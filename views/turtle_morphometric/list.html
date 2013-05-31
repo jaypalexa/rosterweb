@@ -1,0 +1,48 @@
+﻿<div ng-controller="TurtleMorphometricListCtrl">
+<!--
+	<form class="form-search">
+		<div style="float:right;margin-top:0px;margin-bottom:20px;">
+			<div class="input-append">
+				<input type="text" ng-model="q" class="input-medium search-query" placeholder="Search">
+				<button ng-click="search()" type="submit" class="btn"><i class="icon-search"></i></button>
+			</div>
+			<button ng-click="q=''; search()" ng-disabled="!q" type="submit" class="btn">Reset</button>
+		</div>
+	</form>
+	<h3>Morphometrics</h3>
+	<h5>Turtle ID:  {{ $root.currentTurtleId }}</h5>
+-->
+	<table class="table table-striped table-condensed table-hover">
+		<thead>
+			<th sorted="date_measured">Date Measured</th>
+			<th sorted="scl_notch_notch_value">SCL notch-notch</th>
+			<th sorted="scl_notch_tip_value">SCL notch-tip</th>
+			<th sorted="scl_tip_tip_value">SCL tip-tip</th>
+			<th sorted="scw_value">SCW</th>
+			<th sorted="ccl_notch_notch_value">CCL notch-notch</th>
+			<th sorted="ccl_notch_tip_value">CCL notch-tip</th>
+			<th sorted="ccl_tip_tip_value">CCL tip-tip</th>
+			<th sorted="ccw_value">CCW</th>
+			<th sorted="weight_value">Weight</th>
+			<th><a href="#/turtle_morphometric/new" bs-tooltip="'Add a new measurement'"><i class="icon-plus-sign"></i></a></th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="item in items" id="item_{{item.turtle_morphometric_id}}">
+				<td>{{item.date_measured}}</td>
+				<td>{{item.scl_notch_notch_value}}</td>
+				<td>{{item.scl_notch_tip_value}}</td>
+				<td>{{item.scl_tip_tip_value}}</td>
+				<td>{{item.scw_value}}</td>
+				<td>{{item.ccl_notch_notch_value}}</td>
+				<td>{{item.ccl_notch_tip_value}}</td>
+				<td>{{item.ccl_tip_tip_value}}</td>
+				<td>{{item.ccw_value}}</td>
+				<td>{{item.weight_value}}</td>
+				<td>
+					<a href="#/turtle_morphometric/edit/{{item.turtle_morphometric_id}}" bs-tooltip="'Edit'"><i class="icon-pencil"></i></a>
+					<a href ng-click="delete(item)" bs-tooltip="'Delete'"><i class="icon-trash"></i></a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

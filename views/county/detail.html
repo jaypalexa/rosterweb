@@ -1,0 +1,17 @@
+﻿<h3>County</h3>
+
+<form name="form" class="form-horizontal">
+    <div class="control-group" ng-class="{error: form.county_name.$invalid}">
+        <label class="control-label" for="county_name">County name:</label>
+        <div class="controls">
+            <input type="text" ng-model="item.county_name" id="county_name" name="county_name" required ng-maxlength="255" maxlength="255" autofocus="autofocus">
+			<span class="error" ng-show="form.county_name.$error.required">required</span>
+			<span class="error" ng-show="form.county_name.$error.maxlength">max length exceeded</span>
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <button ng-click="save()" ng-disabled="form.$invalid" class="btn btn-primary">Save</button>
+        <a href="#/county/" class="btn">Cancel</a>
+    </div>
+</form>

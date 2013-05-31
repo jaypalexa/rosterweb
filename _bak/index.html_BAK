@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html ng-app="RosterWebApp" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>RosterWeb</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="/rosterweb/styles/bootstrap.css" />
+	<script src="/rosterweb/js/lib/jquery/jquery-1.9.1.js"></script>
+	<script src="/rosterweb/js/lib/angular/angular.js"></script>
+	<script src="/rosterweb/js/lib/angular/angular-resource.js"></script>
+	<script src="/rosterweb/js/util.js"></script>
+
+    <!-- main AngularJS app -->
+	<script src="/rosterweb/js/app.js"></script>
+	
+    <!-- controllers -->
+	<script src="/rosterweb/js/controllers/organization-controller.js"></script>
+	<script src="/rosterweb/js/controllers/tank-controller.js"></script>
+	<script src="/rosterweb/js/controllers/turtle-controller.js"></script>
+	
+    <!-- directives -->
+	<script src="/rosterweb/js/directives/sorted-directive.js"></script>
+</head>
+<body>
+	<h1><a href='#' style='text-decoration: none'>RosterWeb</a></h1>
+	&nbsp;<a href='#/organization'>Organizations</a>&nbsp;|&nbsp;<a href='#/turtle'>Turtles</a>&nbsp;|&nbsp;<a href='#/tank'>Tanks</a>
+	<br />
+	<br />
+	<div class="container">
+		<div ng-view></div>
+	</div>
+</body>
+</html>

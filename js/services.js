@@ -1,0 +1,498 @@
+RosterWebApp.service('codeTableService', function() {
+    this.getCodes = function(code_type) {
+		switch(code_type)
+		{
+			case 'capture_project_type':
+				return [
+					{"id": "N", "name": "N - Nesting beach"},
+					{"id": "T", "name": "T - Tangle net"},
+					{"id": "P", "name": "P - Pound net"},
+					{"id": "H", "name": "H - Hand catch"},
+					{"id": "S", "name": "S - Stranding"},
+					{"id": "O", "name": "O - Other"}
+				]; 
+				break;
+			case 'cm_in':
+				return [
+					{"id": "cm", "name": "cm"},
+					{"id": "in", "name": "in"}
+				]; 
+				break;
+			case 'kg_lb':
+				return [
+					{"id": "kg", "name": "kg"},
+					{"id": "lb", "name": "lb"}
+				]; 
+				break;
+			case 'recapture_type':
+				return [
+					{"id": "S", "name": "S - Recapture of same project turtle"},
+					{"id": "D", "name": "D - Recapture of different project turtle"}
+				]; 
+				break;
+			case 'species':
+				return [
+					{"id": "CC", "name": "CC - Caretta caretta (Loggerhead)"},
+					{"id": "CM", "name": "CM - Chelonia mydas (Green)"},
+					{"id": "DC", "name": "DC - Dermochelys coriacea (Leatherback)"},
+					{"id": "EI", "name": "EI - Eretmochelys imbricata (Hawksbill)"},
+					{"id": "LK", "name": "LK - Lepidochelys kempii (Kemp's Ridley)"},
+					{"id": "LO", "name": "LO - Lepidochelys olivacea (Olive Ridley)"},
+					{"id": "HB", "name": "HB - Hybrid"},
+					{"id": "XX", "name": "XX - Unknown"}
+				]; 
+				break;
+			case 'state':
+				return [
+					{"id": "AL", "name": "Alabama"},
+					{"id": "AK", "name": "Alaska"},
+					{"id": "AZ", "name": "Arizona"},
+					{"id": "AR", "name": "Arkansas"},
+					{"id": "CA", "name": "California"},
+					{"id": "CO", "name": "Colorado"},
+					{"id": "CT", "name": "Connecticut"},
+					{"id": "DE", "name": "Delaware"},
+					{"id": "DC", "name": "District of Columbia"},
+					{"id": "FL", "name": "Florida"},
+					{"id": "GA", "name": "Georgia"},
+					{"id": "HI", "name": "Hawaii"},
+					{"id": "ID", "name": "Idaho"},
+					{"id": "IL", "name": "Illinois"},
+					{"id": "IN", "name": "Indiana"},
+					{"id": "IA", "name": "Iowa"},
+					{"id": "KS", "name": "Kansas"},
+					{"id": "KY", "name": "Kentucky"},
+					{"id": "LA", "name": "Louisiana"},
+					{"id": "ME", "name": "Maine"},
+					{"id": "MD", "name": "Maryland"},
+					{"id": "MA", "name": "Massachusetts"},
+					{"id": "MI", "name": "Michigan"},
+					{"id": "MN", "name": "Minnesota"},
+					{"id": "MS", "name": "Mississippi"},
+					{"id": "MO", "name": "Missouri"},
+					{"id": "MT", "name": "Montana"},
+					{"id": "NE", "name": "Nebraska"},
+					{"id": "NV", "name": "Nevada"},
+					{"id": "NH", "name": "New Hampshire"},
+					{"id": "NJ", "name": "New Jersey"},
+					{"id": "NM", "name": "New Mexico"},
+					{"id": "NY", "name": "New York"},
+					{"id": "NC", "name": "North Carolina"},
+					{"id": "ND", "name": "North Dakota"},
+					{"id": "OH", "name": "Ohio"},
+					{"id": "OK", "name": "Oklahoma"},
+					{"id": "OR", "name": "Oregon"},
+					{"id": "PA", "name": "Pennsylvania"},
+					{"id": "RI", "name": "Rhode Island"},
+					{"id": "SC", "name": "South Carolina"},
+					{"id": "SD", "name": "South Dakota"},
+					{"id": "TN", "name": "Tennessee"},
+					{"id": "TX", "name": "Texas"},
+					{"id": "UT", "name": "Utah"},
+					{"id": "VT", "name": "Vermont"},
+					{"id": "VA", "name": "Virginia"},
+					{"id": "WA", "name": "Washington"},
+					{"id": "WV", "name": "West Virginia"},
+					{"id": "WI", "name": "Wisconsin"},
+					{"id": "WY", "name": "Wyoming"}
+				];
+				break;
+			case 'status':
+				return [
+					{"id": "UR", "name": "UR - Undergoing rehab"},
+					{"id": "ED", "name": "ED - Educational display"},
+					{"id": "UO", "name": "UO - Unknown origin"},
+					{"id": "PD", "name": "PD - Permanently disabled"},
+					{"id": "PREACT", "name": "PREACT - Pre-act animal"},
+					{"id": "RESEARCH", "name": "RESEARCH (requires pre-approval)"},
+					{"id": "RFR", "name": "RFR - Ready for release"},
+					{"id": "TSTR", "name": "TSTR - Holding until reaches size"},
+					{"id": "Unknown", "name": "Unknown"}
+				]; 
+				break;
+			case 'tag_location':
+				return [
+					{"id": "RFF", "name": "RFF"},
+					{"id": "LFF", "name": "LFF"},
+					{"id": "RRF", "name": "RRF"},
+					{"id": "LRF", "name": "LRF"},
+					{"id": "Other", "name": "Other"}
+				]; 
+				break;
+			case 'tag_type':
+				return [
+					{"id": "Inconel", "name": "Inconel"},
+					{"id": "Monel", "name": "Monel"},
+					{"id": "PIT", "name": "PIT"},
+					{"id": "Roto", "name": "Roto"},
+					{"id": "Other", "name": "Other"}
+				]; 
+				break;
+			case 'turtle_size':
+				return [
+					{"id": "Hatchling", "name": "Hatchling"},
+					{"id": "Post-hatchling", "name": "Post-hatchling"},
+					{"id": "Juvenile", "name": "Juvenile"},
+					{"id": "Subadult", "name": "Subadult"},
+					{"id": "Adult", "name": "Adult"},
+					{"id": "Unknown", "name": "Unknown"}
+				]; 
+				break;
+			case 'unit_type':
+				return [
+					{"id": "", "name": ""},
+					{"id": "M", "name": "Metric (cm, kg, etc.)"},
+					{"id": "I", "name": "Imperial (inches, lbs, etc.)"}
+				]; 
+				break;
+			case 'yes_no_undetermined':
+				return [
+					{"id": "Y", "name": "Y - Yes"},
+					{"id": "N", "name": "N - No"},
+					{"id": "U", "name": "U - Undetermined"}
+				]; 
+				break;
+			default:
+				return [];
+		}
+    };
+});
+
+RosterWebApp.service('countyService', function(County) {
+    this.search = function(q, sort_order, sort_desc, success, error) {
+        return County.query({ q: q, sort: sort_order, desc: sort_desc, ver: util_new_guid() }, success, error);
+    };	
+	
+    this.getAll = function(sort_order, sort_desc, success, error) {
+        return County.query({ sort: sort_order, desc: sort_desc, ver: util_new_guid() }, success, error);
+    };	
+	
+    this.get = function(county_id, success, error) {
+        return County.get({ county_id: county_id }, success, error);
+    };
+	
+	this.save = function(county, success, error) {
+		if (county.county_id == null) {
+			//-- insert
+			County.save(county, success, error);
+		} else {
+			//-- update
+			County.update({ county_id: county.county_id }, county, success, error);
+		}
+	};
+	
+    this.delete = function(county_id, success, error) {
+        return County.delete({ county_id: county_id }, success, error);
+    };
+});
+
+RosterWebApp.service('loginService', function($rootScope, $http, $location) {
+    this.doLogin = function(openidIdentifier) {
+	
+		var changeLocation = function(url, forceReload) {
+			$rootScope = $rootScope || angular.element(document).scope();
+			if(forceReload || $rootScope.$$phase) {
+				window.location = url;
+			}
+			else {
+				//only use this if you want to replace the history stack
+				//$location.path(url).replace();
+
+				//this this if you want to change the URL and add it to the history stack
+				$location.path(url);
+				$rootScope.$apply();
+			}
+		};
+		
+		//$http.defaults.useXDomain = true;
+		
+		$http({
+			method: 'GET', 
+			url: '/rosterweb/api/login.php', 
+			params: {openid_identifier: openidIdentifier} 
+		})
+		.success(function(data, status, headers, config) {
+			console.log('[loginService::doLogin().success] data = ' + data);
+			console.log('[loginService::doLogin().success] status = ' + status);
+			console.log('[loginService::doLogin().success] headers = ' + utilPrintHash(headers));
+			console.log('[loginService::doLogin().success] config = ' + config);
+		})
+		.error(function(data, status, headers, config) {
+			console.error('[loginService::doLogin().error] data = ' + data);
+			console.error('[loginService::doLogin().error] status = ' + status);
+			console.error('[loginService::doLogin().error] headers = ' + utilPrintHash(headers));
+			console.error('[loginService::doLogin().error] headers(\'Content-Type\') = ' + headers('Content-Type'));
+			console.error('[loginService::doLogin().error] headers(\'Location\') = ' + headers('Location'));
+			console.error('[loginService::doLogin().error] config = ' + config);
+			console.error('[loginService::doLogin().error] config.url = ' + config.url);
+
+			$rootScope.currentUser = null;
+		})
+		.then(function (response) {
+			// The then function here is an opportunity to modify the response
+			console.log('[loginService::doLogin().then] response.data = ' + response.data);
+			// The return value gets picked up by the then in the controller.
+			changeLocation(response.data, true);
+			//return response.data;
+		})
+		;
+	};	
+});
+
+RosterWebApp.service('logoutService', function($rootScope, $http, $location, $cookieStore) {
+    this.doLogout = function() {
+		
+		$http({
+			method: 'GET', 
+			url: '/rosterweb/api/logout.php'
+		})
+		.success(function(data, status, headers, config) {
+			console.log('[logoutService::doLogout().success] data = ' + data);
+			console.log('[logoutService::doLogout().success] status = ' + status);
+			console.log('[logoutService::doLogout().success] headers = ' + utilPrintHash(headers));
+			console.log('[logoutService::doLogout().success] config = ' + config);
+			
+		})
+		.error(function(data, status, headers, config) {
+			console.error('[logoutService::doLogout().error] data = ' + data);
+			console.error('[logoutService::doLogout().error] status = ' + status);
+			console.error('[logoutService::doLogout().error] headers = ' + utilPrintHash(headers));
+			console.error('[logoutService::doLogout().error] headers(\'Content-Type\') = ' + headers('Content-Type'));
+			console.error('[logoutService::doLogout().error] headers(\'Location\') = ' + headers('Location'));
+			console.error('[logoutService::doLogout().error] config = ' + config);
+			console.error('[logoutService::doLogout().error] config.url = ' + config.url);
+		});
+		
+		$.removeCookie('user_id', { path: '/' });
+		$.removeCookie('is_logged_in', { path: '/' });
+		$cookieStore.remove('is_registered');
+		$cookieStore.remove('rootScopeCurrentUser');
+		$cookieStore.remove('rootScopeCurrentTurtleId');
+		$rootScope.currentUser = null;
+		$rootScope.currentTurtleId = null;
+		console.log('[logoutService::doLogout()] *** USER IS LOGGED OUT ***');
+	};	
+});
+
+RosterWebApp.service('organizationListItemService', function(OrganizationListItem) {
+    this.getAll = function(success, error) {
+        return OrganizationListItem.query({ ver: util_new_guid() }, success, error);
+    };	
+});
+
+RosterWebApp.service('organizationService', function(Organization) {
+    this.search = function(q, sort_order, sort_desc, success, error) {
+        return Organization.query({ q: q, sort: sort_order, desc: sort_desc, ver: util_new_guid() }, success, error);
+    };	
+	
+    this.getAll = function(sort_order, sort_desc, success, error) {
+        return Organization.query({ sort: sort_order, desc: sort_desc, ver: util_new_guid() }, success, error);
+    };	
+	
+    this.get = function(organization_id, success, error) {
+        return Organization.get({ organization_id: organization_id }, success, error);
+    };
+	
+	this.save = function(organization, success, error) {
+		if (organization.organization_id == null) {
+			//-- insert
+			Organization.save(organization, success, error);
+		} else {
+			//-- update
+			Organization.update({ organization_id: organization.organization_id }, organization, success, error);
+		}
+	};
+	
+    this.delete = function(organization_id, success, error) {
+        return Organization.delete({ organization_id: organization_id }, success, error);
+    };
+});
+
+RosterWebApp.service('recordCountService', function($rootScope, RecordCount) {
+    this.resetAll = function(success, error) {
+		console.log('[recordCountService.resetAll()] Calling RecordCount.get()...');
+        RecordCount.get({ ver: util_new_guid(), organization_id: $rootScope.currentUser.organizationId }, 
+			function(result, success) {
+				$recordCounts = result;
+				$rootScope.recordCounts = { 
+					countyCount : $recordCounts.county_count, 
+					organizationCount : $recordCounts.organization_count, 
+					tankCount : $recordCounts.tank_count, 
+					turtleCount : $recordCounts.turtle_count, 
+					userCount : $recordCounts.user_count
+				};
+				success(result);
+			}, error);
+    };	
+});
+
+RosterWebApp.service('tankService', function($rootScope, Tank) {
+    this.search = function(q, sort_order, sort_desc, success, error) {
+        return Tank.query({ q: q, sort: sort_order, desc: sort_desc, ver: util_new_guid(), organization_id: $rootScope.currentUser.organizationId }, success, error);
+    };	
+	
+    this.getAll = function(sort_order, sort_desc, success, error) {
+        return Tank.query({ sort: sort_order, desc: sort_desc, ver: util_new_guid(), organization_id: $rootScope.currentUser.organizationId }, success, error);
+    };	
+	
+    this.get = function(tank_id, success, error) {
+        return Tank.get({ tank_id: tank_id }, success, error);
+    };
+	
+	this.save = function(tank, success, error) {
+		if (tank.tank_id == null) {
+			//-- insert
+			Tank.save(tank, success, error);
+		} else {
+			//-- update
+			Tank.update({ tank_id: tank.tank_id }, tank, success, error);
+		}
+	};
+	
+    this.delete = function(tank_id, success, error) {
+        return Tank.delete({ tank_id: tank_id }, success, error);
+    };
+});
+
+RosterWebApp.service('turtleService', function($rootScope, Turtle) {
+    this.search = function(q, sort_order, sort_desc, success, error) {
+        return Turtle.query({ q: q, sort: sort_order, desc: sort_desc, ver: util_new_guid(), organization_id: $rootScope.currentUser.organizationId }, success, error);
+    };	
+	
+    this.getAll = function(sort_order, sort_desc, success, error) {
+        return Turtle.query({ sort: sort_order, desc: sort_desc, ver: util_new_guid(), organization_id: $rootScope.currentUser.organizationId }, success, error);
+    };	
+	
+    this.get = function(turtle_id, success, error) {
+        return Turtle.get({ turtle_id: turtle_id }, success, error);
+    };
+	
+	this.save = function(turtle, success, error) {
+		if (turtle.turtle_id == null) {
+			//-- insert
+			Turtle.save(turtle, success, error);
+		} else {
+			//-- update
+			Turtle.update({ turtle_id: turtle.turtle_id }, turtle, success, error);
+		}
+	};
+	
+    this.delete = function(turtle_id, success, error) {
+        return Turtle.delete({ turtle_id: turtle_id }, success, error);
+    };
+});
+
+RosterWebApp.service('turtleMorphometricService', function($rootScope, TurtleMorphometric) {
+    this.search = function(q, sort_order, sort_desc, success, error) {
+        return TurtleMorphometric.query({ q: q, sort: sort_order, desc: sort_desc, ver: util_new_guid(), turtle_id: $rootScope.currentTurtleId }, success, error);
+    };	
+	
+    this.getAll = function(sort_order, sort_desc, success, error) {
+        return TurtleMorphometric.query({ sort: sort_order, desc: sort_desc, ver: util_new_guid(), turtle_id: $rootScope.currentTurtleId }, success, error);
+    };	
+	
+    this.get = function(turtle_morphometric_id, success, error) {
+        return TurtleMorphometric.get({ turtle_morphometric_id: turtle_morphometric_id }, success, error);
+    };
+	
+	this.save = function(turtle_morphometric, success, error) {
+		if (turtle_morphometric.turtle_morphometric_id == null) {
+			//-- insert
+			TurtleMorphometric.save(turtle_morphometric, success, error);
+		} else {
+			//-- update
+			TurtleMorphometric.update({ turtle_morphometric_id: turtle_morphometric.turtle_morphometric_id }, turtle_morphometric, success, error);
+		}
+	};
+	
+    this.delete = function(turtle_morphometric_id, success, error) {
+        return TurtleMorphometric.delete({ turtle_morphometric_id: turtle_morphometric_id }, success, error);
+    };
+});
+
+RosterWebApp.service('turtleTagService', function($rootScope, TurtleTag) {
+    this.search = function(q, sort_order, sort_desc, success, error) {
+        return TurtleTag.query({ q: q, sort: sort_order, desc: sort_desc, ver: util_new_guid(), turtle_id: $rootScope.currentTurtleId }, success, error);
+    };	
+	
+    this.getAll = function(sort_order, sort_desc, success, error) {
+        return TurtleTag.query({ sort: sort_order, desc: sort_desc, ver: util_new_guid(), turtle_id: $rootScope.currentTurtleId }, success, error);
+    };	
+	
+    this.get = function(turtle_tag_id, success, error) {
+        return TurtleTag.get({ turtle_tag_id: turtle_tag_id }, success, error);
+    };
+	
+	this.save = function(turtle_tag, success, error) {
+		if (turtle_tag.turtle_tag_id == null) {
+			//-- insert
+			TurtleTag.save(turtle_tag, success, error);
+		} else {
+			//-- update
+			TurtleTag.update({ turtle_tag_id: turtle_tag.turtle_tag_id }, turtle_tag, success, error);
+		}
+	};
+	
+    this.delete = function(turtle_tag_id, success, error) {
+        return TurtleTag.delete({ turtle_tag_id: turtle_tag_id }, success, error);
+    };
+});
+
+RosterWebApp.service('userService', function($q, $http, User) {
+    this.search = function(q, sort_order, sort_desc, success, error) {
+        return User.query({ q: q, sort: sort_order, desc: sort_desc, ver: util_new_guid() }, success, error);
+    };	
+	
+    this.getAll = function(sort_order, sort_desc, success, error) {
+        return User.query({ sort: sort_order, desc: sort_desc, ver: util_new_guid() }, success, error);
+    };	
+	
+    this.get = function(user_id, success, error) {
+        return User.get({ user_id: user_id }, success, error);
+    };
+	
+    this.getByEmail = function(user_email, success, error) {
+		var deferred = $q.defer();
+		
+		$http({
+			method: 'GET', 
+			url: '/rosterweb/api/user.php', 
+			params: {user_email: user_email} 
+		})
+		.success(function(data, status, headers, config) {
+			console.log('[userService::getByEmail().success] data = ' + data);
+			console.log('[userService::getByEmail().success] status = ' + status);
+			console.log('[userService::getByEmail().success] headers = ' + utilPrintHash(headers));
+			console.log('[userService::getByEmail().success] config = ' + config);
+			deferred.resolve(data);
+		})
+		.error(function(data, status, headers, config) {
+			console.error('[userService::getByEmail().error] data = ' + data);
+			console.error('[userService::getByEmail().error] status = ' + status);
+			console.error('[userService::getByEmail().error] headers = ' + utilPrintHash(headers));
+			console.error('[userService::getByEmail().error] headers(\'Content-Type\') = ' + headers('Content-Type'));
+			console.error('[userService::getByEmail().error] headers(\'Location\') = ' + headers('Location'));
+			console.error('[userService::getByEmail().error] config = ' + config);
+			console.error('[userService::getByEmail().error] config.url = ' + config.url);
+			deferred.reject();
+		})
+		;
+
+		return deferred.promise;		
+    };
+	
+	this.save = function(user, success, error) {
+		if (user.user_id == null) {
+			//-- insert
+			User.save(user, success, error);
+		} else {
+			//-- update
+			User.update({ user_id: user.user_id }, user, success, error);
+		}
+	};
+	
+    this.delete = function(user_id, success, error) {
+        return User.delete({ user_id: user_id }, success, error);
+    };
+});
+

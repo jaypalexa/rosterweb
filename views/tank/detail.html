@@ -1,0 +1,17 @@
+﻿<h3>Holding Tank</h3>
+
+<form name="form" class="form-horizontal">
+    <div class="control-group" ng-class="{error: form.tank_name.$invalid}">
+        <label class="control-label" for="tank_name">Tank name:</label>
+        <div class="controls">
+            <input type="text" ng-model="item.tank_name" id="tank_name" name="tank_name" required ng-maxlength="255" maxlength="255" autofocus="autofocus">
+			<span class="error" ng-show="form.tank_name.$error.required">required</span>
+			<span class="error" ng-show="form.tank_name.$error.maxlength">max length exceeded</span>
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <button ng-click="save()" ng-disabled="form.$invalid || $root.currentUser.organizationId == null" class="btn btn-primary">Save</button>
+        <a href="#/tank/" class="btn">Cancel</a>
+    </div>
+</form>

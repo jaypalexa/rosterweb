@@ -1,0 +1,31 @@
+﻿<form class="form-search">
+	<div style="float:right;margin-top:0px;margin-bottom:20px;">
+		<div class="input-append">
+			<input type="text" ng-model="q" class="input-medium search-query" placeholder="Search">
+			<button ng-click="search()" type="submit" class="btn"><i class="icon-search"></i></button>
+		</div>
+		<button ng-click="q=''; search()" ng-disabled="!q" type="submit" class="btn">Reset</button>
+	</div>
+</form>
+<h3>Sea Turtles</h3>
+<table class="table table-striped table-condensed table-hover">
+    <thead>
+        <th sorted="turtle_name">Turtle Name</th>
+        <th sorted="sid_number">SID Number</th>
+        <th sorted="stranding_id_number">Stranding ID</th>
+        <th sorted="species">Species</th>
+        <th><a href="#/turtle/new" bs-tooltip="'Add a new sea turtle'"><i class="icon-plus-sign"></i></a></th>
+    </thead>
+    <tbody>
+        <tr ng-repeat="item in items" id="item_{{item.turtle_id}}">
+            <td>{{item.turtle_name}}</td>
+            <td>{{item.sid_number}}</td>
+            <td>{{item.stranding_id_number}}</td>
+            <td>{{item.species}}</td>
+            <td>
+                <a href="#/turtle/edit/{{item.turtle_id}}" bs-tooltip="'Edit'"><i class="icon-pencil"></i></a>
+                <a href ng-click="delete(item)" bs-tooltip="'Delete'"><i class="icon-trash"></i></a>
+            </td>
+        </tr>
+    </tbody>
+</table>
