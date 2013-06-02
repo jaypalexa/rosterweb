@@ -142,27 +142,34 @@ var LogoutCtrl = function ($scope, $location, logoutService) {
 	$location.url('/');
 };
 
-var MainCtrl = function ($rootScope, $scope, $location, $route, recordCountService, organizationListItemService) {
+var MainCtrl = function ($rootScope, $scope, $location, $route, $cookieStore, recordCountService, organizationListItemService) {
 
 	$scope.rootOrganizations = organizationListItemService.getAll();
 
-	$scope.resetRecordCounts = function() {
-		console.log('[$scope.resetRecordCounts] $scope.currentUser = ' + $scope.currentUser);
+	$scope.organizationChanged = function() {
+		//console.log('[MainCtrl::$scope.organizationChanged] $scope.currentUser = ' + $scope.currentUser);
 		if (($scope.currentUser != null) && ($scope.currentUser.organizationId != null))
 		{
-			console.log('[$scope.resetRecordCounts] $scope.currentUser.organizationId = ' + $scope.currentUser.organizationId);
-			console.log('[$scope.resetRecordCounts] recordCountService = ' + recordCountService);
+			console.log('[MainCtrl::$scope.organizationChanged] $scope.currentUser.organizationId = ' + $scope.currentUser.organizationId);
+			//--------------------------------------------------------------------------------
+			//-- refresh the rootScopeCurrentUser cookie with the $rootScope.currentUser latest values
+			//--------------------------------------------------------------------------------
+			$cookieStore.put('rootScopeCurrentUser', $rootScope.currentUser);
+		
+			//--------------------------------------------------------------------------------
+			//-- reset the record counts
+			//--------------------------------------------------------------------------------
 			if (recordCountService != undefined)
 			{
 				recordCountService.resetAll();
 				var locationPath = $location.path();
-				console.log('[$scope.resetRecordCounts] $location.path() = ' + locationPath);
+				//console.log('[MainCtrl::$scope.organizationChanged] $location.path() = ' + locationPath);
 				if ((locationPath.indexOf("/turtle/") != -1) 
 				|| (locationPath.indexOf("/tank/") != -1) 
 				|| (locationPath.indexOf("/hatchling/") != -1) 
 				|| (locationPath.indexOf("/washback/") != -1))
 				{
-					console.log('[$scope.resetRecordCounts] Performing a $route.reload()...');
+					//console.log('[MainCtrl::$scope.organizationChanged] Performing a $route.reload()...');
 					$route.reload();
 				}
 			}

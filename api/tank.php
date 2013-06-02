@@ -95,7 +95,7 @@
 		if ($verb == 'PUT')
 		{
 			$sql .= 'UPDATE tank SET ';
-			$sql .= 'organization_id = :organization_id ';
+			$sql .= 'organization_id = :organization_id, ';
 			$sql .= 'tank_name = :tank_name ';
 			$sql .= 'WHERE tank_id = :tank_id';
 			

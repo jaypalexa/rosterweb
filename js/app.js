@@ -44,11 +44,11 @@
 			
 			if (next.templateUrl == '/rosterweb/views/login/detail.html') { return; }
 			if (next.templateUrl == '/rosterweb/views/login/notregistered.html') { return; }
-            //if (($rootScope.currentUser == null) || (!$rootScope.currentUser.isLoggedIn)) 
-			console.log('[RosterWebApp.run().$rootScope.$on("$routeChangeStart")] $cookieStore.get(\'is_registered\') = ' + $cookieStore.get('is_registered'));
+
+			//console.log('[RosterWebApp.run().$rootScope.$on("$routeChangeStart")] $cookieStore.get(\'is_registered\') = ' + $cookieStore.get('is_registered'));
             if ($cookieStore.get('is_registered') != 'true') 
 			{
-				console.log('[RosterWebApp.run().$rootScope.$on("$routeChangeStart")] Going to:  $location.url(\'/login/\')');
+				//console.log('[RosterWebApp.run().$rootScope.$on("$routeChangeStart")] Going to:  $location.url(\'/login/\')');
 				//-- no authenticated user, we should be going to #login
 				$location.url('/login/');
 			}
@@ -57,8 +57,9 @@
 				//-- if the current route object is undefined, this is the first time or a refresh/F5, so restore state...
 				if (current == undefined) 
 				{
-					console.log('[RosterWebApp.run().$rootScope.$on("$routeChangeStart")] Resetting $rootScope from $cookieStore...');
+					//console.log('[RosterWebApp.run().$rootScope.$on("$routeChangeStart")] Resetting $rootScope from $cookieStore...');
 					$rootScope.currentUser = $cookieStore.get('rootScopeCurrentUser');
+					//console.log('[RosterWebApp.run().$rootScope.$on("$routeChangeStart")] $rootScope.currentUser.organizationId = ' + $rootScope.currentUser.organizationId);
 					$rootScope.currentTurtleId = $cookieStore.get('rootScopeCurrentTurtleId');
 					recordCountService.resetAll();
 				}
