@@ -347,7 +347,7 @@ var TurtleCreateCtrl = function($rootScope, $scope, $location, turtleService, co
     };
 };
 
-var TurtleEditCtrl = function($rootScope, $scope, $routeParams, $location, turtleService, codeTableService, countyService) {
+var TurtleEditCtrl = function($rootScope, $scope, $routeParams, $location, $cookieStore, turtleService, codeTableService, countyService) {
     $scope.capture_project_types = codeTableService.getCodes('capture_project_type'); 
 	$scope.counties = countyService.getAll('county_name', false);
     $scope.recapture_types = codeTableService.getCodes('recapture_type'); 
