@@ -292,13 +292,68 @@ var TankCreateCtrl = function($rootScope, $scope, $location, tankService, record
     };
 };
 
-var TankEditCtrl = function($scope, $routeParams, $location, tankService) {
+var TankEditCtrl = function($rootScope, $scope, $routeParams, $location, $cookieStore, tankService) {
 	
+	$rootScope.currentTankId = $routeParams.tank_id;
+	$cookieStore.put('rootScopeCurrentTankId', $rootScope.currentTankId);
     $scope.item = tankService.get($routeParams.tank_id);
 
     $scope.save = function() {
         tankService.save($scope.item, function() {
             $location.path('/tank/');
+        });
+    };
+};
+
+var TankWaterListCtrl = function ($scope, $location, $dialog, tankWaterService, recordCountService) {
+
+    $scope.search = function() {
+		$scope.items = tankWaterService.search($scope.q, $scope.sort_order, $scope.sort_desc);
+    };
+
+    $scope.sort_by = function(property_name) {
+        if ($scope.sort_order == property_name) { 
+			$scope.sort_desc = !$scope.sort_desc; 
+		} else { 
+			$scope.sort_desc = false; 
+		}
+        $scope.sort_order = property_name;
+        $scope.search();
+    };
+
+    $scope.delete = function(item) {
+		util_open_delete_dialog($dialog, 'measurement', item.date_measured, function(result) {
+			if (result == 'yes') {
+				tankWaterService.delete(item.tank_water_id, function() {
+					recordCountService.resetAll();
+					$("#item_" + item.tank_water_id).fadeOut();
+				});
+			}
+		});
+	};
+	
+    $scope.sort_order = 'date_measured';
+    $scope.sort_desc = false;
+    $scope.search();
+};
+
+var TankWaterCreateCtrl = function($rootScope, $scope, $location, tankWaterService, codeTableService, recordCountService) {
+	$scope.item = { tank_water_id: null, tank_id: $rootScope.currentTankId };
+
+    $scope.save = function() {
+        tankWaterService.save($scope.item, function() {
+			recordCountService.resetAll();
+            $location.path('/tank_water/');
+        });
+    };
+};
+
+var TankWaterEditCtrl = function($scope, $routeParams, $location, tankWaterService, codeTableService) {
+    $scope.item = tankWaterService.get($routeParams.tank_water_id);
+
+    $scope.save = function() {
+        tankWaterService.save($scope.item, function() {
+            $location.path('/tank_water/');
         });
     };
 };

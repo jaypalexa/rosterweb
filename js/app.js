@@ -13,6 +13,9 @@
             .when('/tank/', { controller: TankListCtrl, templateUrl: '/rosterweb/views/tank/list.html' })
             .when('/tank/new', { controller: TankCreateCtrl, templateUrl: '/rosterweb/views/tank/detail.html' })
             .when('/tank/edit/:tank_id', { controller: TankEditCtrl, templateUrl: '/rosterweb/views/tank/detail.html' })
+            .when('/tank_water/', { controller: TankWaterListCtrl, templateUrl: '/rosterweb/views/tank_water/list.html' })
+            .when('/tank_water/new', { controller: TankWaterCreateCtrl, templateUrl: '/rosterweb/views/tank_water/detail.html' })
+            .when('/tank_water/edit/:tank_water_id', { controller: TankWaterEditCtrl, templateUrl: '/rosterweb/views/tank_water/detail.html' })
             .when('/turtle/', { controller: TurtleListCtrl, templateUrl: '/rosterweb/views/turtle/list.html' })
             .when('/turtle/new', { controller: TurtleCreateCtrl, templateUrl: '/rosterweb/views/turtle/detail.html' })
             .when('/turtle/edit/:turtle_id', { controller: TurtleEditCtrl, templateUrl: '/rosterweb/views/turtle/detail.html' })
@@ -61,6 +64,7 @@
 					$rootScope.currentUser = $cookieStore.get('rootScopeCurrentUser');
 					//console.log('[RosterWebApp.run().$rootScope.$on("$routeChangeStart")] $rootScope.currentUser.organizationId = ' + $rootScope.currentUser.organizationId);
 					$rootScope.currentTurtleId = $cookieStore.get('rootScopeCurrentTurtleId');
+					$rootScope.currentTankId = $cookieStore.get('rootScopeCurrentTankId');
 					recordCountService.resetAll();
 				}
 			}

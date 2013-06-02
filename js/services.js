@@ -268,6 +268,7 @@ RosterWebApp.service('logoutService', function($rootScope, $http, $location, $co
 		$cookieStore.remove('is_registered');
 		$cookieStore.remove('rootScopeCurrentUser');
 		$cookieStore.remove('rootScopeCurrentTurtleId');
+		$cookieStore.remove('rootScopeCurrentTankId');
 		$rootScope.currentUser = null;
 		$rootScope.currentTurtleId = null;
 		console.log('[logoutService::doLogout()] *** USER IS LOGGED OUT ***');
@@ -351,6 +352,34 @@ RosterWebApp.service('tankService', function($rootScope, Tank) {
 	
     this.delete = function(tank_id, success, error) {
         return Tank.delete({ tank_id: tank_id }, success, error);
+    };
+});
+
+RosterWebApp.service('tankWaterService', function($rootScope, TankWater) {
+    this.search = function(q, sort_order, sort_desc, success, error) {
+        return TankWater.query({ q: q, sort: sort_order, desc: sort_desc, ver: util_new_guid(), tank_id: $rootScope.currentTankId }, success, error);
+    };	
+	
+    this.getAll = function(sort_order, sort_desc, success, error) {
+        return TankWater.query({ sort: sort_order, desc: sort_desc, ver: util_new_guid(), tank_id: $rootScope.currentTankId }, success, error);
+    };	
+	
+    this.get = function(tank_water_id, success, error) {
+        return TankWater.get({ tank_water_id: tank_water_id }, success, error);
+    };
+	
+	this.save = function(tank_water, success, error) {
+		if (tank_water.tank_water_id == null) {
+			//-- insert
+			TankWater.save(tank_water, success, error);
+		} else {
+			//-- update
+			TankWater.update({ tank_water_id: tank_water.tank_water_id }, tank_water, success, error);
+		}
+	};
+	
+    this.delete = function(tank_water_id, success, error) {
+        return TankWater.delete({ tank_water_id: tank_water_id }, success, error);
     };
 });
 

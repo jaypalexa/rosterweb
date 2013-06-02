@@ -1,0 +1,37 @@
+﻿<h3>Water Quality Measurements</h3>
+<h5>Tank ID:  {{ $root.currentTankId }}</h5>
+<form name="form" class="form-horizontal">
+	<div class="control-group input-append" style="display: block" ng-class="{error: form.date_measured.$invalid}">
+		<label class="control-label" for="date_measured">Date measured:</label>
+		<div class="controls">
+			<input id="date_measured" name="date_measured" class="input-small" type="text" ng-model="item.date_measured" data-date-format="dd-MM-yyyy" bs-datepicker autofocus="autofocus"/>
+			<button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
+		</div>
+	</div>
+    <div class="control-group" ng-class="{error: form.temperature.$invalid}">
+        <label class="control-label" for="temperature">Temperature:</label>
+        <div class="controls">
+            <input type="text" ng-model="item.temperature" id="temperature" name="temperature" ng-maxlength="255" maxlength="255">
+			<span class="error" ng-show="form.temperature.$error.maxlength">max length exceeded</span>
+        </div>
+    </div>
+    <div class="control-group" ng-class="{error: form.salinity.$invalid}">
+        <label class="control-label" for="salinity">Salinity:</label>
+        <div class="controls">
+            <input type="text" ng-model="item.salinity" id="salinity" name="salinity" ng-maxlength="255" maxlength="255">
+			<span class="error" ng-show="form.salinity.$error.maxlength">max length exceeded</span>
+        </div>
+    </div>
+    <div class="control-group" ng-class="{error: form.ph.$invalid}">
+        <label class="control-label" for="ph">Ph:</label>
+        <div class="controls">
+            <input type="text" ng-model="item.ph" id="ph" name="ph" ng-maxlength="255" maxlength="255">
+			<span class="error" ng-show="form.ph.$error.maxlength">max length exceeded</span>
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <button ng-click="save()" ng-disabled="form.$invalid || $root.currentTankId == null" class="btn btn-primary">Save</button>
+        <a href="#/turtle_tag/" class="btn">Cancel</a>
+    </div>
+</form>

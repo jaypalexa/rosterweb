@@ -18,6 +18,10 @@ RosterWebApp.factory('Tank', function($resource) {
     return $resource('/rosterweb/api/tank.php', {}, { 'update': { method: 'PUT' } });
 });
 
+RosterWebApp.factory('TankWater', function($resource) {
+    return $resource('/rosterweb/api/tank_water.php', {}, { 'update': { method: 'PUT' } });
+});
+
 RosterWebApp.factory('Turtle', function($resource) {
     return $resource('/rosterweb/api/turtle.php', {}, { 'update': { method: 'PUT' } });
 });

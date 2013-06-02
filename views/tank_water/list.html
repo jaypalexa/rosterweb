@@ -1,0 +1,36 @@
+﻿ <div ng-controller="TankWaterListCtrl">
+<!--
+	<form class="form-search">
+		<div style="float:right;margin-top:0px;margin-bottom:20px;">
+			<div class="input-append">
+				<input type="text" ng-model="q" class="input-medium search-query" placeholder="Search">
+				<button ng-click="search()" type="submit" class="btn"><i class="icon-search"></i></button>
+			</div>
+			<button ng-click="q=''; search()" ng-disabled="!q" type="submit" class="btn">Reset</button>
+		</div>
+	</form>
+	<h3>Water Quality Measurements</h3>
+	<h5>Tank ID:  {{ $root.currentTankId }}</h5>
+-->
+	<table class="table table-striped table-condensed table-hover">
+		<thead>
+			<th sorted="date_measured">Date Measured</th>
+			<th sorted="temperature">Temperature</th>
+			<th sorted="salinity">Salinity</th>
+			<th sorted="ph">Ph</th>
+			<th><a href="#/tank_water/new" bs-tooltip="'Add a new tag'"><i class="icon-plus-sign"></i></a></th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="item in items" id="item_{{item.tank_water_id}}">
+				<td>{{item.date_measured}}</td>
+				<td>{{item.temperature}}</td>
+				<td>{{item.salinity}}</td>
+				<td>{{item.ph}}</td>
+				<td>
+					<a href="#/tank_water/edit/{{item.tank_water_id}}" bs-tooltip="'Edit'"><i class="icon-pencil"></i></a>
+					<a href ng-click="delete(item)" bs-tooltip="'Delete'"><i class="icon-trash"></i></a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
