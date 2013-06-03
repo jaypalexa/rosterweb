@@ -186,6 +186,34 @@ RosterWebApp.service('countyService', function(County) {
     };
 });
 
+RosterWebApp.service('hatchlingService', function($rootScope, Hatchling) {
+    this.search = function(q, sort_order, sort_desc, success, error) {
+        return Hatchling.query({ q: q, sort: sort_order, desc: sort_desc, ver: util_new_guid(), organization_id: $rootScope.currentUser.organizationId }, success, error);
+    };	
+	
+    this.getAll = function(sort_order, sort_desc, success, error) {
+        return Hatchling.query({ sort: sort_order, desc: sort_desc, ver: util_new_guid(), organization_id: $rootScope.currentUser.organizationId }, success, error);
+    };	
+	
+    this.get = function(hatchling_id, success, error) {
+        return Hatchling.get({ hatchling_id: hatchling_id }, success, error);
+    };
+	
+	this.save = function(hatchling, success, error) {
+		if (hatchling.hatchling_id == null) {
+			//-- insert
+			Hatchling.save(hatchling, success, error);
+		} else {
+			//-- update
+			Hatchling.update({ hatchling_id: hatchling.hatchling_id }, hatchling, success, error);
+		}
+	};
+	
+    this.delete = function(hatchling_id, success, error) {
+        return Hatchling.delete({ hatchling_id: hatchling_id }, success, error);
+    };
+});
+
 RosterWebApp.service('loginService', function($rootScope, $http, $location) {
     this.doLogin = function(openidIdentifier) {
 	
@@ -311,7 +339,7 @@ RosterWebApp.service('organizationService', function(Organization) {
 
 RosterWebApp.service('recordCountService', function($rootScope, RecordCount) {
     this.resetAll = function(success, error) {
-		console.log('[recordCountService.resetAll()] Calling RecordCount.get()...');
+		//console.log('[recordCountService.resetAll()] Calling RecordCount.get()...');
         RecordCount.get({ ver: util_new_guid(), organization_id: $rootScope.currentUser.organizationId }, 
 			function(result, success) {
 				$recordCounts = result;
@@ -320,7 +348,9 @@ RosterWebApp.service('recordCountService', function($rootScope, RecordCount) {
 					organizationCount : $recordCounts.organization_count, 
 					tankCount : $recordCounts.tank_count, 
 					turtleCount : $recordCounts.turtle_count, 
-					userCount : $recordCounts.user_count
+					userCount : $recordCounts.user_count, 
+					hatchlingCount : $recordCounts.hatchling_count, 
+					washbackCount : $recordCounts.washback_count
 				};
 				success(result);
 			}, error);

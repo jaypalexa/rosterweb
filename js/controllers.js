@@ -63,6 +63,38 @@ var CountyCreateCtrl = function($scope, $location, countyService, recordCountSer
     };
 };
 
+var HatchlingListCtrl = function ($scope, $location, $dialog, hatchlingService, recordCountService) {
+
+    $scope.search = function() {
+		$scope.items = hatchlingService.search($scope.q, $scope.sort_order, $scope.sort_desc);
+    };
+
+    $scope.sort_by = function(property_name) {
+        if ($scope.sort_order == property_name) { 
+			$scope.sort_desc = !$scope.sort_desc; 
+		} else { 
+			$scope.sort_desc = false; 
+		}
+        $scope.sort_order = property_name;
+        $scope.search();
+    };
+
+    $scope.delete = function(item) {
+		util_open_delete_dialog($dialog, 'hatchling event', item.event_date, function(result) {
+			if (result == 'yes') {
+				hatchlingService.delete(item.hatchling_event_id, function() {
+					recordCountService.resetAll();
+					$("#item_" + item.hatchling_event_id).fadeOut();
+				});
+			}
+		});
+	};
+	
+    $scope.sort_order = 'event_date';
+    $scope.sort_desc = false;
+    $scope.search();
+};
+
 var LoginCtrl = function ($rootScope, $scope, $location, $cookieStore, loginService, logoutService, userService, recordCountService, organizationListItemService) {
 
 	//$scope.targetUrl = $location.search().target_url;

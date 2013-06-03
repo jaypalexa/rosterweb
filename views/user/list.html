@@ -12,6 +12,7 @@
     <thead>
         <th sorted="user_name">User Name</th>
         <th sorted="user_email">E-mail</th>
+        <th sorted="organization_name">Organization</th>
         <th sorted="is_admin">Is Admin?</th>
         <th><a href="#/user/new" bs-tooltip="'Add a new user'"><i class="icon-plus-sign"></i></a></th>
     </thead>
@@ -19,6 +20,7 @@
         <tr ng-repeat="item in items" id="item_{{item.user_id}}">
             <td>{{item.user_name}}</td>
             <td>{{item.user_email}}</td>
+            <td>{{item.organization_name}}</td>
             <td>{{item.is_admin}}</td>
             <td>
                 <a href="#/user/edit/{{item.user_id}}" bs-tooltip="'Edit'"><i class="icon-pencil"></i></a>

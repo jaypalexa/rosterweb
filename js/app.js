@@ -7,6 +7,7 @@
             .when('/notregistered/', { controller: NotRegisteredCtrl, templateUrl: '/rosterweb/views/login/notregistered.html' })
             .when('/county/', { controller: CountyListCtrl, templateUrl: '/rosterweb/views/county/list.html' })
             .when('/county/new', { controller: CountyCreateCtrl, templateUrl: '/rosterweb/views/county/detail.html' })
+            .when('/hatchling/', { controller: HatchlingListCtrl, templateUrl: '/rosterweb/views/hatchling/list.html' })
             .when('/organization/', { controller: OrganizationListCtrl, templateUrl: '/rosterweb/views/organization/list.html' })
             .when('/organization/new', { controller: OrganizationCreateCtrl, templateUrl: '/rosterweb/views/organization/detail.html' })
             .when('/organization/edit/:organization_id', { controller: OrganizationEditCtrl, templateUrl: '/rosterweb/views/organization/detail.html' })

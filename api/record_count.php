@@ -65,13 +65,58 @@
 		{
 			$item['user_count'] = $row['record_count'];
 		}
-		
-		//utilLog('[record_count.php] $item[\'county_count\'] = ' . $item['county_count']);
-		//utilLog('[record_count.php] $item[\'organization_count\'] = ' . $item['organization_count']);
-		//utilLog('[record_count.php] $item[\'tank_count\'] = ' . $item['tank_count']);
-		//utilLog('[record_count.php] $item[\'turtle_count\'] = ' . $item['turtle_count']);
-		//utilLog('[record_count.php] $item[\'user_count\'] = ' . $item['user_count']);
 
+		$item['hatchling_count'] = 0;
+		$sql = 'SELECT COUNT(*) AS record_count FROM (';
+		$sql .= 'SELECT 1 FROM hatchlings_acquired_event ';
+		$sql .= 'WHERE organization_id = :organization_id ';
+		$sql .= 'UNION ALL ';
+		$sql .= 'SELECT 1 ';
+		$sql .= 'FROM hatchlings_died_event ';
+		$sql .= 'WHERE organization_id = :organization_id ';
+		$sql .= 'UNION ALL ';
+		$sql .= 'SELECT 1 ';
+		$sql .= 'FROM hatchlings_released_event ';
+		$sql .= 'WHERE organization_id = :organization_id ';
+		$sql .= 'UNION ALL ';
+		$sql .= 'SELECT 1 ';
+		$sql .= 'FROM hatchlings_doa_event ';
+		$sql .= 'WHERE organization_id = :organization_id ';
+		$sql .= ') AS hatchlings ';
+		$stmt = $db->prepare($sql);
+		$stmt->bindValue(':organization_id', $parameters['organization_id']);
+		$stmt->execute();
+		if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) 
+		{
+			$item['hatchling_count'] = $row['record_count'];
+		}
+
+
+		$item['washback_count'] = 0;
+		$sql = 'SELECT COUNT(*) AS record_count FROM (';
+		$sql .= 'SELECT 1 FROM washbacks_acquired_event ';
+		$sql .= 'WHERE organization_id = :organization_id ';
+		$sql .= 'UNION ALL ';
+		$sql .= 'SELECT 1 ';
+		$sql .= 'FROM washbacks_died_event ';
+		$sql .= 'WHERE organization_id = :organization_id ';
+		$sql .= 'UNION ALL ';
+		$sql .= 'SELECT 1 ';
+		$sql .= 'FROM washbacks_released_event ';
+		$sql .= 'WHERE organization_id = :organization_id ';
+		$sql .= 'UNION ALL ';
+		$sql .= 'SELECT 1 ';
+		$sql .= 'FROM washbacks_doa_event ';
+		$sql .= 'WHERE organization_id = :organization_id ';
+		$sql .= ') AS washbacks ';
+		$stmt = $db->prepare($sql);
+		$stmt->bindValue(':organization_id', $parameters['organization_id']);
+		$stmt->execute();
+		if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) 
+		{
+			$item['washback_count'] = $row['record_count'];
+		}
+		
 		echo json_encode($item);
 	}
 
