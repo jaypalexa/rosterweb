@@ -8,7 +8,7 @@
 	function fillItem($row)
 	{
 		$item['tank_water_id'] = $row['tank_water_id'];
-		$item['date_measured'] = $row['date_measured'];
+		$item['date_measured'] = dbDateOnly($row['date_measured']);
 		$item['tank_id'] = $row['tank_id'];
 		$item['temperature'] = $row['temperature'];
 		$item['salinity'] = $row['salinity'];

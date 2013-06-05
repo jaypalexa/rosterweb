@@ -9,7 +9,7 @@
 	{
 		$item['turtle_morphometric_id'] = $row['turtle_morphometric_id'];
 		$item['turtle_id'] = $row['turtle_id'];
-		$item['date_measured'] = $row['date_measured'];
+		$item['date_measured'] = dbDateOnly($row['date_measured']);
 		$item['scl_notch_notch_value'] = $row['scl_notch_notch_value'];
 		$item['scl_notch_notch_units'] = $row['scl_notch_notch_units'];
 		$item['scl_notch_tip_value'] = $row['scl_notch_tip_value'];

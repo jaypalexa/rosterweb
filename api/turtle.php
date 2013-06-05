@@ -15,13 +15,13 @@
 		$item['species'] = $row['species'];
 		$item['turtle_size'] = $row['turtle_size'];
 		$item['status'] = $row['status'];
-		$item['date_captured'] = $row['date_captured'];
-		$item['date_acquired'] = $row['date_acquired'];
+		$item['date_captured'] = dbDateOnly($row['date_captured']);
+		$item['date_acquired'] = dbDateOnly($row['date_acquired']);
 		$item['acquired_from'] = $row['acquired_from'];
 		$item['acquired_county'] = $row['acquired_county'];
 		$item['acquired_latitude'] = $row['acquired_latitude'];
 		$item['acquired_longitude'] = $row['acquired_longitude'];
-		$item['date_relinquished'] = $row['date_relinquished'];
+		$item['date_relinquished'] = dbDateOnly($row['date_relinquished']);
 		$item['relinquished_to'] = $row['relinquished_to'];
 		$item['relinquished_county'] = $row['relinquished_county'];
 		$item['relinquished_latitude'] = $row['relinquished_latitude'];

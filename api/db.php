@@ -61,8 +61,21 @@
 		return $value;
 	}	
 
+	function dbDateOnly($value)
+	{
+		if ($value != null)
+		{
+			//-- retrieving dates like '2013-05-01 00:00:00', which JavaScript datepicker does NOT like, so re-formatting... 
+			$value = date_format(date_create($value), 'Y-m-d');
+		}
+		
+		return $value;
+	}	
+
 	function dbYNtoBoolean($value)
 	{
+		if ($value == null) { return false; }
+		
 		$value = strtoupper($value);
 		if ($value == 'Y')
 		{

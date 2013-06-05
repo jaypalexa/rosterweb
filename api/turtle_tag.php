@@ -12,7 +12,7 @@
 		$item['tag_number'] = $row['tag_number'];
 		$item['tag_type'] = $row['tag_type'];
 		$item['location'] = $row['location'];
-		$item['date_tagged'] = $row['date_tagged'];
+		$item['date_tagged'] = dbDateOnly($row['date_tagged']);
 		
 		return $item;
 	}
