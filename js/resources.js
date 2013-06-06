@@ -2,8 +2,12 @@ RosterWebApp.factory('County', function($resource) {
     return $resource('/rosterweb/api/county.php', {}, { 'update': { method: 'PUT' } });
 });
 
-RosterWebApp.factory('Hatchling', function($resource) {
-    return $resource('/rosterweb/api/hatchling.php', {}, { 'update': { method: 'PUT' } });
+RosterWebApp.factory('HatchlingsEvent', function($resource) {
+    return $resource('/rosterweb/api/hatchlings_event.php', {}, { 'update': { method: 'PUT' } });
+});
+
+RosterWebApp.factory('HatchlingsAcquiredEvent', function($resource) {
+    return $resource('/rosterweb/api/hatchlings_acquired_event.php', {}, { 'update': { method: 'PUT' } });
 });
 
 RosterWebApp.factory('Organization', function($resource) {

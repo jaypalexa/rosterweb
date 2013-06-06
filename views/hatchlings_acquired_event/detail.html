@@ -1,23 +1,36 @@
-﻿<h3>Hatchling Acquired Event</h3>
+﻿<h3>Hatchlings Acquired Event</h3>
 
 <form name="form" class="form-horizontal">
-    <div class="control-group" ng-class="{error: form.tank_name.$invalid}">
-        <label class="control-label" for="tank_name">Tank name:</label>
-        <div class="controls">
-            <input type="text" ng-model="item.tank_name" id="tank_name" name="tank_name" required ng-maxlength="255" maxlength="255" autofocus="autofocus">
-			<span class="error" ng-show="form.tank_name.$error.required">required</span>
-			<span class="error" ng-show="form.tank_name.$error.maxlength">max length exceeded</span>
-        </div>
-    </div>
+	<div class="control-group" ng-class="{error: form.species_code.$invalid}">
+		<label class="control-label" for="species_code">Species:</label>
+		<div class="controls">
+			<select id="species_code" name="species_code" ng-model="item.species_code" ng-options="s.id as s.name for s in species"></select>
+		</div>
+	</div>
+	<div class="control-group input-append" style="display: block" ng-class="{error: form.event_date.$invalid}">
+		<label class="control-label" for="event_date">Event date:</label>
+		<div class="controls">
+			<input id="event_date" name="event_date" class="input-small" type="text" ng-model="item.event_date" data-date-format="dd-MM-yyyy" bs-datepicker />
+			<button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
+		</div>
+	</div>
+	<div class="control-group" ng-class="{error: form.event_count.$invalid}">
+		<label class="control-label" for="event_count">Event count:</label>
+		<div class="controls">
+			<input type="text" ng-model="item.event_count" id="event_count" name="event_count" ng-maxlength="255" maxlength="255" />
+			<span class="error" ng-show="form.event_count.$error.maxlength">max length exceeded</span>
+		</div>
+	</div>
+	<div class="control-group" ng-class="{error: form.acquired_from_county.$invalid}">
+		<label class="control-label" for="acquired_from_county">County:</label>
+		<div class="controls">
+			<select id="acquired_from_county" name="acquired_from_county" ng-model="item.acquired_from_county" ng-options="c.county_name as c.county_name for c in counties | orderBy: 'county_name'"></select>
+		</div>
+	</div>
 
     <div class="form-actions">
         <button ng-click="save()" ng-disabled="form.$invalid || $root.currentUser.organizationId == null" class="btn btn-primary">Save</button>
-        <a href="#/tank/" class="btn">Cancel</a>
+        <a href="#/hatchlings_event/" class="btn">Cancel</a>
     </div>
-	
-	<hr />
-	<div>
-		<ng-include src="'/rosterweb/views/tank_water/list.html'"></ng-include>
-	</div>
 
 </form>

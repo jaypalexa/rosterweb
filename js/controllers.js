@@ -63,10 +63,10 @@ var CountyCreateCtrl = function($scope, $location, countyService, recordCountSer
     };
 };
 
-var HatchlingListCtrl = function ($scope, $location, $dialog, hatchlingService, recordCountService) {
+var HatchlingsEventListCtrl = function ($scope, $location, $dialog, hatchlingsEventService, recordCountService) {
 
     $scope.search = function() {
-		$scope.items = hatchlingService.search($scope.q, $scope.sort_order, $scope.sort_desc);
+		$scope.items = hatchlingsEventService.search($scope.q, $scope.sort_order, $scope.sort_desc);
     };
 
     $scope.sort_by = function(property_name) {
@@ -80,11 +80,11 @@ var HatchlingListCtrl = function ($scope, $location, $dialog, hatchlingService, 
     };
 
     $scope.delete = function(item) {
-		util_open_delete_dialog($dialog, 'hatchling event', item.event_date, function(result) {
+		util_open_delete_dialog($dialog, 'hatchlings event', item.event_date, function(result) {
 			if (result == 'yes') {
-				hatchlingService.delete(item.hatchling_event_id, function() {
+				hatchlingsEventService.delete(item.hatchlings_event_id, item.event_type_code, function() {
 					recordCountService.resetAll();
-					$("#item_" + item.hatchling_event_id).fadeOut();
+					$("#item_" + item.hatchlings_event_id).fadeOut();
 				});
 			}
 		});
@@ -93,6 +93,35 @@ var HatchlingListCtrl = function ($scope, $location, $dialog, hatchlingService, 
     $scope.sort_order = 'event_date';
     $scope.sort_desc = false;
     $scope.search();
+};
+
+var HatchlingsAcquiredEventCreateCtrl = function($rootScope, $scope, $location, hatchlingsEventService, codeTableService, countyService, recordCountService) {
+	
+    $scope.species = codeTableService.getCodes('species'); 
+	$scope.counties = countyService.getAll('county_name', false);
+
+	$scope.item = { hatchlings_event_id: null, organization_id: $rootScope.currentUser.organizationId, event_type_code: 'acquired', event_type: 'Acquired' };
+
+    $scope.save = function() {
+        hatchlingsEventService.save($scope.item, function() {
+			recordCountService.resetAll();
+            $location.path('/hatchlings_event/');
+        });
+    };
+};
+
+var HatchlingsAcquiredEventEditCtrl = function($rootScope, $scope, $routeParams, $location, hatchlingsEventService, codeTableService, countyService) {
+	
+    $scope.species = codeTableService.getCodes('species'); 
+	$scope.counties = countyService.getAll('county_name', false);
+
+    $scope.item = hatchlingsEventService.get($routeParams.hatchlings_event_id, 'acquired');
+
+    $scope.save = function() {
+        hatchlingsEventService.save($scope.item, function() {
+            $location.path('/hatchlings_event/');
+        });
+    };
 };
 
 var LoginCtrl = function ($rootScope, $scope, $location, $cookieStore, loginService, logoutService, userService, recordCountService, organizationListItemService) {
@@ -245,7 +274,7 @@ var OrganizationListCtrl = function ($scope, $location, $dialog, organizationSer
     $scope.search();
 };
 
-var OrganizationCreateCtrl = function($scope, $location, codeTableService, organizationService, recordCountService) {
+var OrganizationCreateCtrl = function($scope, $location, organizationService, codeTableService, recordCountService) {
     $scope.states = codeTableService.getCodes('state'); 
     $scope.unit_types = codeTableService.getCodes('unit_type'); 
 	
@@ -263,7 +292,7 @@ var OrganizationCreateCtrl = function($scope, $location, codeTableService, organ
     };
 };
 
-var OrganizationEditCtrl = function($rootScope, $scope, $routeParams, $location, codeTableService, organizationService) {
+var OrganizationEditCtrl = function($rootScope, $scope, $routeParams, $location, organizationService, codeTableService) {
     $scope.states = codeTableService.getCodes('state'); 
     $scope.unit_types = codeTableService.getCodes('unit_type'); 
 

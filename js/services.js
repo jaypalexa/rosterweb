@@ -186,32 +186,84 @@ RosterWebApp.service('countyService', function(County) {
     };
 });
 
-RosterWebApp.service('hatchlingService', function($rootScope, Hatchling) {
+RosterWebApp.service('hatchlingsEventService', function($rootScope, HatchlingsEvent, HatchlingsAcquiredEvent) {
     this.search = function(q, sort_order, sort_desc, success, error) {
-        return Hatchling.query({ q: q, sort: sort_order, desc: sort_desc, ver: util_new_guid(), organization_id: $rootScope.currentUser.organizationId }, success, error);
+        return HatchlingsEvent.query({ q: q, sort: sort_order, desc: sort_desc, ver: util_new_guid(), organization_id: $rootScope.currentUser.organizationId }, success, error);
     };	
 	
     this.getAll = function(sort_order, sort_desc, success, error) {
-        return Hatchling.query({ sort: sort_order, desc: sort_desc, ver: util_new_guid(), organization_id: $rootScope.currentUser.organizationId }, success, error);
+        return HatchlingsEvent.query({ sort: sort_order, desc: sort_desc, ver: util_new_guid(), organization_id: $rootScope.currentUser.organizationId }, success, error);
     };	
 	
-    this.get = function(hatchling_id, success, error) {
-        return Hatchling.get({ hatchling_id: hatchling_id }, success, error);
+    this.get = function(hatchlings_event_id, event_type_code, success, error) {
+		switch(event_type_code)
+		{
+			case 'acquired':
+				return HatchlingsAcquiredEvent.get({ hatchlings_acquired_event_id: hatchlings_event_id }, success, error);
+				break;
+			case 'died':
+				//execute code block 2
+				break;
+			case 'released':
+				//execute code block 2
+				break;
+			case 'doa':
+				//execute code block 2
+				break;
+			default:
+				return;
+		}
     };
 	
-	this.save = function(hatchling, success, error) {
-		if (hatchling.hatchling_id == null) {
-			//-- insert
-			Hatchling.save(hatchling, success, error);
-		} else {
-			//-- update
-			Hatchling.update({ hatchling_id: hatchling.hatchling_id }, hatchling, success, error);
+	this.save = function(hatchlings_event, success, error) {
+		console.log('[hatchlingsEventService.save()] hatchlings_event.event_type_code = ' + hatchlings_event.event_type_code);
+		console.log('[hatchlingsEventService.save()] hatchlings_event.hatchlings_event_id = ' + hatchlings_event.hatchlings_event_id);
+
+		switch(hatchlings_event.event_type_code)
+		{
+			case 'acquired':
+				if (hatchlings_event.hatchlings_event_id == null) {
+					//-- insert
+					HatchlingsAcquiredEvent.save(hatchlings_event, success, error);
+				} else {
+					//-- update
+					hatchlings_event.hatchlings_acquired_event_id = hatchlings_event.hatchlings_event_id;
+					HatchlingsAcquiredEvent.update({ hatchlings_acquired_event_id: hatchlings_event.hatchlings_acquired_event_id }, hatchlings_event, success, error);
+				}
+				break;
+			case 'died':
+				//execute code block 2
+				break;
+			case 'released':
+				//execute code block 2
+				break;
+			case 'doa':
+				//execute code block 2
+				break;
+			default:
+				return;
 		}
 	};
 	
-    this.delete = function(hatchling_id, success, error) {
-        return Hatchling.delete({ hatchling_id: hatchling_id }, success, error);
-    };
+    this.delete = function(hatchlings_event_id, event_type_code, success, error) {
+		switch(event_type_code)
+		{
+			case 'acquired':
+				return HatchlingsAcquiredEvent.delete({ hatchlings_acquired_event_id: hatchlings_event_id }, success, error);
+				break;
+			case 'died':
+				//execute code block 2
+				break;
+			case 'released':
+				//execute code block 2
+				break;
+			case 'doa':
+				//execute code block 2
+				break;
+			default:
+				return;
+		}
+	};
 });
 
 RosterWebApp.service('loginService', function($rootScope, $http, $location) {

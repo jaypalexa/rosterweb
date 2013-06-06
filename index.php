@@ -44,8 +44,8 @@
 	<div style="text-align: center; font-size: large;">
 		<span ng-show="$root.currentUser.isLoggedIn"><a href='#/turtle'>Sea Turtles ({{ $root.recordCounts.turtleCount }})</a>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
 		<span ng-show="$root.currentUser.isLoggedIn"><a href='#/tank'>Holding Tanks ({{ $root.recordCounts.tankCount }})</a>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-		<span ng-show="$root.currentUser.isLoggedIn"><a href='#/hatchling'>Hatchlings ({{ $root.recordCounts.hatchlingCount }})</a>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-		<span ng-show="$root.currentUser.isLoggedIn"><a href='#/washback'>Washbacks ({{ $root.recordCounts.washbackCount }})</a></span>
+		<span ng-show="$root.currentUser.isLoggedIn"><a href='#/hatchlings_event'>Hatchlings ({{ $root.recordCounts.hatchlingCount }})</a>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+		<span ng-show="$root.currentUser.isLoggedIn"><a href='#/washbacks_event'>Washbacks ({{ $root.recordCounts.washbackCount }})</a></span>
 		<span ng-show="$root.currentUser.isAdmin">&nbsp;&nbsp;|&nbsp;&nbsp;<a href='#/organization'>Organizations ({{ $root.recordCounts.organizationCount }})</a>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
 		<span ng-show="$root.currentUser.isAdmin"><a href='#/county'>Counties ({{ $root.recordCounts.countyCount }})</a>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
 		<span ng-show="$root.currentUser.isAdmin"><a href='#/user'>Users ({{ $root.recordCounts.userCount }})</a></span>

@@ -1,8 +1,8 @@
 ﻿<h3>Hatchlings</h3>
-<a href="#/hatchling_acquired_event/new" class="btn">Add hatchling acquired event</a>&nbsp;
-<a href="#/hatchling_died_event/new" class="btn">Add hatchling died event</a>&nbsp;
-<a href="#/hatchling_released_event/new" class="btn">Add hatchling released event</a>&nbsp;
-<a href="#/hatchling_doa_event/new" class="btn">Add hatchling DOA event</a>&nbsp;
+<a href="#/hatchlings_acquired_event/new" class="btn">Add hatchling acquired event</a>&nbsp;
+<a href="#/hatchlings_died_event/new" class="btn">Add hatchling died event</a>&nbsp;
+<a href="#/hatchlings_released_event/new" class="btn">Add hatchling released event</a>&nbsp;
+<a href="#/hatchlings_doa_event/new" class="btn">Add hatchling DOA event</a>&nbsp;
 <table class="table table-striped table-condensed table-hover">
     <thead>
         <th sorted="species_code">Species</th>
@@ -10,7 +10,10 @@
         <th sorted="event_date">Date</th>
         <th sorted="event_count">Count</th>
         <th sorted="county_name">County</th>
-        <th><a href="#/hatchling_acquired_event/new" bs-tooltip="'Add a new acquired hatchling event'"><i class="icon-plus-sign"></i></a></th>
+		<!--
+        <th><a href="#/hatchlings_acquired_event/new" bs-tooltip="'Add a new acquired hatchling event'"><i class="icon-plus-sign"></i></a></th>
+		-->
+		<th></th>
     </thead>
     <tbody>
         <tr ng-repeat="item in items" id="item_{{item.hatchlings_event_id}}">
@@ -20,7 +23,7 @@
             <td>{{item.event_count}}</td>
             <td>{{item.county_name}}</td>
             <td>
-                <a href="#/tank/hatchling_{{item.event_type_code}}_event/{{item.hatchlings_event_id}}" bs-tooltip="'Edit'"><i class="icon-pencil"></i></a>
+                <a href="#/hatchlings_{{item.event_type_code}}_event/edit/{{item.hatchlings_event_id}}" bs-tooltip="'Edit'"><i class="icon-pencil"></i></a>
                 <a ng-click="delete(item)" bs-tooltip="'Delete'"><i class="icon-trash"></i></a>
             </td>
         </tr>
