@@ -452,7 +452,12 @@ var TankEditCtrl = function($rootScope, $scope, $routeParams, $location, $cookie
 	
 	$rootScope.currentTankId = $routeParams.tank_id;
 	$cookieStore.put('rootScopeCurrentTankId', $rootScope.currentTankId);
-    $scope.item = tankService.get($routeParams.tank_id);
+    tankService.get($routeParams.tank_id).then(
+			function(result){ //-- success
+				$scope.item = result;
+				$rootScope.currentTankName = $scope.item.tank_name;
+			}
+	);
 
     $scope.save = function() {
         tankService.save($scope.item, function() {
@@ -505,6 +510,9 @@ var TankWaterCreateCtrl = function($rootScope, $scope, $location, tankWaterServi
 };
 
 var TankWaterEditCtrl = function($rootScope, $scope, $routeParams, $location, tankWaterService, codeTableService) {
+
+	console.log('[TankWaterEditCtrl] $rootScope.currentTankName = ' + $rootScope.currentTankName);
+
     $scope.item = tankWaterService.get($routeParams.tank_water_id);
 
     $scope.save = function() {
@@ -568,6 +576,7 @@ var TurtleCreateCtrl = function($rootScope, $scope, $location, turtleService, co
 };
 
 var TurtleEditCtrl = function($rootScope, $scope, $routeParams, $location, $cookieStore, turtleService, codeTableService, countyService, recordCountService) {
+
     $scope.capture_project_types = codeTableService.getCodes('capture_project_type'); 
 	$scope.counties = countyService.getAll('county_name', false);
     $scope.recapture_types = codeTableService.getCodes('recapture_type'); 
@@ -576,12 +585,15 @@ var TurtleEditCtrl = function($rootScope, $scope, $routeParams, $location, $cook
     $scope.turtle_sizes = codeTableService.getCodes('turtle_size'); 
     $scope.yes_no_undetermineds = codeTableService.getCodes('yes_no_undetermined'); 
 	
-    $scope.item = turtleService.get($routeParams.turtle_id);
-	$rootScope.currentTurtleId = $routeParams.turtle_id;
-	$cookieStore.put('rootScopeCurrentTurtleId', $rootScope.currentTurtleId);
-	
-	recordCountService.resetAllForTurtle($rootScope.currentTurtleId);
-	
+    turtleService.get($routeParams.turtle_id).then(
+			function(result){ //-- success
+				$scope.item = result;
+				$rootScope.currentTurtleId = $routeParams.turtle_id;
+				$cookieStore.put('rootScopeCurrentTurtleId', $rootScope.currentTurtleId);
+				$rootScope.currentTurtleName = $scope.item.turtle_name;
+				recordCountService.resetAllForTurtle($rootScope.currentTurtleId);
+			}
+	);	
 	$scope.$watch("item.was_carrying_tags_when_enc", function(newVal, oldVal) { 
 		//console.log('[TurtleEditCtrl::$scope.$watch("item.was_carrying_tags_when_enc"] newVal = ' + newVal + '; oldVal = ' + oldVal);
 		if ((oldVal != undefined) && (oldVal != undefined)) { 
@@ -613,7 +625,7 @@ var TurtleEditCtrl = function($rootScope, $scope, $routeParams, $location, $cook
     };
 };
 
-var TurtleMorphometricListCtrl = function ($scope, $location, $dialog, turtleMorphometricService, recordCountService) {
+var TurtleMorphometricListCtrl = function ($rootScope, $scope, $location, $dialog, turtleMorphometricService, recordCountService) {
 
     $scope.search = function() {
 		$scope.items = turtleMorphometricService.search($scope.q, $scope.sort_order, $scope.sort_desc);
@@ -646,6 +658,9 @@ var TurtleMorphometricListCtrl = function ($scope, $location, $dialog, turtleMor
 };
 
 var TurtleMorphometricCreateCtrl = function($rootScope, $scope, $location, turtleMorphometricService, codeTableService, recordCountService) {
+
+	$rootScope.turtleActiveTabName = 'turtle_morphometric';
+
     $scope.cm_ins = codeTableService.getCodes('cm_in'); 
     $scope.kg_lbs = codeTableService.getCodes('kg_lb'); 
 	
@@ -685,6 +700,9 @@ var TurtleMorphometricCreateCtrl = function($rootScope, $scope, $location, turtl
 };
 
 var TurtleMorphometricEditCtrl = function($rootScope, $scope, $routeParams, $location, turtleMorphometricService, codeTableService) {
+
+	$rootScope.turtleActiveTabName = 'turtle_morphometric';
+
     $scope.cm_ins = codeTableService.getCodes('cm_in'); 
     $scope.kg_lbs = codeTableService.getCodes('kg_lb'); 
 	
@@ -776,7 +794,7 @@ var TurtleMorphometricEditCtrl = function($rootScope, $scope, $routeParams, $loc
     };
 };
 
-var TurtleTagListCtrl = function ($scope, $location, $dialog, turtleTagService, recordCountService) {
+var TurtleTagListCtrl = function ($rootScope, $scope, $location, $dialog, turtleTagService, recordCountService) {
 
     $scope.search = function() {
 		$scope.items = turtleTagService.search($scope.q, $scope.sort_order, $scope.sort_desc);
@@ -809,6 +827,9 @@ var TurtleTagListCtrl = function ($scope, $location, $dialog, turtleTagService, 
 };
 
 var TurtleTagCreateCtrl = function($rootScope, $scope, $location, turtleTagService, codeTableService, recordCountService) {
+
+	$rootScope.turtleActiveTabName = 'turtle_tag';
+
     $scope.tag_locations = codeTableService.getCodes('tag_location'); 
     $scope.tag_types = codeTableService.getCodes('tag_type'); 
 	
@@ -823,6 +844,9 @@ var TurtleTagCreateCtrl = function($rootScope, $scope, $location, turtleTagServi
 };
 
 var TurtleTagEditCtrl = function($rootScope, $scope, $routeParams, $location, turtleTagService, codeTableService) {
+
+	$rootScope.turtleActiveTabName = 'turtle_tag';
+
     $scope.tag_locations = codeTableService.getCodes('tag_location'); 
     $scope.tag_types = codeTableService.getCodes('tag_type'); 
 	

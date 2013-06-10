@@ -446,7 +446,7 @@ RosterWebApp.service('recordCountService', function($rootScope, RecordCount) {
     };	
 });
 
-RosterWebApp.service('tankService', function($rootScope, Tank) {
+RosterWebApp.service('tankService', function($q, $http, $rootScope, Tank) {
     this.search = function(q, sort_order, sort_desc, success, error) {
         return Tank.query({ q: q, sort: sort_order, desc: sort_desc, ver: util_new_guid(), organization_id: $rootScope.currentUser.organizationId }, success, error);
     };	
@@ -456,7 +456,23 @@ RosterWebApp.service('tankService', function($rootScope, Tank) {
     };	
 	
     this.get = function(tank_id, success, error) {
-        return Tank.get({ tank_id: tank_id }, success, error);
+        //return Tank.get({ tank_id: tank_id }, success, error);
+		var deferred = $q.defer();
+		
+		$http({
+			method: 'GET', 
+			url: '/rosterweb/api/tank.php', 
+			params: {tank_id: tank_id} 
+		})
+		.success(function(data, status, headers, config) {
+			deferred.resolve(data);
+		})
+		.error(function(data, status, headers, config) {
+			deferred.reject();
+		})
+		;
+
+		return deferred.promise;		
     };
 	
 	this.save = function(tank, success, error) {
@@ -502,7 +518,7 @@ RosterWebApp.service('tankWaterService', function($rootScope, TankWater) {
     };
 });
 
-RosterWebApp.service('turtleService', function($rootScope, Turtle) {
+RosterWebApp.service('turtleService', function($q, $http, $rootScope, Turtle) {
     this.search = function(q, sort_order, sort_desc, success, error) {
         return Turtle.query({ q: q, sort: sort_order, desc: sort_desc, ver: util_new_guid(), organization_id: $rootScope.currentUser.organizationId }, success, error);
     };	
@@ -512,7 +528,23 @@ RosterWebApp.service('turtleService', function($rootScope, Turtle) {
     };	
 	
     this.get = function(turtle_id, success, error) {
-        return Turtle.get({ turtle_id: turtle_id }, success, error);
+        //return Turtle.get({ turtle_id: turtle_id }, success, error);
+		var deferred = $q.defer();
+		
+		$http({
+			method: 'GET', 
+			url: '/rosterweb/api/turtle.php', 
+			params: {turtle_id: turtle_id} 
+		})
+		.success(function(data, status, headers, config) {
+			deferred.resolve(data);
+		})
+		.error(function(data, status, headers, config) {
+			deferred.reject();
+		})
+		;
+
+		return deferred.promise;		
     };
 	
 	this.save = function(turtle, success, error) {

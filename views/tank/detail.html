@@ -1,4 +1,4 @@
-﻿<h3>Holding Tank</h3>
+﻿<h3>Holding Tank<span ng-show="(item.tank_name != null)"> - {{item.tank_name}}</span></h3>
 
 <form name="form" class="form-horizontal">
     <div class="control-group" ng-class="{error: form.tank_name.$invalid}">

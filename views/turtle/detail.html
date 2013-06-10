@@ -207,7 +207,7 @@
 				<a href="#/turtle/" class="btn">Cancel</a>
 			</div>
 		</pane>
-        <pane heading="Tags ({{ $root.recordCounts.turtleTagCount }})">
+        <pane heading="Tags ({{ $root.recordCounts.turtleTagCount }})" active="$root.turtleActiveTabName == 'turtle_tag'">
 			<div>
 				<ng-include src="'/rosterweb/views/turtle_tag/list.html'"></ng-include>
 			</div>
@@ -318,7 +318,7 @@
 				<a href="#/turtle/" class="btn">Cancel</a>
 			</div>
 		</pane>
-        <pane heading="Morphometrics ({{ $root.recordCounts.turtleMorphometricCount }})">
+        <pane heading="Morphometrics ({{ $root.recordCounts.turtleMorphometricCount }})" active="$root.turtleActiveTabName == 'turtle_morphometric'">
 			<div>
 				<ng-include src="'/rosterweb/views/turtle_morphometric/list.html'"></ng-include>
 			</div>
