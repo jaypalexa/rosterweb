@@ -40,6 +40,7 @@ CREATE TABLE `deleted_turtle` (
   `was_carrying_tags_when_enc` varchar(1) DEFAULT NULL,
   `recapture_type` varchar(1) DEFAULT NULL,
   `tag_return_address` varchar(255) DEFAULT NULL,
+  `capture_project_type` varchar(1) DEFAULT NULL,
   `did_turtle_nest` varchar(1) DEFAULT NULL,
   `capture_project_other` varchar(255) DEFAULT NULL,
   `acquired_county` varchar(255) DEFAULT NULL,
@@ -88,6 +89,17 @@ CREATE TABLE `deleted_turtle_morphometric` (
   `weight_units` varchar(2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8$$
 
+
+delimiter $$
+
+CREATE TABLE `deleted_turtle_tag` (
+  `turtle_tag_id` varchar(36) DEFAULT NULL,
+  `turtle_id` varchar(36) DEFAULT NULL,
+  `tag_number` varchar(255) DEFAULT NULL,
+  `tag_type` varchar(255) DEFAULT NULL,
+  `location` varchar(255) DEFAULT NULL,
+  `date_tagged` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8$$
 
 delimiter $$
 
@@ -304,6 +316,7 @@ delimiter $$
 
 CREATE TABLE `washbacks_died_event` (
   `washbacks_died_event_id` varchar(36) DEFAULT NULL,
+  `organization_id` varchar(36) DEFAULT NULL,
   `species_code` varchar(2) DEFAULT NULL,
   `event_date` datetime DEFAULT NULL,
   `event_count` int(11) DEFAULT NULL,

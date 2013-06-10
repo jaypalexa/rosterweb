@@ -186,7 +186,7 @@ RosterWebApp.service('countyService', function(County) {
     };
 });
 
-RosterWebApp.service('hatchlingsEventService', function($rootScope, HatchlingsEvent, HatchlingsAcquiredEvent) {
+RosterWebApp.service('hatchlingsEventService', function($rootScope, HatchlingsEvent, HatchlingsAcquiredEvent, HatchlingsDiedEvent, HatchlingsDoaEvent, HatchlingsReleasedEvent) {
     this.search = function(q, sort_order, sort_desc, success, error) {
         return HatchlingsEvent.query({ q: q, sort: sort_order, desc: sort_desc, ver: util_new_guid(), organization_id: $rootScope.currentUser.organizationId }, success, error);
     };	
@@ -202,13 +202,13 @@ RosterWebApp.service('hatchlingsEventService', function($rootScope, HatchlingsEv
 				return HatchlingsAcquiredEvent.get({ hatchlings_acquired_event_id: hatchlings_event_id }, success, error);
 				break;
 			case 'died':
-				//execute code block 2
+				return HatchlingsDiedEvent.get({ hatchlings_died_event_id: hatchlings_event_id }, success, error);
 				break;
 			case 'released':
-				//execute code block 2
+				return HatchlingsReleasedEvent.get({ hatchlings_released_event_id: hatchlings_event_id }, success, error);
 				break;
 			case 'doa':
-				//execute code block 2
+				return HatchlingsDoaEvent.get({ hatchlings_doa_event_id: hatchlings_event_id }, success, error);
 				break;
 			default:
 				return;
@@ -216,8 +216,8 @@ RosterWebApp.service('hatchlingsEventService', function($rootScope, HatchlingsEv
     };
 	
 	this.save = function(hatchlings_event, success, error) {
-		console.log('[hatchlingsEventService.save()] hatchlings_event.event_type_code = ' + hatchlings_event.event_type_code);
-		console.log('[hatchlingsEventService.save()] hatchlings_event.hatchlings_event_id = ' + hatchlings_event.hatchlings_event_id);
+		//console.log('[hatchlingsEventService.save()] hatchlings_event.event_type_code = ' + hatchlings_event.event_type_code);
+		//console.log('[hatchlingsEventService.save()] hatchlings_event.hatchlings_event_id = ' + hatchlings_event.hatchlings_event_id);
 
 		switch(hatchlings_event.event_type_code)
 		{
@@ -232,13 +232,34 @@ RosterWebApp.service('hatchlingsEventService', function($rootScope, HatchlingsEv
 				}
 				break;
 			case 'died':
-				//execute code block 2
+				if (hatchlings_event.hatchlings_event_id == null) {
+					//-- insert
+					HatchlingsDiedEvent.save(hatchlings_event, success, error);
+				} else {
+					//-- update
+					hatchlings_event.hatchlings_died_event_id = hatchlings_event.hatchlings_event_id;
+					HatchlingsDiedEvent.update({ hatchlings_died_event_id: hatchlings_event.hatchlings_died_event_id }, hatchlings_event, success, error);
+				}
 				break;
 			case 'released':
-				//execute code block 2
+				if (hatchlings_event.hatchlings_event_id == null) {
+					//-- insert
+					HatchlingsReleasedEvent.save(hatchlings_event, success, error);
+				} else {
+					//-- update
+					hatchlings_event.hatchlings_released_event_id = hatchlings_event.hatchlings_event_id;
+					HatchlingsReleasedEvent.update({ hatchlings_released_event_id: hatchlings_event.hatchlings_released_event_id }, hatchlings_event, success, error);
+				}
 				break;
 			case 'doa':
-				//execute code block 2
+				if (hatchlings_event.hatchlings_event_id == null) {
+					//-- insert
+					HatchlingsDoaEvent.save(hatchlings_event, success, error);
+				} else {
+					//-- update
+					hatchlings_event.hatchlings_doa_event_id = hatchlings_event.hatchlings_event_id;
+					HatchlingsDoaEvent.update({ hatchlings_doa_event_id: hatchlings_event.hatchlings_doa_event_id }, hatchlings_event, success, error);
+				}
 				break;
 			default:
 				return;
@@ -252,13 +273,13 @@ RosterWebApp.service('hatchlingsEventService', function($rootScope, HatchlingsEv
 				return HatchlingsAcquiredEvent.delete({ hatchlings_acquired_event_id: hatchlings_event_id }, success, error);
 				break;
 			case 'died':
-				//execute code block 2
+				return HatchlingsDiedEvent.delete({ hatchlings_died_event_id: hatchlings_event_id }, success, error);
 				break;
 			case 'released':
-				//execute code block 2
+				return HatchlingsReleasedEvent.delete({ hatchlings_released_event_id: hatchlings_event_id }, success, error);
 				break;
 			case 'doa':
-				//execute code block 2
+				return HatchlingsDoaEvent.delete({ hatchlings_doa_event_id: hatchlings_event_id }, success, error);
 				break;
 			default:
 				return;
@@ -390,22 +411,38 @@ RosterWebApp.service('organizationService', function(Organization) {
 });
 
 RosterWebApp.service('recordCountService', function($rootScope, RecordCount) {
-    this.resetAll = function(success, error) {
-		//console.log('[recordCountService.resetAll()] Calling RecordCount.get()...');
-        RecordCount.get({ ver: util_new_guid(), organization_id: $rootScope.currentUser.organizationId }, 
+    this.resetAll = function(organizationId, success, error) {
+        RecordCount.get({ ver: util_new_guid(), organization_id: organizationId }, 
 			function(result, success) {
 				$recordCounts = result;
 				$rootScope.recordCounts = { 
-					countyCount : $recordCounts.county_count, 
-					organizationCount : $recordCounts.organization_count, 
-					tankCount : $recordCounts.tank_count, 
-					turtleCount : $recordCounts.turtle_count, 
-					userCount : $recordCounts.user_count, 
-					hatchlingCount : $recordCounts.hatchling_count, 
-					washbackCount : $recordCounts.washback_count
+					countyCount : $recordCounts.county_count, 				//-- system-level
+					organizationCount : $recordCounts.organization_count, 	//-- system-level
+					userCount : $recordCounts.user_count, 					//-- system-level
+					turtleCount : $recordCounts.turtle_count, 				//-- organization-level
+					tankCount : $recordCounts.tank_count, 					//-- organization-level
+					hatchlingCount : $recordCounts.hatchling_count, 		//-- organization-level	
+					washbackCount : $recordCounts.washback_count			//-- organization-level
 				};
 				success(result);
 			}, error);
+    };	
+    this.resetAllForTurtle = function(turtleId, success, error) {
+		if (turtleId != null)
+		{
+			RecordCount.get({ ver: util_new_guid(), turtle_id: turtleId }, 
+				function(result, success) {
+					$recordCounts = result;
+					$rootScope.recordCounts.turtleTagCount = $recordCounts.turtle_tag_count; 
+					$rootScope.recordCounts.turtleMorphometricCount = $recordCounts.turtle_morphometric_count;
+					success(result);
+				}, error);
+		}
+		else
+		{
+			$rootScope.recordCounts.turtleTagCount = 0; 
+			$rootScope.recordCounts.turtleMorphometricCount = 0;
+		}
     };	
 });
 
@@ -607,3 +644,103 @@ RosterWebApp.service('userService', function($q, $http, User) {
     };
 });
 
+RosterWebApp.service('washbacksEventService', function($rootScope, WashbacksEvent, WashbacksAcquiredEvent, WashbacksDiedEvent, WashbacksDoaEvent, WashbacksReleasedEvent) {
+    this.search = function(q, sort_order, sort_desc, success, error) {
+        return WashbacksEvent.query({ q: q, sort: sort_order, desc: sort_desc, ver: util_new_guid(), organization_id: $rootScope.currentUser.organizationId }, success, error);
+    };	
+	
+    this.getAll = function(sort_order, sort_desc, success, error) {
+        return WashbacksEvent.query({ sort: sort_order, desc: sort_desc, ver: util_new_guid(), organization_id: $rootScope.currentUser.organizationId }, success, error);
+    };	
+	
+    this.get = function(washbacks_event_id, event_type_code, success, error) {
+		switch(event_type_code)
+		{
+			case 'acquired':
+				return WashbacksAcquiredEvent.get({ washbacks_acquired_event_id: washbacks_event_id }, success, error);
+				break;
+			case 'died':
+				return WashbacksDiedEvent.get({ washbacks_died_event_id: washbacks_event_id }, success, error);
+				break;
+			case 'released':
+				return WashbacksReleasedEvent.get({ washbacks_released_event_id: washbacks_event_id }, success, error);
+				break;
+			case 'doa':
+				return WashbacksDoaEvent.get({ washbacks_doa_event_id: washbacks_event_id }, success, error);
+				break;
+			default:
+				return;
+		}
+    };
+	
+	this.save = function(washbacks_event, success, error) {
+		//console.log('[washbacksEventService.save()] washbacks_event.event_type_code = ' + washbacks_event.event_type_code);
+		//console.log('[washbacksEventService.save()] washbacks_event.washbacks_event_id = ' + washbacks_event.washbacks_event_id);
+
+		switch(washbacks_event.event_type_code)
+		{
+			case 'acquired':
+				if (washbacks_event.washbacks_event_id == null) {
+					//-- insert
+					WashbacksAcquiredEvent.save(washbacks_event, success, error);
+				} else {
+					//-- update
+					washbacks_event.washbacks_acquired_event_id = washbacks_event.washbacks_event_id;
+					WashbacksAcquiredEvent.update({ washbacks_acquired_event_id: washbacks_event.washbacks_acquired_event_id }, washbacks_event, success, error);
+				}
+				break;
+			case 'died':
+				if (washbacks_event.washbacks_event_id == null) {
+					//-- insert
+					WashbacksDiedEvent.save(washbacks_event, success, error);
+				} else {
+					//-- update
+					washbacks_event.washbacks_died_event_id = washbacks_event.washbacks_event_id;
+					WashbacksDiedEvent.update({ washbacks_died_event_id: washbacks_event.washbacks_died_event_id }, washbacks_event, success, error);
+				}
+				break;
+			case 'released':
+				if (washbacks_event.washbacks_event_id == null) {
+					//-- insert
+					WashbacksReleasedEvent.save(washbacks_event, success, error);
+				} else {
+					//-- update
+					washbacks_event.washbacks_released_event_id = washbacks_event.washbacks_event_id;
+					WashbacksReleasedEvent.update({ washbacks_released_event_id: washbacks_event.washbacks_released_event_id }, washbacks_event, success, error);
+				}
+				break;
+			case 'doa':
+				if (washbacks_event.washbacks_event_id == null) {
+					//-- insert
+					WashbacksDoaEvent.save(washbacks_event, success, error);
+				} else {
+					//-- update
+					washbacks_event.washbacks_doa_event_id = washbacks_event.washbacks_event_id;
+					WashbacksDoaEvent.update({ washbacks_doa_event_id: washbacks_event.washbacks_doa_event_id }, washbacks_event, success, error);
+				}
+				break;
+			default:
+				return;
+		}
+	};
+	
+    this.delete = function(washbacks_event_id, event_type_code, success, error) {
+		switch(event_type_code)
+		{
+			case 'acquired':
+				return WashbacksAcquiredEvent.delete({ washbacks_acquired_event_id: washbacks_event_id }, success, error);
+				break;
+			case 'died':
+				return WashbacksDiedEvent.delete({ washbacks_died_event_id: washbacks_event_id }, success, error);
+				break;
+			case 'released':
+				return WashbacksReleasedEvent.delete({ washbacks_released_event_id: washbacks_event_id }, success, error);
+				break;
+			case 'doa':
+				return WashbacksDoaEvent.delete({ washbacks_doa_event_id: washbacks_event_id }, success, error);
+				break;
+			default:
+				return;
+		}
+	};
+});

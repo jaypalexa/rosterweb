@@ -185,6 +185,11 @@
 	}
 	else if ($verb == 'DELETE')
 	{
+		$sql = 'INSERT INTO deleted_turtle_morphometric SELECT * FROM turtle_morphometric WHERE turtle_morphometric_id = :turtle_morphometric_id';
+		$stmt = $db->prepare($sql);
+		$stmt->bindValue(':turtle_morphometric_id', $parameters['turtle_morphometric_id']);
+		$stmt->execute();
+	
 		$sql = 'DELETE FROM turtle_morphometric WHERE turtle_morphometric_id = :turtle_morphometric_id';
 		$stmt = $db->prepare($sql);
 		$stmt->bindValue(':turtle_morphometric_id', $parameters['turtle_morphometric_id']);

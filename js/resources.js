@@ -10,6 +10,18 @@ RosterWebApp.factory('HatchlingsAcquiredEvent', function($resource) {
     return $resource('/rosterweb/api/hatchlings_acquired_event.php', {}, { 'update': { method: 'PUT' } });
 });
 
+RosterWebApp.factory('HatchlingsDiedEvent', function($resource) {
+    return $resource('/rosterweb/api/hatchlings_died_event.php', {}, { 'update': { method: 'PUT' } });
+});
+
+RosterWebApp.factory('HatchlingsDoaEvent', function($resource) {
+    return $resource('/rosterweb/api/hatchlings_doa_event.php', {}, { 'update': { method: 'PUT' } });
+});
+
+RosterWebApp.factory('HatchlingsReleasedEvent', function($resource) {
+    return $resource('/rosterweb/api/hatchlings_released_event.php', {}, { 'update': { method: 'PUT' } });
+});
+
 RosterWebApp.factory('Organization', function($resource) {
     return $resource('/rosterweb/api/organization.php', {}, { 'update': { method: 'PUT' } });
 });
@@ -44,4 +56,24 @@ RosterWebApp.factory('TurtleTag', function($resource) {
 
 RosterWebApp.factory('User', function($resource) {
     return $resource('/rosterweb/api/user.php', {}, { 'update': { method: 'PUT' } });
+});
+
+RosterWebApp.factory('WashbacksEvent', function($resource) {
+    return $resource('/rosterweb/api/washbacks_event.php', {}, { 'update': { method: 'PUT' } });
+});
+
+RosterWebApp.factory('WashbacksAcquiredEvent', function($resource) {
+    return $resource('/rosterweb/api/washbacks_acquired_event.php', {}, { 'update': { method: 'PUT' } });
+});
+
+RosterWebApp.factory('WashbacksDiedEvent', function($resource) {
+    return $resource('/rosterweb/api/washbacks_died_event.php', {}, { 'update': { method: 'PUT' } });
+});
+
+RosterWebApp.factory('WashbacksDoaEvent', function($resource) {
+    return $resource('/rosterweb/api/washbacks_doa_event.php', {}, { 'update': { method: 'PUT' } });
+});
+
+RosterWebApp.factory('WashbacksReleasedEvent', function($resource) {
+    return $resource('/rosterweb/api/washbacks_released_event.php', {}, { 'update': { method: 'PUT' } });
 });

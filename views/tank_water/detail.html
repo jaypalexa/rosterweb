@@ -32,6 +32,6 @@
 
     <div class="form-actions">
         <button ng-click="save()" ng-disabled="form.$invalid || $root.currentTankId == null" class="btn btn-primary">Save</button>
-        <a href="#/turtle_tag/" class="btn">Cancel</a>
+        <a href="#/tank/edit/{{$root.currentTankId}}" class="btn">Cancel</a>
     </div>
 </form>

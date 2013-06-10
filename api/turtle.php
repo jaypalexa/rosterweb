@@ -269,9 +269,34 @@
 	}
 	else if ($verb == 'DELETE')
 	{
-		$sql = 'DELETE FROM turtle WHERE turtle_id = :turtle_id';
+		$sql = 'INSERT INTO deleted_turtle_morphometric SELECT * FROM turtle_morphometric WHERE turtle_id = :turtle_id';
 		$stmt = $db->prepare($sql);
 		$stmt->bindValue(':turtle_id', $parameters['turtle_id']);
+		$stmt->execute();
+	
+		$sql = 'DELETE FROM turtle_morphometric WHERE turtle_id = :turtle_id';
+		$stmt = $db->prepare($sql);
+		$stmt->bindValue(':turtle_id', $parameters['turtle_id']);
+		$stmt->execute();
+	
+		$sql = 'INSERT INTO deleted_turtle_tag SELECT * FROM turtle_tag WHERE turtle_id = :turtle_id';
+		$stmt = $db->prepare($sql);
+		$stmt->bindValue(':turtle_id', $parameters['turtle_id']);
+		$stmt->execute();
+	
+		$sql = 'DELETE FROM turtle_tag WHERE turtle_id = :turtle_id';
+		$stmt = $db->prepare($sql);
+		$stmt->bindValue(':turtle_id', $parameters['turtle_id']);
+		$stmt->execute();
+	
+		$sql = 'INSERT INTO deleted_turtle SELECT * FROM turtle WHERE turtle_id = :turtle_id';
+		$stmt = $db->prepare($sql);
+		$stmt->bindValue(':turtle_id', $parameters['turtle_id']);
+		$stmt->execute();
+	
+		$sql = 'DELETE FROM turtle WHERE turtle_id = :turtle_id';
+		$stmt = $db->prepare($sql);
+		$stmt->bindvalue(':turtle_id', $parameters['turtle_id']);
 		$stmt->execute();
 	}
 

@@ -10,6 +10,12 @@
             .when('/hatchlings_event/', { controller: HatchlingsEventListCtrl, templateUrl: '/rosterweb/views/hatchlings_event/list.html' })
             .when('/hatchlings_acquired_event/new', { controller: HatchlingsAcquiredEventCreateCtrl, templateUrl: '/rosterweb/views/hatchlings_acquired_event/detail.html' })
             .when('/hatchlings_acquired_event/edit/:hatchlings_event_id', { controller: HatchlingsAcquiredEventEditCtrl, templateUrl: '/rosterweb/views/hatchlings_acquired_event/detail.html' })
+            .when('/hatchlings_died_event/new', { controller: HatchlingsDiedEventCreateCtrl, templateUrl: '/rosterweb/views/hatchlings_died_event/detail.html' })
+            .when('/hatchlings_died_event/edit/:hatchlings_event_id', { controller: HatchlingsDiedEventEditCtrl, templateUrl: '/rosterweb/views/hatchlings_died_event/detail.html' })
+            .when('/hatchlings_doa_event/new', { controller: HatchlingsDoaEventCreateCtrl, templateUrl: '/rosterweb/views/hatchlings_doa_event/detail.html' })
+            .when('/hatchlings_doa_event/edit/:hatchlings_event_id', { controller: HatchlingsDoaEventEditCtrl, templateUrl: '/rosterweb/views/hatchlings_doa_event/detail.html' })
+            .when('/hatchlings_released_event/new', { controller: HatchlingsReleasedEventCreateCtrl, templateUrl: '/rosterweb/views/hatchlings_released_event/detail.html' })
+            .when('/hatchlings_released_event/edit/:hatchlings_event_id', { controller: HatchlingsReleasedEventEditCtrl, templateUrl: '/rosterweb/views/hatchlings_released_event/detail.html' })
             .when('/organization/', { controller: OrganizationListCtrl, templateUrl: '/rosterweb/views/organization/list.html' })
             .when('/organization/new', { controller: OrganizationCreateCtrl, templateUrl: '/rosterweb/views/organization/detail.html' })
             .when('/organization/edit/:organization_id', { controller: OrganizationEditCtrl, templateUrl: '/rosterweb/views/organization/detail.html' })
@@ -31,6 +37,15 @@
             .when('/user/', { controller: UserListCtrl, templateUrl: '/rosterweb/views/user/list.html' })
             .when('/user/new', { controller: UserCreateCtrl, templateUrl: '/rosterweb/views/user/detail.html' })
             .when('/user/edit/:user_id', { controller: UserEditCtrl, templateUrl: '/rosterweb/views/user/detail.html' })
+            .when('/washbacks_event/', { controller: WashbacksEventListCtrl, templateUrl: '/rosterweb/views/washbacks_event/list.html' })
+            .when('/washbacks_acquired_event/new', { controller: WashbacksAcquiredEventCreateCtrl, templateUrl: '/rosterweb/views/washbacks_acquired_event/detail.html' })
+            .when('/washbacks_acquired_event/edit/:washbacks_event_id', { controller: WashbacksAcquiredEventEditCtrl, templateUrl: '/rosterweb/views/washbacks_acquired_event/detail.html' })
+            .when('/washbacks_died_event/new', { controller: WashbacksDiedEventCreateCtrl, templateUrl: '/rosterweb/views/washbacks_died_event/detail.html' })
+            .when('/washbacks_died_event/edit/:washbacks_event_id', { controller: WashbacksDiedEventEditCtrl, templateUrl: '/rosterweb/views/washbacks_died_event/detail.html' })
+            .when('/washbacks_doa_event/new', { controller: WashbacksDoaEventCreateCtrl, templateUrl: '/rosterweb/views/washbacks_doa_event/detail.html' })
+            .when('/washbacks_doa_event/edit/:washbacks_event_id', { controller: WashbacksDoaEventEditCtrl, templateUrl: '/rosterweb/views/washbacks_doa_event/detail.html' })
+            .when('/washbacks_released_event/new', { controller: WashbacksReleasedEventCreateCtrl, templateUrl: '/rosterweb/views/washbacks_released_event/detail.html' })
+            .when('/washbacks_released_event/edit/:washbacks_event_id', { controller: WashbacksReleasedEventEditCtrl, templateUrl: '/rosterweb/views/washbacks_released_event/detail.html' })
             .otherwise({ redirectTo: '/' });
     }]
 	)
@@ -51,10 +66,8 @@
 			if (next.templateUrl == '/rosterweb/views/login/detail.html') { return; }
 			if (next.templateUrl == '/rosterweb/views/login/notregistered.html') { return; }
 
-			//console.log('[RosterWebApp.run().$rootScope.$on("$routeChangeStart")] $cookieStore.get(\'is_registered\') = ' + $cookieStore.get('is_registered'));
             if ($cookieStore.get('is_registered') != 'true') 
 			{
-				//console.log('[RosterWebApp.run().$rootScope.$on("$routeChangeStart")] Going to:  $location.url(\'/login/\')');
 				//-- no authenticated user, we should be going to #login
 				$location.url('/login/');
 			}
@@ -68,7 +81,7 @@
 					//console.log('[RosterWebApp.run().$rootScope.$on("$routeChangeStart")] $rootScope.currentUser.organizationId = ' + $rootScope.currentUser.organizationId);
 					$rootScope.currentTurtleId = $cookieStore.get('rootScopeCurrentTurtleId');
 					$rootScope.currentTankId = $cookieStore.get('rootScopeCurrentTankId');
-					recordCountService.resetAll();
+					recordCountService.resetAll($rootScope.currentUser.organizationId);
 				}
 			}
         });

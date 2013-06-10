@@ -1,4 +1,4 @@
-﻿<h3>Sea Turtle</h3>
+﻿<h3>Sea Turtle<span ng-show="(item.turtle_name != null)"> - {{item.turtle_name}}</span></h3>
 
 <form name="form" class="form-horizontal">
     <tabs>
@@ -207,7 +207,7 @@
 				<a href="#/turtle/" class="btn">Cancel</a>
 			</div>
 		</pane>
-        <pane heading="Tags">
+        <pane heading="Tags ({{ $root.recordCounts.turtleTagCount }})">
 			<div>
 				<ng-include src="'/rosterweb/views/turtle_tag/list.html'"></ng-include>
 			</div>
@@ -318,7 +318,7 @@
 				<a href="#/turtle/" class="btn">Cancel</a>
 			</div>
 		</pane>
-        <pane heading="Morphometrics">
+        <pane heading="Morphometrics ({{ $root.recordCounts.turtleMorphometricCount }})">
 			<div>
 				<ng-include src="'/rosterweb/views/turtle_morphometric/list.html'"></ng-include>
 			</div>
@@ -327,7 +327,7 @@
 		</pane>
         <pane heading="Brochures">
 			<div class="control-group" ng-class="{error: form.brochure_comments.$invalid}">
-				<label class="control-label" for="brochure_comments">Brochure Comments:</label>
+				<label class="control-label" for="brochure_comments">Brochure comments:</label>
 				<div class="controls">
 					<input type="text" ng-model="item.brochure_comments" id="brochure_comments" name="brochure_comments" ng-maxlength="255" maxlength="255" />
 					<span class="error" ng-show="form.brochure_comments.$error.maxlength">max length exceeded</span>

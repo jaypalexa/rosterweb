@@ -11,30 +11,30 @@
 	//-- get HTTP request stuff
 	//--------------------------------------------------------------------------------
 	$verb = strtoupper($_SERVER['REQUEST_METHOD']);
-	utilLog('[hatchlings_event.php] $verb = ' . $verb);
+	utilLog('[washbacks_event.php] $verb = ' . $verb);
 	$parameters = utilParseHttpParameters();
 	
 	//--------------------------------------------------------------------------------
-	//-- GET /api/hatchling.php?desc=false&limit=20&offset=0&q=undefined&sort=hatchling_name
+	//-- GET /api/washback.php?desc=false&limit=20&offset=0&q=undefined&sort=washback_name
 	//--------------------------------------------------------------------------------
 	if ($verb == 'GET') 
 	{
 		$items = array();
 		
-		$sql = 'SELECT hatchlings_acquired_event_id AS hatchlings_event_id, species_code, event_date, \'Acquired\' AS event_type, \'acquired\' AS event_type_code, event_count, acquired_from_county AS county_name ';
-		$sql .= 'FROM hatchlings_acquired_event ';
+		$sql = 'SELECT washbacks_acquired_event_id AS washbacks_event_id, species_code, event_date, \'Acquired\' AS event_type, \'acquired\' AS event_type_code, event_count, acquired_from_county AS county_name ';
+		$sql .= 'FROM washbacks_acquired_event ';
 		$sql .= 'WHERE organization_id = :organization_id ';
 		$sql .= 'UNION ALL ';
-		$sql .= 'SELECT hatchlings_died_event_id AS hatchlings_event_id, species_code, event_date, \'Died\' AS event_type, \'died\' AS event_type_code, event_count, \'\' AS county_name ';
-		$sql .= 'FROM hatchlings_died_event ';
+		$sql .= 'SELECT washbacks_died_event_id AS washbacks_event_id, species_code, event_date, \'Died\' AS event_type, \'died\' AS event_type_code, event_count, \'\' AS county_name ';
+		$sql .= 'FROM washbacks_died_event ';
 		$sql .= 'WHERE organization_id = :organization_id ';
 		$sql .= 'UNION ALL ';
-		$sql .= 'SELECT hatchlings_released_event_id AS hatchlings_event_id, species_code, event_date, \'Released\' AS event_type, \'released\' AS event_type_code, IFNULL(beach_event_count, 0) + IFNULL(offshore_event_count, 0) AS event_count, \'\' AS county_name ';
-		$sql .= 'FROM hatchlings_released_event ';
+		$sql .= 'SELECT washbacks_released_event_id AS washbacks_event_id, species_code, event_date, \'Released\' AS event_type, \'released\' AS event_type_code, IFNULL(beach_event_count, 0) + IFNULL(offshore_event_count, 0) AS event_count, \'\' AS county_name ';
+		$sql .= 'FROM washbacks_released_event ';
 		$sql .= 'WHERE organization_id = :organization_id ';
 		$sql .= 'UNION ALL ';
-		$sql .= 'SELECT hatchlings_doa_event_id AS hatchlings_event_id, species_code, event_date, \'DOA\' AS event_type, \'doa\' AS event_type_code, event_count, doa_from_county AS county_name ';
-		$sql .= 'FROM hatchlings_doa_event ';
+		$sql .= 'SELECT washbacks_doa_event_id AS washbacks_event_id, species_code, event_date, \'DOA\' AS event_type, \'doa\' AS event_type_code, event_count, doa_from_county AS county_name ';
+		$sql .= 'FROM washbacks_doa_event ';
 		$sql .= 'WHERE organization_id = :organization_id ';
 		$sql .= 'ORDER BY %sort_column% %sort_order%';
 		
@@ -51,11 +51,12 @@
 		
 		$stmt = $db->prepare($sql);
 		$stmt->bindValue(':organization_id', $parameters['organization_id']);
+		//utilLog('[washbacks_event.php] $sql = ' . $sql);
 		$stmt->execute();
 
 		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) 
 		{
-			$item['hatchlings_event_id'] = $row['hatchlings_event_id'];
+			$item['washbacks_event_id'] = $row['washbacks_event_id'];
 			$item['species_code'] = $row['species_code'];
 			$item['event_date'] = dbDateOnly($row['event_date']);
 			$item['event_type'] = $row['event_type'];

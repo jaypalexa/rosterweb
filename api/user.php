@@ -14,6 +14,7 @@
 		$item['is_admin'] = dbYNtoBoolean($row['is_admin']);
 		$item['last_login'] = $row['last_login'];
 		$item['organization_name'] = $row['organization_name'];
+		$item['preferred_units_type'] = $row['preferred_units_type'];
 		
 		return $item;
 	}
@@ -79,7 +80,7 @@
 		//--------------------------------------------------------------------------------
 		else
 		{
-			$sql = 'SELECT u.*, o.organization_name FROM user u LEFT JOIN organization o ON u.organization_id = o.organization_id ';
+			$sql = 'SELECT u.*, o.organization_name, o.preferred_units_type FROM user u LEFT JOIN organization o ON u.organization_id = o.organization_id ';
 			if (array_key_exists('user_id', $parameters))
 			{
 				$sql .= 'WHERE user_id = :user_id';

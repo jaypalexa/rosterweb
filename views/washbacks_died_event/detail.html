@@ -1,0 +1,36 @@
+﻿<h3>Washbacks Died Event</h3>
+
+<form name="form" class="form-horizontal">
+	<div class="control-group" ng-class="{error: form.species_code.$invalid}">
+		<label class="control-label" for="species_code">Species:</label>
+		<div class="controls">
+			<select id="species_code" name="species_code" ng-model="item.species_code" ng-options="s.id as s.name for s in species"></select>
+		</div>
+	</div>
+	<div class="control-group input-append" style="display: block" ng-class="{error: form.event_date.$invalid}">
+		<label class="control-label" for="event_date">Event date:</label>
+		<div class="controls">
+			<input id="event_date" name="event_date" class="input-small" type="text" ng-model="item.event_date" data-date-format="dd-MM-yyyy" bs-datepicker />
+			<button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
+		</div>
+	</div>
+	<div class="control-group" ng-class="{error: form.event_count.$invalid}">
+		<label class="control-label" for="event_count">Event count:</label>
+		<div class="controls">
+			<input type="text" ng-model="item.event_count" id="event_count" name="event_count" ng-maxlength="255" maxlength="255" />
+			<span class="error" ng-show="form.event_count.$error.maxlength">max length exceeded</span>
+		</div>
+	</div>
+	<div class="control-group" style="margin-bottom: 0px;">
+		<label class="control-label" for="under_5cm_clsl">Under 5cm CLSL:</label>
+		<div class="controls">
+			<input type="checkbox" ng-model="item.under_5cm_clsl" ng-checked="item.under_5cm_clsl" name="under_5cm_clsl" id="under_5cm_clsl" />
+		</div>
+	</div>
+
+    <div class="form-actions">
+        <button ng-click="save()" ng-disabled="form.$invalid || $root.currentUser.organizationId == null" class="btn btn-primary">Save</button>
+        <a href="#/washbacks_event/" class="btn">Cancel</a>
+    </div>
+
+</form>

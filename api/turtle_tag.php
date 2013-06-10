@@ -130,6 +130,11 @@
 	}
 	else if ($verb == 'DELETE')
 	{
+		$sql = 'INSERT INTO deleted_turtle_tag SELECT * FROM turtle_tag WHERE turtle_tag_id = :turtle_tag_id';
+		$stmt = $db->prepare($sql);
+		$stmt->bindValue(':turtle_tag_id', $parameters['turtle_tag_id']);
+		$stmt->execute();
+	
 		$sql = 'DELETE FROM turtle_tag WHERE turtle_tag_id = :turtle_tag_id';
 		$stmt = $db->prepare($sql);
 		$stmt->bindValue(':turtle_tag_id', $parameters['turtle_tag_id']);

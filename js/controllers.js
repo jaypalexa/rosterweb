@@ -14,14 +14,14 @@ var CountyListItemCtrl = function($scope, $location, $dialog, countyService, rec
 		countyService.save($scope.item, function() {
 			//-- reset 
 			$scope.cancel();
-		});
+		});0
     };
 
     $scope.delete = function() {
 		util_open_delete_dialog($dialog, 'county', $scope.item.county_name, function(result) {
 			if (result == 'yes') {
 				countyService.delete($scope.item.county_id, function() {
-					recordCountService.resetAll();
+					recordCountService.resetAll($rootScope.currentUser.organizationId);
 					$("#item_" + $scope.item.county_id).fadeOut();
 				});
 			}
@@ -57,7 +57,7 @@ var CountyCreateCtrl = function($scope, $location, countyService, recordCountSer
 
     $scope.save = function() {
         countyService.save($scope.item, function() {
-			recordCountService.resetAll();
+			recordCountService.resetAll($rootScope.currentUser.organizationId);
             $location.path('/county/');
         });
     };
@@ -83,7 +83,7 @@ var HatchlingsEventListCtrl = function ($scope, $location, $dialog, hatchlingsEv
 		util_open_delete_dialog($dialog, 'hatchlings event', item.event_date, function(result) {
 			if (result == 'yes') {
 				hatchlingsEventService.delete(item.hatchlings_event_id, item.event_type_code, function() {
-					recordCountService.resetAll();
+					recordCountService.resetAll($rootScope.currentUser.organizationId);
 					$("#item_" + item.hatchlings_event_id).fadeOut();
 				});
 			}
@@ -104,7 +104,7 @@ var HatchlingsAcquiredEventCreateCtrl = function($rootScope, $scope, $location, 
 
     $scope.save = function() {
         hatchlingsEventService.save($scope.item, function() {
-			recordCountService.resetAll();
+			recordCountService.resetAll($rootScope.currentUser.organizationId);
             $location.path('/hatchlings_event/');
         });
     };
@@ -116,6 +116,89 @@ var HatchlingsAcquiredEventEditCtrl = function($rootScope, $scope, $routeParams,
 	$scope.counties = countyService.getAll('county_name', false);
 
     $scope.item = hatchlingsEventService.get($routeParams.hatchlings_event_id, 'acquired');
+
+    $scope.save = function() {
+        hatchlingsEventService.save($scope.item, function() {
+            $location.path('/hatchlings_event/');
+        });
+    };
+};
+
+var HatchlingsDiedEventCreateCtrl = function($rootScope, $scope, $location, hatchlingsEventService, codeTableService, recordCountService) {
+	
+    $scope.species = codeTableService.getCodes('species'); 
+
+	$scope.item = { hatchlings_event_id: null, organization_id: $rootScope.currentUser.organizationId, event_type_code: 'died', event_type: 'Died' };
+
+    $scope.save = function() {
+        hatchlingsEventService.save($scope.item, function() {
+			recordCountService.resetAll($rootScope.currentUser.organizationId);
+            $location.path('/hatchlings_event/');
+        });
+    };
+};
+
+var HatchlingsDiedEventEditCtrl = function($rootScope, $scope, $routeParams, $location, hatchlingsEventService, codeTableService) {
+	
+    $scope.species = codeTableService.getCodes('species'); 
+
+    $scope.item = hatchlingsEventService.get($routeParams.hatchlings_event_id, 'died');
+
+    $scope.save = function() {
+        hatchlingsEventService.save($scope.item, function() {
+            $location.path('/hatchlings_event/');
+        });
+    };
+};
+
+var HatchlingsDoaEventCreateCtrl = function($rootScope, $scope, $location, hatchlingsEventService, codeTableService, countyService, recordCountService) {
+	
+    $scope.species = codeTableService.getCodes('species'); 
+	$scope.counties = countyService.getAll('county_name', false);
+
+	$scope.item = { hatchlings_event_id: null, organization_id: $rootScope.currentUser.organizationId, event_type_code: 'doa', event_type: 'DOA' };
+
+    $scope.save = function() {
+        hatchlingsEventService.save($scope.item, function() {
+			recordCountService.resetAll($rootScope.currentUser.organizationId);
+            $location.path('/hatchlings_event/');
+        });
+    };
+};
+
+var HatchlingsDoaEventEditCtrl = function($rootScope, $scope, $routeParams, $location, hatchlingsEventService, codeTableService, countyService) {
+	
+    $scope.species = codeTableService.getCodes('species'); 
+	$scope.counties = countyService.getAll('county_name', false);
+
+    $scope.item = hatchlingsEventService.get($routeParams.hatchlings_event_id, 'doa');
+
+    $scope.save = function() {
+        hatchlingsEventService.save($scope.item, function() {
+            $location.path('/hatchlings_event/');
+        });
+    };
+};
+
+var HatchlingsReleasedEventCreateCtrl = function($rootScope, $scope, $location, hatchlingsEventService, codeTableService, recordCountService) {
+	
+    $scope.species = codeTableService.getCodes('species'); 
+
+	$scope.item = { hatchlings_event_id: null, organization_id: $rootScope.currentUser.organizationId, event_type_code: 'released', event_type: 'Released' };
+
+    $scope.save = function() {
+        hatchlingsEventService.save($scope.item, function() {
+			recordCountService.resetAll($rootScope.currentUser.organizationId);
+            $location.path('/hatchlings_event/');
+        });
+    };
+};
+
+var HatchlingsReleasedEventEditCtrl = function($rootScope, $scope, $routeParams, $location, hatchlingsEventService, codeTableService) {
+	
+    $scope.species = codeTableService.getCodes('species'); 
+
+    $scope.item = hatchlingsEventService.get($routeParams.hatchlings_event_id, 'released');
 
     $scope.save = function() {
         hatchlingsEventService.save($scope.item, function() {
@@ -168,9 +251,13 @@ var LoginCtrl = function ($rootScope, $scope, $location, $cookieStore, loginServ
 				{
 					console.log('[LoginCtrl] *** LOGGED IN AND IS REGISTERED ***');
 					$cookieStore.put('is_registered', 'true');
-					$rootScope.currentUser = { userName : $currentUser.user_name, organizationId : $currentUser.organization_id, organizationName : $currentUser.organization_name, isLoggedIn : true, isAdmin : $currentUser.is_admin };
+					if (($currentUser.preferred_units_type == undefined) || ($currentUser.preferred_units_type == null) || ($currentUser.preferred_units_type == ''))
+					{
+						$currentUser.preferred_units_type = 'M';
+					}
+					$rootScope.currentUser = { userName : $currentUser.user_name, organizationId : $currentUser.organization_id, organizationName : $currentUser.organization_name, preferredUnitsType : $currentUser.preferred_units_type, isLoggedIn : true, isAdmin : $currentUser.is_admin };
 					$cookieStore.put('rootScopeCurrentUser', $rootScope.currentUser);
-					recordCountService.resetAll();
+					recordCountService.resetAll($rootScope.currentUser.organizationId);
 					$location.url('/turtle/');
 				}
 				else
@@ -203,9 +290,9 @@ var LogoutCtrl = function ($scope, $location, logoutService) {
 	$location.url('/');
 };
 
-var MainCtrl = function ($rootScope, $scope, $location, $route, $cookieStore, recordCountService, organizationListItemService) {
+var MainCtrl = function ($rootScope, $scope, $location, $route, $cookieStore, organizationListItemService, recordCountService) {
 
-	$scope.rootOrganizations = organizationListItemService.getAll();
+	$rootScope.organizations = organizationListItemService.getAll();
 
 	$scope.organizationChanged = function() {
 		//console.log('[MainCtrl::$scope.organizationChanged] $scope.currentUser = ' + $scope.currentUser);
@@ -222,7 +309,7 @@ var MainCtrl = function ($rootScope, $scope, $location, $route, $cookieStore, re
 			//--------------------------------------------------------------------------------
 			if (recordCountService != undefined)
 			{
-				recordCountService.resetAll();
+				recordCountService.resetAll($rootScope.currentUser.organizationId);
 				var locationPath = $location.path();
 				//console.log('[MainCtrl::$scope.organizationChanged] $location.path() = ' + locationPath);
 				if ((locationPath.indexOf("/turtle/") != -1) 
@@ -262,7 +349,8 @@ var OrganizationListCtrl = function ($scope, $location, $dialog, organizationSer
 		util_open_delete_dialog($dialog, 'organization', item.organization_name, function(result) {
 			if (result == 'yes') {
 				organizationService.delete(item.organization_id, function() {
-					recordCountService.resetAll();
+					$rootScope.organizations = organizationListItemService.getAll();
+					recordCountService.resetAll($rootScope.currentUser.organizationId);
 					$("#item_" + item.organization_id).fadeOut();
 				});
 			}
@@ -282,8 +370,9 @@ var OrganizationCreateCtrl = function($scope, $location, organizationService, co
 
 	$scope.save = function() {
         organizationService.save($scope.item, function() {
-			recordCountService.resetAll();
-			window.history.back();
+			$rootScope.organizations = organizationListItemService.getAll();
+			recordCountService.resetAll($rootScope.currentUser.organizationId);
+            $location.path('/organization/');
 		});
     };
 
@@ -292,7 +381,7 @@ var OrganizationCreateCtrl = function($scope, $location, organizationService, co
     };
 };
 
-var OrganizationEditCtrl = function($rootScope, $scope, $routeParams, $location, organizationService, codeTableService) {
+var OrganizationEditCtrl = function($rootScope, $scope, $routeParams, $location, $cookieStore, organizationService, codeTableService, organizationListItemService) {
     $scope.states = codeTableService.getCodes('state'); 
     $scope.unit_types = codeTableService.getCodes('unit_type'); 
 
@@ -300,7 +389,13 @@ var OrganizationEditCtrl = function($rootScope, $scope, $routeParams, $location,
 
 	$scope.save = function() {
         organizationService.save($scope.item, function() {
-			window.history.back();
+			$rootScope.organizations = organizationListItemService.getAll();
+			if ($scope.item.organization_id == $rootScope.currentUser.organizationId)
+			{
+				$rootScope.currentUser.preferredUnitsType = $scope.item.preferred_units_type;
+				$cookieStore.put('rootScopeCurrentUser', $rootScope.currentUser);
+			}
+            $location.path('/organization/');
 		});
     };
 
@@ -329,7 +424,7 @@ var TankListCtrl = function ($scope, $location, $dialog, tankService, recordCoun
 		util_open_delete_dialog($dialog, 'tank', item.tank_name, function(result) {
 			if (result == 'yes') {
 				tankService.delete(item.tank_id, function() {
-					recordCountService.resetAll();
+					recordCountService.resetAll($rootScope.currentUser.organizationId);
 					$("#item_" + item.tank_id).fadeOut();
 				});
 			}
@@ -347,7 +442,7 @@ var TankCreateCtrl = function($rootScope, $scope, $location, tankService, record
 
     $scope.save = function() {
         tankService.save($scope.item, function() {
-			recordCountService.resetAll();
+			recordCountService.resetAll($rootScope.currentUser.organizationId);
             $location.path('/tank/');
         });
     };
@@ -386,7 +481,7 @@ var TankWaterListCtrl = function ($scope, $location, $dialog, tankWaterService, 
 		util_open_delete_dialog($dialog, 'measurement', item.date_measured, function(result) {
 			if (result == 'yes') {
 				tankWaterService.delete(item.tank_water_id, function() {
-					recordCountService.resetAll();
+					recordCountService.resetAll($rootScope.currentUser.organizationId);
 					$("#item_" + item.tank_water_id).fadeOut();
 				});
 			}
@@ -403,18 +498,18 @@ var TankWaterCreateCtrl = function($rootScope, $scope, $location, tankWaterServi
 
     $scope.save = function() {
         tankWaterService.save($scope.item, function() {
-			recordCountService.resetAll();
-            $location.path('/tank_water/');
+			recordCountService.resetAll($rootScope.currentUser.organizationId);
+            $location.path('/tank/edit/' + $rootScope.currentTankId);
         });
     };
 };
 
-var TankWaterEditCtrl = function($scope, $routeParams, $location, tankWaterService, codeTableService) {
+var TankWaterEditCtrl = function($rootScope, $scope, $routeParams, $location, tankWaterService, codeTableService) {
     $scope.item = tankWaterService.get($routeParams.tank_water_id);
 
     $scope.save = function() {
         tankWaterService.save($scope.item, function() {
-            $location.path('/tank_water/');
+            $location.path('/tank/edit/' + $rootScope.currentTankId);
         });
     };
 };
@@ -439,7 +534,7 @@ var TurtleListCtrl = function ($scope, $location, $dialog, turtleService, record
 		util_open_delete_dialog($dialog, 'turtle', item.turtle_name, function(result) {
 			if (result == 'yes') {
 				turtleService.delete(item.turtle_id, function() {
-					recordCountService.resetAll();
+					recordCountService.resetAll($rootScope.currentUser.organizationId);
 					$("#item_" + item.turtle_id).fadeOut();
 				});
 			}
@@ -461,16 +556,18 @@ var TurtleCreateCtrl = function($rootScope, $scope, $location, turtleService, co
     $scope.yes_no_undetermineds = codeTableService.getCodes('yes_no_undetermined'); 
 	
 	$scope.item = { turtle_id: null, organization_id: $rootScope.currentUser.organizationId };
+	$rootScope.currentTurtleId = null;
+	recordCountService.resetAllForTurtle($rootScope.currentTurtleId);
 
     $scope.save = function() {
         turtleService.save($scope.item, function() {
-			recordCountService.resetAll();
+			recordCountService.resetAll($rootScope.currentUser.organizationId);
             $location.path('/turtle/');
         });
     };
 };
 
-var TurtleEditCtrl = function($rootScope, $scope, $routeParams, $location, $cookieStore, turtleService, codeTableService, countyService) {
+var TurtleEditCtrl = function($rootScope, $scope, $routeParams, $location, $cookieStore, turtleService, codeTableService, countyService, recordCountService) {
     $scope.capture_project_types = codeTableService.getCodes('capture_project_type'); 
 	$scope.counties = countyService.getAll('county_name', false);
     $scope.recapture_types = codeTableService.getCodes('recapture_type'); 
@@ -482,6 +579,8 @@ var TurtleEditCtrl = function($rootScope, $scope, $routeParams, $location, $cook
     $scope.item = turtleService.get($routeParams.turtle_id);
 	$rootScope.currentTurtleId = $routeParams.turtle_id;
 	$cookieStore.put('rootScopeCurrentTurtleId', $rootScope.currentTurtleId);
+	
+	recordCountService.resetAllForTurtle($rootScope.currentTurtleId);
 	
 	$scope.$watch("item.was_carrying_tags_when_enc", function(newVal, oldVal) { 
 		//console.log('[TurtleEditCtrl::$scope.$watch("item.was_carrying_tags_when_enc"] newVal = ' + newVal + '; oldVal = ' + oldVal);
@@ -534,7 +633,7 @@ var TurtleMorphometricListCtrl = function ($scope, $location, $dialog, turtleMor
 		util_open_delete_dialog($dialog, 'morphometric', item.date_measured, function(result) {
 			if (result == 'yes') {
 				turtleMorphometricService.delete(item.turtle_morphometric_id, function() {
-					recordCountService.resetAll();
+					recordCountService.resetAllForTurtle($rootScope.currentTurtleId);
 					$("#item_" + item.turtle_morphometric_id).fadeOut();
 				});
 			}
@@ -551,24 +650,128 @@ var TurtleMorphometricCreateCtrl = function($rootScope, $scope, $location, turtl
     $scope.kg_lbs = codeTableService.getCodes('kg_lb'); 
 	
 	$scope.item = { turtle_morphometric_id: null, turtle_id: $rootScope.currentTurtleId };
+	
+	if ($rootScope.currentUser.preferredUnitsType == 'I')
+	{
+		$scope.item.scl_notch_notch_units = 'in';
+		$scope.item.scl_notch_tip_units = 'in';
+		$scope.item.scl_tip_tip_units = 'in';
+		$scope.item.scw_units = 'in';
+		$scope.item.ccl_notch_notch_units = 'in';
+		$scope.item.ccl_notch_tip_units = 'in';
+		$scope.item.ccl_tip_tip_units = 'in';
+		$scope.item.ccw_units = 'in';
+		$scope.item.weight_units = 'lb';
+	} 
+	else
+	{
+		$scope.item.scl_notch_notch_units = 'cm';
+		$scope.item.scl_notch_tip_units = 'cm';
+		$scope.item.scl_tip_tip_units = 'cm';
+		$scope.item.scw_units = 'cm';
+		$scope.item.ccl_notch_notch_units = 'cm';
+		$scope.item.ccl_notch_tip_units = 'cm';
+		$scope.item.ccl_tip_tip_units = 'cm';
+		$scope.item.ccw_units = 'cm';
+		$scope.item.weight_units = 'kg';
+	}
 
     $scope.save = function() {
         turtleMorphometricService.save($scope.item, function() {
-			recordCountService.resetAll();
-            $location.path('/turtle_morphometric/');
+			recordCountService.resetAllForTurtle($rootScope.currentTurtleId);
+            $location.path('/turtle/edit/' + $rootScope.currentTurtleId);
         });
     };
 };
 
-var TurtleMorphometricEditCtrl = function($scope, $routeParams, $location, turtleMorphometricService, codeTableService) {
+var TurtleMorphometricEditCtrl = function($rootScope, $scope, $routeParams, $location, turtleMorphometricService, codeTableService) {
     $scope.cm_ins = codeTableService.getCodes('cm_in'); 
     $scope.kg_lbs = codeTableService.getCodes('kg_lb'); 
 	
     $scope.item = turtleMorphometricService.get($routeParams.turtle_morphometric_id);
 
+	if ($rootScope.currentUser.preferredUnitsType == 'I')
+	{
+		if (($scope.item.scl_notch_notch_value == undefined) || ($scope.item.scl_notch_notch_value == null) || ($scope.item.scl_notch_notch_value == 0))
+		{
+			$scope.item.scl_notch_notch_units = 'in';
+		}
+		if (($scope.item.scl_notch_tip_value == undefined) || ($scope.item.scl_notch_tip_value == null) || ($scope.item.scl_notch_tip_value == 0))
+		{
+			$scope.item.scl_notch_tip_units = 'in';
+		}
+		if (($scope.item.scl_tip_tip_value == undefined) || ($scope.item.scl_tip_tip_value == null) || ($scope.item.scl_tip_tip_value == 0))
+		{
+			$scope.item.scl_tip_tip_units = 'in';
+		}
+		if (($scope.item.scw_value == undefined) || ($scope.item.scw_value == null) || ($scope.item.scw_value == 0))
+		{
+			$scope.item.scw_units = 'in';
+		}
+		if (($scope.item.ccl_notch_notch_value == undefined) || ($scope.item.ccl_notch_notch_value == null) || ($scope.item.ccl_notch_notch_value == 0))
+		{
+			$scope.item.ccl_notch_notch_units = 'in';
+		}
+		if (($scope.item.ccl_notch_tip_value == undefined) || ($scope.item.ccl_notch_tip_value == null) || ($scope.item.ccl_notch_tip_value == 0))
+		{
+			$scope.item.ccl_notch_tip_units = 'in';
+		}
+		if (($scope.item.ccl_tip_tip_value == undefined) || ($scope.item.ccl_tip_tip_value == null) || ($scope.item.ccl_tip_tip_value == 0))
+		{
+			$scope.item.ccl_tip_tip_units = 'in';
+		}
+		if (($scope.item.ccw_value == undefined) || ($scope.item.ccw_value == null) || ($scope.item.ccw_value == 0))
+		{
+			$scope.item.ccw_units = 'in';
+		}
+		if (($scope.item.weight_value == undefined) || ($scope.item.weight_value == null) || ($scope.item.weight_value == 0))
+		{
+			$scope.item.weight_units = 'lb';
+		}
+	} 
+	else
+	{
+		if (($scope.item.scl_notch_notch_value == undefined) || ($scope.item.scl_notch_notch_value == null) || ($scope.item.scl_notch_notch_value == 0))
+		{
+			$scope.item.scl_notch_notch_units = 'cm';
+		}
+		if (($scope.item.scl_notch_tip_value == undefined) || ($scope.item.scl_notch_tip_value == null) || ($scope.item.scl_notch_tip_value == 0))
+		{
+			$scope.item.scl_notch_tip_units = 'cm';
+		}
+		if (($scope.item.scl_tip_tip_value == undefined) || ($scope.item.scl_tip_tip_value == null) || ($scope.item.scl_tip_tip_value == 0))
+		{
+			$scope.item.scl_tip_tip_units = 'cm';
+		}
+		if (($scope.item.scw_value == undefined) || ($scope.item.scw_value == null) || ($scope.item.scw_value == 0))
+		{
+			$scope.item.scw_units = 'cm';
+		}
+		if (($scope.item.ccl_notch_notch_value == undefined) || ($scope.item.ccl_notch_notch_value == null) || ($scope.item.ccl_notch_notch_value == 0))
+		{
+			$scope.item.ccl_notch_notch_units = 'cm';
+		}
+		if (($scope.item.ccl_notch_tip_value == undefined) || ($scope.item.ccl_notch_tip_value == null) || ($scope.item.ccl_notch_tip_value == 0))
+		{
+			$scope.item.ccl_notch_tip_units = 'cm';
+		}
+		if (($scope.item.ccl_tip_tip_value == undefined) || ($scope.item.ccl_tip_tip_value == null) || ($scope.item.ccl_tip_tip_value == 0))
+		{
+			$scope.item.ccl_tip_tip_units = 'cm';
+		}
+		if (($scope.item.ccw_value == undefined) || ($scope.item.ccw_value == null) || ($scope.item.ccw_value == 0))
+		{
+			$scope.item.ccw_units = 'cm';
+		}
+		if (($scope.item.weight_value == undefined) || ($scope.item.weight_value == null) || ($scope.item.weight_value == 0))
+		{
+			$scope.item.weight_units = 'kg';
+		}
+	}
+
     $scope.save = function() {
         turtleMorphometricService.save($scope.item, function() {
-            $location.path('/turtle_morphometric/');
+            $location.path('/turtle/edit/' + $rootScope.currentTurtleId);
         });
     };
 };
@@ -593,7 +796,7 @@ var TurtleTagListCtrl = function ($scope, $location, $dialog, turtleTagService, 
 		util_open_delete_dialog($dialog, 'tag', item.tag_number, function(result) {
 			if (result == 'yes') {
 				turtleTagService.delete(item.turtle_tag_id, function() {
-					recordCountService.resetAll();
+					recordCountService.resetAllForTurtle($rootScope.currentTurtleId);
 					$("#item_" + item.turtle_tag_id).fadeOut();
 				});
 			}
@@ -613,13 +816,13 @@ var TurtleTagCreateCtrl = function($rootScope, $scope, $location, turtleTagServi
 
     $scope.save = function() {
         turtleTagService.save($scope.item, function() {
-			recordCountService.resetAll();
-            $location.path('/turtle_tag/');
+			recordCountService.resetAllForTurtle($rootScope.currentTurtleId);
+            $location.path('/turtle/edit/' + $rootScope.currentTurtleId);
         });
     };
 };
 
-var TurtleTagEditCtrl = function($scope, $routeParams, $location, turtleTagService, codeTableService) {
+var TurtleTagEditCtrl = function($rootScope, $scope, $routeParams, $location, turtleTagService, codeTableService) {
     $scope.tag_locations = codeTableService.getCodes('tag_location'); 
     $scope.tag_types = codeTableService.getCodes('tag_type'); 
 	
@@ -627,7 +830,7 @@ var TurtleTagEditCtrl = function($scope, $routeParams, $location, turtleTagServi
 
     $scope.save = function() {
         turtleTagService.save($scope.item, function() {
-            $location.path('/turtle_tag/');
+            $location.path('/turtle/edit/' + $rootScope.currentTurtleId);
         });
     };
 };
@@ -652,7 +855,7 @@ var UserListCtrl = function ($scope, $location, $dialog, userService, recordCoun
 		util_open_delete_dialog($dialog, 'user', item.user_name, function(result) {
 			if (result == 'yes') {
 				userService.delete(item.user_id, function() {
-					recordCountService.resetAll();
+					recordCountService.resetAll($rootScope.currentUser.organizationId);
 					$("#item_" + item.user_id).fadeOut();
 				});
 			}
@@ -671,13 +874,14 @@ var UserCreateCtrl = function($scope, $location, userService, organizationListIt
 
     $scope.save = function() {
         userService.save($scope.item, function() {
-			recordCountService.resetAll();
+			recordCountService.resetAll($rootScope.currentUser.organizationId);
             $location.path('/user/');
         });
     };
 };
 
 var UserEditCtrl = function($scope, $routeParams, $location, userService, organizationListItemService) {
+
 	$scope.organizations = organizationListItemService.getAll();
 	
     $scope.item = userService.get($routeParams.user_id);
@@ -688,3 +892,148 @@ var UserEditCtrl = function($scope, $routeParams, $location, userService, organi
         });
     };
 };
+
+var WashbacksEventListCtrl = function ($scope, $location, $dialog, washbacksEventService, recordCountService) {
+
+    $scope.search = function() {
+		$scope.items = washbacksEventService.search($scope.q, $scope.sort_order, $scope.sort_desc);
+    };
+
+    $scope.sort_by = function(property_name) {
+        if ($scope.sort_order == property_name) { 
+			$scope.sort_desc = !$scope.sort_desc; 
+		} else { 
+			$scope.sort_desc = false; 
+		}
+        $scope.sort_order = property_name;
+        $scope.search();
+    };
+
+    $scope.delete = function(item) {
+		util_open_delete_dialog($dialog, 'washbacks ' + item.event_type + ' event', item.species_code + ' - ' + item.event_date, function(result) {
+			if (result == 'yes') {
+				washbacksEventService.delete(item.washbacks_event_id, item.event_type_code, function() {
+					recordCountService.resetAll($rootScope.currentUser.organizationId);
+					$("#item_" + item.washbacks_event_id).fadeOut();
+				});
+			}
+		});
+	};
+	
+    $scope.sort_order = 'event_date';
+    $scope.sort_desc = false;
+    $scope.search();
+};
+
+var WashbacksAcquiredEventCreateCtrl = function($rootScope, $scope, $location, washbacksEventService, codeTableService, countyService, recordCountService) {
+	
+    $scope.species = codeTableService.getCodes('species'); 
+	$scope.counties = countyService.getAll('county_name', false);
+
+	$scope.item = { washbacks_event_id: null, organization_id: $rootScope.currentUser.organizationId, event_type_code: 'acquired', event_type: 'Acquired' };
+
+    $scope.save = function() {
+        washbacksEventService.save($scope.item, function() {
+			recordCountService.resetAll($rootScope.currentUser.organizationId);
+            $location.path('/washbacks_event/');
+        });
+    };
+};
+
+var WashbacksAcquiredEventEditCtrl = function($rootScope, $scope, $routeParams, $location, washbacksEventService, codeTableService, countyService) {
+	
+    $scope.species = codeTableService.getCodes('species'); 
+	$scope.counties = countyService.getAll('county_name', false);
+
+    $scope.item = washbacksEventService.get($routeParams.washbacks_event_id, 'acquired');
+
+    $scope.save = function() {
+        washbacksEventService.save($scope.item, function() {
+            $location.path('/washbacks_event/');
+        });
+    };
+};
+
+var WashbacksDiedEventCreateCtrl = function($rootScope, $scope, $location, washbacksEventService, codeTableService, recordCountService) {
+	
+    $scope.species = codeTableService.getCodes('species'); 
+
+	$scope.item = { washbacks_event_id: null, organization_id: $rootScope.currentUser.organizationId, event_type_code: 'died', event_type: 'Died' };
+
+    $scope.save = function() {
+        washbacksEventService.save($scope.item, function() {
+			recordCountService.resetAll($rootScope.currentUser.organizationId);
+            $location.path('/washbacks_event/');
+        });
+    };
+};
+
+var WashbacksDiedEventEditCtrl = function($rootScope, $scope, $routeParams, $location, washbacksEventService, codeTableService) {
+	
+    $scope.species = codeTableService.getCodes('species'); 
+
+    $scope.item = washbacksEventService.get($routeParams.washbacks_event_id, 'died');
+
+    $scope.save = function() {
+        washbacksEventService.save($scope.item, function() {
+            $location.path('/washbacks_event/');
+        });
+    };
+};
+
+var WashbacksDoaEventCreateCtrl = function($rootScope, $scope, $location, washbacksEventService, codeTableService, countyService, recordCountService) {
+	
+    $scope.species = codeTableService.getCodes('species'); 
+	$scope.counties = countyService.getAll('county_name', false);
+
+	$scope.item = { washbacks_event_id: null, organization_id: $rootScope.currentUser.organizationId, event_type_code: 'doa', event_type: 'DOA' };
+
+    $scope.save = function() {
+        washbacksEventService.save($scope.item, function() {
+			recordCountService.resetAll($rootScope.currentUser.organizationId);
+            $location.path('/washbacks_event/');
+        });
+    };
+};
+
+var WashbacksDoaEventEditCtrl = function($rootScope, $scope, $routeParams, $location, washbacksEventService, codeTableService, countyService) {
+	
+    $scope.species = codeTableService.getCodes('species'); 
+	$scope.counties = countyService.getAll('county_name', false);
+
+    $scope.item = washbacksEventService.get($routeParams.washbacks_event_id, 'doa');
+
+    $scope.save = function() {
+        washbacksEventService.save($scope.item, function() {
+            $location.path('/washbacks_event/');
+        });
+    };
+};
+
+var WashbacksReleasedEventCreateCtrl = function($rootScope, $scope, $location, washbacksEventService, codeTableService, recordCountService) {
+	
+    $scope.species = codeTableService.getCodes('species'); 
+
+	$scope.item = { washbacks_event_id: null, organization_id: $rootScope.currentUser.organizationId, event_type_code: 'released', event_type: 'Released' };
+
+    $scope.save = function() {
+        washbacksEventService.save($scope.item, function() {
+			recordCountService.resetAll($rootScope.currentUser.organizationId);
+            $location.path('/washbacks_event/');
+        });
+    };
+};
+
+var WashbacksReleasedEventEditCtrl = function($rootScope, $scope, $routeParams, $location, washbacksEventService, codeTableService) {
+	
+    $scope.species = codeTableService.getCodes('species'); 
+
+    $scope.item = washbacksEventService.get($routeParams.washbacks_event_id, 'released');
+
+    $scope.save = function() {
+        washbacksEventService.save($scope.item, function() {
+            $location.path('/washbacks_event/');
+        });
+    };
+};
+
