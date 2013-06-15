@@ -140,7 +140,6 @@ var HatchlingsAcquiredEventEditCtrl = function($rootScope, $scope, $routeParams,
 var HatchlingsDiedEventEditCtrl = function($rootScope, $scope, $routeParams, $location, hatchlingsEventService, codeTableService, countyService, recordCountService) {
 	
     $scope.species = codeTableService.getCodes('species'); 
-	$scope.counties = countyService.getAll('county_name', false);
 
 	$scope.save = function() {
         hatchlingsEventService.save($scope.item, function() {
@@ -1085,7 +1084,6 @@ var WashbacksAcquiredEventEditCtrl = function($rootScope, $scope, $routeParams, 
 var WashbacksDiedEventEditCtrl = function($rootScope, $scope, $routeParams, $location, washbacksEventService, codeTableService, countyService, recordCountService) {
 	
     $scope.species = codeTableService.getCodes('species'); 
-	$scope.counties = countyService.getAll('county_name', false);
 
 	$scope.save = function() {
         washbacksEventService.save($scope.item, function() {
@@ -1100,6 +1098,7 @@ var WashbacksDiedEventEditCtrl = function($rootScope, $scope, $routeParams, $loc
 	//--------------------------------------------------------------------------------
 	//-- if there in no ID in the route, then we are creating a new item...
 	//--------------------------------------------------------------------------------
+	console.log('$routeParams.washbacks_event_id = ' + $routeParams.washbacks_event_id);
 	if ($routeParams.washbacks_event_id == undefined)
 	{
 		var newId = util_new_guid();

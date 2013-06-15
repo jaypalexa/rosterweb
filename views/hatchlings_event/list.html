@@ -1,5 +1,14 @@
-﻿<ul class="breadcrumb">
-	<li class="active">Hatchlings Events ({{ $root.recordCounts.hatchlingCount }})</li>
+﻿<form class="form-search">
+	<div style="float:right;margin-top:6px;margin-bottom:20px;margin-right:6px;">
+		<div class="input-append">
+			<input type="text" ng-model="q" class="input-medium search-query" placeholder="Search">
+			<button ng-click="search()" type="submit" class="btn"><i class="icon-search"></i></button>
+		</div>
+		<button ng-click="q=''; search()" ng-disabled="!q" type="submit" class="btn">Reset</button>
+	</div>
+</form>
+<ul class="breadcrumb">
+	<li class="active" style="font-size: x-large; font-weight: 650; margin-top: 3px;">Hatchling Events</li>
 </ul>
 <a href="#/hatchlings_acquired_event/new" class="btn">Add hatchlings acquired event</a>&nbsp;
 <a href="#/hatchlings_died_event/new" class="btn">Add hatchlings died event</a>&nbsp;

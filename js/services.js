@@ -761,7 +761,7 @@ RosterWebApp.service('washbacksEventService', function($rootScope, WashbacksEven
 				break;
 			case 'died':
 				washbacks_event.washbacks_died_event_id = washbacks_event.washbacks_event_id;
-				if (washbacks_event.washbacks_event_id == null) {
+				if (washbacks_event.is_new) {
 					//-- insert
 					WashbacksDiedEvent.save(washbacks_event, success, error);
 				} else {
@@ -771,7 +771,7 @@ RosterWebApp.service('washbacksEventService', function($rootScope, WashbacksEven
 				break;
 			case 'released':
 				washbacks_event.washbacks_released_event_id = washbacks_event.washbacks_event_id;
-				if (washbacks_event.washbacks_event_id == null) {
+				if (washbacks_event.is_new) {
 					//-- insert
 					WashbacksReleasedEvent.save(washbacks_event, success, error);
 				} else {
@@ -781,7 +781,7 @@ RosterWebApp.service('washbacksEventService', function($rootScope, WashbacksEven
 				break;
 			case 'doa':
 				washbacks_event.washbacks_doa_event_id = washbacks_event.washbacks_event_id;
-				if (washbacks_event.washbacks_event_id == null) {
+				if (washbacks_event.is_new) {
 					//-- insert
 					WashbacksDoaEvent.save(washbacks_event, success, error);
 				} else {

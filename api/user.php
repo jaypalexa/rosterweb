@@ -41,12 +41,12 @@
 		if (!array_key_exists('user_id', $parameters) && !array_key_exists('user_email', $parameters))
 		{
 			$sql = 'SELECT u.*, o.organization_name FROM user u LEFT JOIN organization o ON u.organization_id = o.organization_id ';
-			
+
 			if ($parameters['q'] != 'undefined')
 			{
 				$sql .= 'WHERE user_name LIKE :search_user_name ';
 			}
-			
+
 			$sql .= 'ORDER BY %sort_column% %sort_order%';
 			
 			$sql = str_replace('%sort_column%', $parameters['sort'], $sql);

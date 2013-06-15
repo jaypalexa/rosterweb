@@ -21,7 +21,8 @@
 	{
 		$items = array();
 		
-		$sql = 'SELECT washbacks_acquired_event_id AS washbacks_event_id, species_code, event_date, \'Acquired\' AS event_type, \'acquired\' AS event_type_code, IFNULL(event_count, 0) AS event_count, acquired_from_county AS county_name ';
+		$sql = 'SELECT * FROM (';
+		$sql .= 'SELECT washbacks_acquired_event_id AS washbacks_event_id, species_code, event_date, \'Acquired\' AS event_type, \'acquired\' AS event_type_code, IFNULL(event_count, 0) AS event_count, acquired_from_county AS county_name ';
 		$sql .= 'FROM washbacks_acquired_event ';
 		$sql .= 'WHERE organization_id = :organization_id ';
 		$sql .= 'UNION ALL ';
@@ -36,6 +37,13 @@
 		$sql .= 'SELECT washbacks_doa_event_id AS washbacks_event_id, species_code, event_date, \'DOA\' AS event_type, \'doa\' AS event_type_code, IFNULL(event_count, 0) AS event_count, doa_from_county AS county_name ';
 		$sql .= 'FROM washbacks_doa_event ';
 		$sql .= 'WHERE organization_id = :organization_id ';
+		$sql .= ') tbl ';
+
+		if ($parameters['q'] != 'undefined')
+		{
+			$sql .= 'WHERE species_code LIKE :q OR event_type LIKE :q OR county_name LIKE :q ';
+		}
+
 		$sql .= 'ORDER BY %sort_column% %sort_order%';
 		
 		$sql = str_replace('%sort_column%', $parameters['sort'], $sql);
@@ -51,7 +59,10 @@
 		
 		$stmt = $db->prepare($sql);
 		$stmt->bindValue(':organization_id', $parameters['organization_id']);
-		//utilLog('[washbacks_event.php] $sql = ' . $sql);
+		if ($parameters['q'] != 'undefined')
+		{
+			$stmt->bindValue(':q', '%' . $parameters['q'] .'%');
+		}
 		$stmt->execute();
 
 		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) 
