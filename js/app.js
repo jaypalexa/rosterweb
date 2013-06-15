@@ -78,11 +78,8 @@
 				{
 					//console.log('[RosterWebApp.run().$rootScope.$on("$routeChangeStart")] Resetting $rootScope from $cookieStore...');
 					$rootScope.currentUser = $cookieStore.get('rootScopeCurrentUser');
-					//console.log('[RosterWebApp.run().$rootScope.$on("$routeChangeStart")] $rootScope.currentUser.organizationId = ' + $rootScope.currentUser.organizationId);
-					$rootScope.currentTurtleId = $cookieStore.get('rootScopeCurrentTurtleId');
-					$rootScope.currentTurtleName = $cookieStore.get('rootScopeCurrentTurtleName');
-					$rootScope.currentTankId = $cookieStore.get('rootScopeCurrentTankId');
-					$rootScope.currentTankName = $cookieStore.get('rootScopeCurrentTankName');
+					$rootScope.currentTurtle = $cookieStore.get('rootScopeCurrentTurtle');
+					$rootScope.currentTank = $cookieStore.get('rootScopeCurrentTank');
 					recordCountService.resetAll($rootScope.currentUser.organizationId);
 				}
 			}

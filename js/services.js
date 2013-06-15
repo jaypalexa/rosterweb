@@ -368,10 +368,8 @@ RosterWebApp.service('logoutService', function($rootScope, $http, $location, $co
 		$.removeCookie('is_logged_in', { path: '/' });
 		$cookieStore.remove('is_registered');
 		$cookieStore.remove('rootScopeCurrentUser');
-		$cookieStore.remove('rootScopeCurrentTurtleId');
-		$cookieStore.remove('rootScopeCurrentTurtleName');
-		$cookieStore.remove('rootScopeCurrentTankId');
-		$cookieStore.remove('rootScopeCurrentTankName');
+		$cookieStore.remove('rootScopeCurrentTurtle');
+		$cookieStore.remove('rootScopeCurrentTank');
 		$rootScope.currentUser = null;
 		$rootScope.currentTurtleId = null;
 		console.log('[logoutService::doLogout()] *** USER IS LOGGED OUT ***');
@@ -526,11 +524,11 @@ RosterWebApp.service('tankService', function($q, $http, $rootScope, Tank) {
 
 RosterWebApp.service('tankWaterService', function($rootScope, TankWater) {
     this.search = function(q, sort_order, sort_desc, success, error) {
-        return TankWater.query({ q: q, sort: sort_order, desc: sort_desc, ver: util_new_guid(), tank_id: $rootScope.currentTankId }, success, error);
+        return TankWater.query({ q: q, sort: sort_order, desc: sort_desc, ver: util_new_guid(), tank_id: $rootScope.currentTank.tankId }, success, error);
     };	
 	
     this.getAll = function(sort_order, sort_desc, success, error) {
-        return TankWater.query({ sort: sort_order, desc: sort_desc, ver: util_new_guid(), tank_id: $rootScope.currentTankId }, success, error);
+        return TankWater.query({ sort: sort_order, desc: sort_desc, ver: util_new_guid(), tank_id: $rootScope.currentTank.tankId }, success, error);
     };	
 	
     this.get = function(tank_water_id, success, error) {
@@ -598,11 +596,11 @@ RosterWebApp.service('turtleService', function($q, $http, $rootScope, Turtle) {
 
 RosterWebApp.service('turtleMorphometricService', function($q, $http, $rootScope, TurtleMorphometric) {
     this.search = function(q, sort_order, sort_desc, success, error) {
-        return TurtleMorphometric.query({ q: q, sort: sort_order, desc: sort_desc, ver: util_new_guid(), turtle_id: $rootScope.currentTurtleId }, success, error);
+        return TurtleMorphometric.query({ q: q, sort: sort_order, desc: sort_desc, ver: util_new_guid(), turtle_id: $rootScope.currentTurtle.turtleId }, success, error);
     };	
 	
     this.getAll = function(sort_order, sort_desc, success, error) {
-        return TurtleMorphometric.query({ sort: sort_order, desc: sort_desc, ver: util_new_guid(), turtle_id: $rootScope.currentTurtleId }, success, error);
+        return TurtleMorphometric.query({ sort: sort_order, desc: sort_desc, ver: util_new_guid(), turtle_id: $rootScope.currentTurtle.turtleId }, success, error);
     };	
 	
     this.get = function(turtle_morphometric_id, success, error) {
@@ -641,11 +639,11 @@ RosterWebApp.service('turtleMorphometricService', function($q, $http, $rootScope
 
 RosterWebApp.service('turtleTagService', function($rootScope, TurtleTag) {
     this.search = function(q, sort_order, sort_desc, success, error) {
-        return TurtleTag.query({ q: q, sort: sort_order, desc: sort_desc, ver: util_new_guid(), turtle_id: $rootScope.currentTurtleId }, success, error);
+        return TurtleTag.query({ q: q, sort: sort_order, desc: sort_desc, ver: util_new_guid(), turtle_id: $rootScope.currentTurtle.turtleId }, success, error);
     };	
 	
     this.getAll = function(sort_order, sort_desc, success, error) {
-        return TurtleTag.query({ sort: sort_order, desc: sort_desc, ver: util_new_guid(), turtle_id: $rootScope.currentTurtleId }, success, error);
+        return TurtleTag.query({ sort: sort_order, desc: sort_desc, ver: util_new_guid(), turtle_id: $rootScope.currentTurtle.turtleId }, success, error);
     };	
 	
     this.get = function(turtle_tag_id, success, error) {

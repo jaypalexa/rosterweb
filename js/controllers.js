@@ -493,14 +493,15 @@ var TankListCtrl = function ($rootScope, $scope, $location, $dialog, tankService
 
 var TankEditCtrl = function($rootScope, $scope, $routeParams, $location, $cookieStore, tankService, recordCountService) {
 
+	$rootScope.currentTank = {};
+
 	$scope.save = function() {
+		$rootScope.currentTank.tankId = $scope.item.tank_id;
+		$rootScope.currentTank.tankName = $scope.item.tank_name;
+		$cookieStore.put('rootScopeCurrentTank', $rootScope.currentTank);
         tankService.save($scope.item, function() {
 			if ($scope.item.is_new)
 			{
-				$rootScope.currentTankId = $scope.item.tank_id;
-				$cookieStore.put('rootScopeCurrentTankId', $rootScope.currentTankId);
-				$rootScope.currentTankName = $scope.item.tank_name;
-				$cookieStore.put('rootScopeCurrentTankName', $rootScope.currentTankName);
 				recordCountService.resetAll($rootScope.currentUser.organizationId);
 				$scope.item.is_new = false;
 			}
@@ -520,20 +521,23 @@ var TankEditCtrl = function($rootScope, $scope, $routeParams, $location, $cookie
 	//--------------------------------------------------------------------------------
 	else
 	{
-		$rootScope.currentTankId = $routeParams.tank_id;
-		$cookieStore.put('rootScopeCurrentTankId', $rootScope.currentTankId);
+		//-- we need to do this before calling the async "get" below so the parent screen has $rootScope.currentTurtle.turtleId
+		$rootScope.currentTank.tankId = $routeParams.tank_id;
+		$rootScope.currentTank.tankName = '';
+		$cookieStore.put('rootScopeCurrentTank', $rootScope.currentTank);
 		
 		tankService.get($routeParams.tank_id).then(
 			function(result){ //-- success
 				$scope.item = result;
 				$scope.item.is_new = false;
-				$rootScope.currentTankName = $scope.item.tank_name;
-				$cookieStore.put('rootScopeCurrentTankName', $rootScope.currentTankName);
+				$rootScope.currentTank.tankId = $scope.item.tank_id;
+				$rootScope.currentTank.tankName = $scope.item.tank_name;
+				$cookieStore.put('rootScopeCurrentTank', $rootScope.currentTank);
 			}
 		);
 	}
 	
-	recordCountService.resetAllForTank($rootScope.currentTankId);
+	recordCountService.resetAllForTank($rootScope.currentTank.tankId);
 };
 
 var TankWaterListCtrl = function ($rootScope, $scope, $location, $dialog, tankWaterService, recordCountService) {
@@ -556,7 +560,7 @@ var TankWaterListCtrl = function ($rootScope, $scope, $location, $dialog, tankWa
 		util_open_delete_dialog($dialog, 'measurement', item.date_measured, function(result) {
 			if (result == 'yes') {
 				tankWaterService.delete(item.tank_water_id, function() {
-					recordCountService.resetAllForTank($rootScope.currentTankId);
+					recordCountService.resetAllForTank($rootScope.currentTank.tankId);
 					$("#item_" + item.tank_water_id).fadeOut();
 				});
 			}
@@ -574,7 +578,7 @@ var TankWaterEditCtrl = function($rootScope, $scope, $routeParams, $location, ta
         tankWaterService.save($scope.item, function() {
 			if ($scope.item.is_new)
 			{
-				recordCountService.resetAllForTank($rootScope.currentTankId);
+				recordCountService.resetAllForTank($rootScope.currentTank.tankId);
 				$scope.item.is_new = false;
 			}
 		});
@@ -585,7 +589,7 @@ var TankWaterEditCtrl = function($rootScope, $scope, $routeParams, $location, ta
 	//--------------------------------------------------------------------------------
 	if ($routeParams.tank_water_id == undefined)
 	{
-		$scope.item = { is_new: true, tank_water_id: util_new_guid(), tank_id: $rootScope.currentTankId };
+		$scope.item = { is_new: true, tank_water_id: util_new_guid(), tank_id: $rootScope.currentTank.tankId };
 		$scope.save();
 	}
 	//--------------------------------------------------------------------------------
@@ -632,6 +636,8 @@ var TurtleListCtrl = function ($rootScope, $scope, $location, $dialog, turtleSer
 
 var TurtleEditCtrl = function($rootScope, $scope, $routeParams, $location, $cookieStore, turtleService, codeTableService, countyService, recordCountService) {
 
+	$rootScope.currentTurtle = {};
+
     $scope.capture_project_types = codeTableService.getCodes('capture_project_type'); 
 	$scope.counties = countyService.getAll('county_name', false);
     $scope.recapture_types = codeTableService.getCodes('recapture_type'); 
@@ -666,12 +672,11 @@ var TurtleEditCtrl = function($rootScope, $scope, $routeParams, $location, $cook
 
 	$scope.save = function() {
         turtleService.save($scope.item, function() {
+			$rootScope.currentTurtle.turtleId = $scope.item.turtle_id;
+			$rootScope.currentTurtle.turtleName = $scope.item.turtle_name;
+			$cookieStore.put('rootScopeCurrentTurtle', $rootScope.currentTurtle);
 			if ($scope.item.is_new)
 			{
-				$rootScope.currentTurtleId = $scope.item.turtle_id;
-				$cookieStore.put('rootScopeCurrentTurtleId', $rootScope.currentTurtleId);
-				$rootScope.currentTurtleName = $scope.item.turtle_name;
-				$cookieStore.put('rootScopeCurrentTurtleName', $rootScope.currentTurtleName);
 				recordCountService.resetAll($rootScope.currentUser.organizationId);
 				$scope.item.is_new = false;
 			}
@@ -691,20 +696,23 @@ var TurtleEditCtrl = function($rootScope, $scope, $routeParams, $location, $cook
 	//--------------------------------------------------------------------------------
 	else
 	{
-		$rootScope.currentTurtleId = $routeParams.turtle_id;
-		$cookieStore.put('rootScopeCurrentTurtleId', $rootScope.currentTurtleId);
+		//-- we need to do this before calling the async "get" below so the parent screen has $rootScope.currentTurtle.turtleId
+		$rootScope.currentTurtle.turtleId = $routeParams.turtle_id;
+		$rootScope.currentTurtle.turtleName = '';
+		$cookieStore.put('rootScopeCurrentTurtle', $rootScope.currentTurtle);
 
 		turtleService.get($routeParams.turtle_id).then(
 			function(result){ //-- success
 				$scope.item = result;
 				$scope.item.is_new = false;
-				$rootScope.currentTurtleName = $scope.item.turtle_name;
-				$cookieStore.put('rootScopeCurrentTurtleName', $rootScope.currentTurtleName);
+				$rootScope.currentTurtle.turtleId = $scope.item.turtle_id;
+				$rootScope.currentTurtle.turtleName = $scope.item.turtle_name;
+				$cookieStore.put('rootScopeCurrentTurtle', $rootScope.currentTurtle);
 			}
 		);
 	}
 	
-	recordCountService.resetAllForTurtle($rootScope.currentTurtleId);
+	recordCountService.resetAllForTurtle($rootScope.currentTurtle.turtleId);
 };
 
 var TurtleMorphometricListCtrl = function ($rootScope, $scope, $location, $dialog, turtleMorphometricService, recordCountService) {
@@ -727,7 +735,7 @@ var TurtleMorphometricListCtrl = function ($rootScope, $scope, $location, $dialo
 		util_open_delete_dialog($dialog, 'morphometric', item.date_measured, function(result) {
 			if (result == 'yes') {
 				turtleMorphometricService.delete(item.turtle_morphometric_id, function() {
-					recordCountService.resetAllForTurtle($rootScope.currentTurtleId);
+					recordCountService.resetAllForTurtle($rootScope.currentTurtle.turtleId);
 					$("#item_" + item.turtle_morphometric_id).fadeOut();
 				});
 			}
@@ -750,7 +758,7 @@ var TurtleMorphometricEditCtrl = function($rootScope, $scope, $routeParams, $loc
         turtleMorphometricService.save($scope.item, function() {
 			if ($scope.item.is_new)
 			{
-				recordCountService.resetAllForTurtle($rootScope.currentTurtleId);
+				recordCountService.resetAllForTurtle($rootScope.currentTurtle.turtleId);
 				$scope.item.is_new = false;
 			}
 		});
@@ -761,7 +769,7 @@ var TurtleMorphometricEditCtrl = function($rootScope, $scope, $routeParams, $loc
 	//--------------------------------------------------------------------------------
 	if ($routeParams.turtle_morphometric_id == undefined)
 	{
-		$scope.item = { is_new: true, turtle_morphometric_id: util_new_guid(), turtle_id: $rootScope.currentTurtleId };
+		$scope.item = { is_new: true, turtle_morphometric_id: util_new_guid(), turtle_id: $rootScope.currentTurtle.turtleId };
 		if ($rootScope.currentUser.preferredUnitsType == 'I')
 		{
 			$scope.item.scl_notch_notch_units = 'in';
@@ -902,7 +910,7 @@ var TurtleTagListCtrl = function ($rootScope, $scope, $location, $dialog, turtle
 		util_open_delete_dialog($dialog, 'tag', item.tag_number, function(result) {
 			if (result == 'yes') {
 				turtleTagService.delete(item.turtle_tag_id, function() {
-					recordCountService.resetAllForTurtle($rootScope.currentTurtleId);
+					recordCountService.resetAllForTurtle($rootScope.currentTurtle.turtleId);
 					$("#item_" + item.turtle_tag_id).fadeOut();
 				});
 			}
@@ -927,7 +935,7 @@ var TurtleTagEditCtrl = function($rootScope, $scope, $routeParams, $location, tu
         turtleTagService.save($scope.item, function() {
 			if ($scope.item.is_new)
 			{
-				recordCountService.resetAllForTurtle($rootScope.currentTurtleId);
+				recordCountService.resetAllForTurtle($rootScope.currentTurtle.turtleId);
 				$scope.item.is_new = false;
 			}
 		});
@@ -938,7 +946,7 @@ var TurtleTagEditCtrl = function($rootScope, $scope, $routeParams, $location, tu
 	//--------------------------------------------------------------------------------
 	if ($routeParams.turtle_tag_id == undefined)
 	{
-		$scope.item = { is_new: true, turtle_tag_id: util_new_guid(), turtle_id: $rootScope.currentTurtleId };
+		$scope.item = { is_new: true, turtle_tag_id: util_new_guid(), turtle_id: $rootScope.currentTurtle.turtleId };
 		$scope.save();
 	}
 	//--------------------------------------------------------------------------------
