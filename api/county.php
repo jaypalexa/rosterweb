@@ -88,14 +88,12 @@
 	else if (($verb == 'PUT') || ($verb == 'POST'))
 	{
 		$sql = '';
-		$county_id = '';
+
 		if ($verb == 'PUT')
 		{
 			$sql .= 'UPDATE county SET ';
 			$sql .= 'county_name = :county_name ';
 			$sql .= 'WHERE county_id = :county_id';
-			
-			$county_id = $parameters['county_id'];
 		}
 		else if ($verb == 'POST')
 		{
@@ -103,12 +101,10 @@
 			$sql .= '(county_id, county_name) ';
 			$sql .= 'VALUES ';
 			$sql .= '(:county_id, :county_name) ';
-			
-			$county_id = utilCreateGuid();
 		}
 		$stmt = $db->prepare($sql);
 		
-		$stmt->bindValue(':county_id', $county_id);
+		$stmt->bindValue(':county_id', dbGetParameterValue($parameters, 'county_id'));
 		$stmt->bindValue(':county_name', dbGetParameterValue($parameters, 'county_name'));
 
 		$stmt->execute();

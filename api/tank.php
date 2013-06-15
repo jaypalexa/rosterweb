@@ -91,15 +91,13 @@
 	else if (($verb == 'PUT') || ($verb == 'POST'))
 	{
 		$sql = '';
-		$tank_id = '';
+
 		if ($verb == 'PUT')
 		{
 			$sql .= 'UPDATE tank SET ';
 			$sql .= 'organization_id = :organization_id, ';
 			$sql .= 'tank_name = :tank_name ';
 			$sql .= 'WHERE tank_id = :tank_id';
-			
-			$tank_id = $parameters['tank_id'];
 		}
 		else if ($verb == 'POST')
 		{
@@ -107,12 +105,10 @@
 			$sql .= '(tank_id, organization_id, tank_name) ';
 			$sql .= 'VALUES ';
 			$sql .= '(:tank_id, :organization_id, :tank_name) ';
-			
-			$tank_id = utilCreateGuid();
 		}
 		$stmt = $db->prepare($sql);
 		
-		$stmt->bindValue(':tank_id', $tank_id);
+		$stmt->bindValue(':tank_id', dbGetParameterValue($parameters, 'tank_id'));
 		$stmt->bindValue(':organization_id', dbGetParameterValue($parameters, 'organization_id'));
 		$stmt->bindValue(':tank_name', dbGetParameterValue($parameters, 'tank_name'));
 

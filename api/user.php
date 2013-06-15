@@ -112,7 +112,7 @@
 	else if (($verb == 'PUT') || ($verb == 'POST'))
 	{
 		$sql = '';
-		$user_id = '';
+
 		if ($verb == 'PUT')
 		{
 			$sql .= 'UPDATE user SET ';
@@ -122,8 +122,6 @@
 			$sql .= 'is_admin = :is_admin, ';
 			$sql .= 'last_login = :last_login ';
 			$sql .= 'WHERE user_id = :user_id';
-			
-			$user_id = $parameters['user_id'];
 		}
 		else if ($verb == 'POST')
 		{
@@ -132,12 +130,10 @@
 			$sql .= ') VALUES (';
 			$sql .= ':user_id, :user_name, :user_email, :organization_id, :is_admin, :last_login ';
 			$sql .= ') ';
-			
-			$user_id = utilCreateGuid();
 		}
 		$stmt = $db->prepare($sql);
 		
-		$stmt->bindValue(':user_id', $user_id);
+		$stmt->bindValue(':user_id', dbGetParameterValue($parameters, 'user_id'));
 		$stmt->bindValue(':user_name', dbGetParameterValue($parameters, 'user_name'));
 		$stmt->bindValue(':user_email', dbGetParameterValue($parameters, 'user_email'));
 		$stmt->bindValue(':organization_id', dbGetParameterValue($parameters, 'organization_id'));

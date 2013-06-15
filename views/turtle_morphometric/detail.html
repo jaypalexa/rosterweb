@@ -1,81 +1,78 @@
-﻿<h3>Morphometric Information for {{ $root.currentTurtleName }}</h3>
-<!--
-<h5>Turtle ID:  {{ $root.currentTurtleId }}</h5>
--->
+﻿<ul class="breadcrumb">
+	<li><a href='#/turtle'>Sea Turtles</a> <span class="divider">/</span></li>
+	<li><a href='#/turtle/edit/{{ $root.currentTurtleId }}'>Sea Turtle:  {{ $root.currentTurtleName }}</a> <span class="divider">/</span> <a href='#/turtle/edit/{{ $root.currentTurtleId }}'>Morphometrics</a> <span class="divider">/</span></li>
+	<li class="active">Morphometric Information</li>
+</ul>
+<h4>Morphometric Information</h4>
 <form name="form" class="form-horizontal">
 	<div class="control-group input-append" style="display: block" ng-class="{error: form.date_measured.$invalid}">
 		<label class="control-label" for="date_measured">Date measured:</label>
 		<div class="controls">
-			<input id="date_measured" name="date_measured" class="input-small" type="text" ng-model="item.date_measured" data-date-format="dd-MM-yyyy" bs-datepicker required autofocus="autofocus" />
+			<input id="date_measured" name="date_measured" class="input-small" type="text" ng-model="item.date_measured" data-date-format="dd-MM-yyyy" bs-datepicker required autofocus="autofocus" ng-model-onblur ng-change="save()" />
 			<button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
 		</div>
 	</div>
     <div class="control-group" ng-class="{error: form.scl_notch_notch_value.$invalid}">
         <label class="control-label" for="scl_notch_notch_value">SCL notch-notch:</label>
         <div class="controls">
-            <input type="text" ng-model="item.scl_notch_notch_value" id="scl_notch_notch_value" name="scl_notch_notch_value" ng-maxlength="10" maxlength="10">
-			<select id="scl_notch_notch_units" name="scl_notch_notch_units" ng-model="item.scl_notch_notch_units" ng-options="c.id as c.name for c in cm_ins"></select>
+            <input type="text" ng-model="item.scl_notch_notch_value" id="scl_notch_notch_value" name="scl_notch_notch_value" ng-maxlength="10" maxlength="10" ng-model-onblur ng-change="save()" />
+			<select id="scl_notch_notch_units" name="scl_notch_notch_units" ng-model="item.scl_notch_notch_units" ng-options="c.id as c.name for c in cm_ins" ng-change="save()" ></select>
         </div>
     </div>
     <div class="control-group" ng-class="{error: form.scl_notch_tip_value.$invalid}">
         <label class="control-label" for="scl_notch_tip_value">SCL notch-tip:</label>
         <div class="controls">
-            <input type="text" ng-model="item.scl_notch_tip_value" id="scl_notch_tip_value" name="scl_notch_tip_value" ng-maxlength="10" maxlength="10">
-			<select id="scl_notch_tip_units" name="scl_notch_tip_units" ng-model="item.scl_notch_tip_units" ng-options="c.id as c.name for c in cm_ins"></select>
+            <input type="text" ng-model="item.scl_notch_tip_value" id="scl_notch_tip_value" name="scl_notch_tip_value" ng-maxlength="10" maxlength="10" ng-model-onblur ng-change="save()" />
+			<select id="scl_notch_tip_units" name="scl_notch_tip_units" ng-model="item.scl_notch_tip_units" ng-options="c.id as c.name for c in cm_ins" ng-change="save()" ></select>
         </div>
     </div>
     <div class="control-group" ng-class="{error: form.scl_tip_tip_value.$invalid}">
         <label class="control-label" for="scl_tip_tip_value">SCL tip-tip:</label>
         <div class="controls">
-            <input type="text" ng-model="item.scl_tip_tip_value" id="scl_tip_tip_value" name="scl_tip_tip_value" ng-maxlength="10" maxlength="10">
-			<select id="scl_tip_tip_units" name="scl_tip_tip_units" ng-model="item.scl_tip_tip_units" ng-options="c.id as c.name for c in cm_ins"></select>
+            <input type="text" ng-model="item.scl_tip_tip_value" id="scl_tip_tip_value" name="scl_tip_tip_value" ng-maxlength="10" maxlength="10" ng-model-onblur ng-change="save()" />
+			<select id="scl_tip_tip_units" name="scl_tip_tip_units" ng-model="item.scl_tip_tip_units" ng-options="c.id as c.name for c in cm_ins" ng-change="save()" ></select>
         </div>
     </div>
     <div class="control-group" ng-class="{error: form.scw_value.$invalid}">
         <label class="control-label" for="scw_value">SCW:</label>
         <div class="controls">
-            <input type="text" ng-model="item.scw_value" id="scw_value" name="scw_value" ng-maxlength="10" maxlength="10">
-			<select id="scw_units" name="scw_units" ng-model="item.scw_units" ng-options="c.id as c.name for c in cm_ins"></select>
+            <input type="text" ng-model="item.scw_value" id="scw_value" name="scw_value" ng-maxlength="10" maxlength="10" ng-model-onblur ng-change="save()" />
+			<select id="scw_units" name="scw_units" ng-model="item.scw_units" ng-options="c.id as c.name for c in cm_ins" ng-change="save()" ></select>
         </div>
     </div>
     <div class="control-group" ng-class="{error: form.ccl_notch_notch_value.$invalid}">
         <label class="control-label" for="ccl_notch_notch_value">CCL notch-notch:</label>
         <div class="controls">
-            <input type="text" ng-model="item.ccl_notch_notch_value" id="ccl_notch_notch_value" name="ccl_notch_notch_value" ng-maxlength="10" maxlength="10">
-			<select id="ccl_notch_notch_units" name="ccl_notch_notch_units" ng-model="item.ccl_notch_notch_units" ng-options="c.id as c.name for c in cm_ins"></select>
+            <input type="text" ng-model="item.ccl_notch_notch_value" id="ccl_notch_notch_value" name="ccl_notch_notch_value" ng-maxlength="10" maxlength="10" ng-model-onblur ng-change="save()" />
+			<select id="ccl_notch_notch_units" name="ccl_notch_notch_units" ng-model="item.ccl_notch_notch_units" ng-options="c.id as c.name for c in cm_ins" ng-change="save()" ></select>
         </div>
     </div>
     <div class="control-group" ng-class="{error: form.ccl_notch_tip_value.$invalid}">
         <label class="control-label" for="ccl_notch_tip_value">CCL notch-tip:</label>
         <div class="controls">
-            <input type="text" ng-model="item.ccl_notch_tip_value" id="ccl_notch_tip_value" name="ccl_notch_tip_value" ng-maxlength="10" maxlength="10">
-			<select id="ccl_notch_tip_units" name="ccl_notch_tip_units" ng-model="item.ccl_notch_tip_units" ng-options="c.id as c.name for c in cm_ins"></select>
+            <input type="text" ng-model="item.ccl_notch_tip_value" id="ccl_notch_tip_value" name="ccl_notch_tip_value" ng-maxlength="10" maxlength="10" ng-model-onblur ng-change="save()" />
+			<select id="ccl_notch_tip_units" name="ccl_notch_tip_units" ng-model="item.ccl_notch_tip_units" ng-options="c.id as c.name for c in cm_ins" ng-change="save()" ></select>
         </div>
     </div>
     <div class="control-group" ng-class="{error: form.ccl_tip_tip_value.$invalid}">
         <label class="control-label" for="ccl_tip_tip_value">CCL tip-tip:</label>
         <div class="controls">
-            <input type="text" ng-model="item.ccl_tip_tip_value" id="ccl_tip_tip_value" name="ccl_tip_tip_value" ng-maxlength="10" maxlength="10">
-			<select id="ccl_tip_tip_units" name="ccl_tip_tip_units" ng-model="item.ccl_tip_tip_units" ng-options="c.id as c.name for c in cm_ins"></select>
+            <input type="text" ng-model="item.ccl_tip_tip_value" id="ccl_tip_tip_value" name="ccl_tip_tip_value" ng-maxlength="10" maxlength="10" ng-model-onblur ng-change="save()" />
+			<select id="ccl_tip_tip_units" name="ccl_tip_tip_units" ng-model="item.ccl_tip_tip_units" ng-options="c.id as c.name for c in cm_ins" ng-change="save()" ></select>
         </div>
     </div>
     <div class="control-group" ng-class="{error: form.ccw_value.$invalid}">
         <label class="control-label" for="ccw_value">CCW:</label>
         <div class="controls">
-            <input type="text" ng-model="item.ccw_value" id="ccw_value" name="ccw_value" ng-maxlength="10" maxlength="10">
-			<select id="ccw_units" name="ccw_units" ng-model="item.ccw_units" ng-options="c.id as c.name for c in cm_ins"></select>
+            <input type="text" ng-model="item.ccw_value" id="ccw_value" name="ccw_value" ng-maxlength="10" maxlength="10" ng-model-onblur ng-change="save()" />
+			<select id="ccw_units" name="ccw_units" ng-model="item.ccw_units" ng-options="c.id as c.name for c in cm_ins" ng-change="save()" ></select>
         </div>
     </div>
     <div class="control-group" ng-class="{error: form.weight_value.$invalid}">
         <label class="control-label" for="weight_value">Weight:</label>
         <div class="controls">
-            <input type="text" ng-model="item.weight_value" id="weight_value" name="weight_value" ng-maxlength="10" maxlength="10">
-			<select id="weight_units" name="weight_units" ng-model="item.weight_units" ng-options="k.id as k.name for k in kg_lbs"></select>
+            <input type="text" ng-model="item.weight_value" id="weight_value" name="weight_value" ng-maxlength="10" maxlength="10" ng-model-onblur ng-change="save()" />
+			<select id="weight_units" name="weight_units" ng-model="item.weight_units" ng-options="k.id as k.name for k in kg_lbs" ng-change="save()" ></select>
         </div>
-    </div>
-
-    <div class="form-actions">
-        <button ng-click="save()" ng-disabled="form.$invalid || $root.currentTurtleId == null" class="btn btn-primary">Save</button>
-        <a href="#/turtle/edit/{{$root.currentTurtleId}}" class="btn">Cancel</a>
     </div>
 </form>

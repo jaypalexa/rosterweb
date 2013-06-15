@@ -29,7 +29,7 @@
 			$item['organization_id'] = $row['organization_id'];
 			$item['species_code'] = $row['species_code'];
 			$item['event_date'] = dbDateOnly($row['event_date']);
-			$item['event_count'] = $row['event_count'];
+			$item['event_count'] = dbIntOrNull($row['event_count']);
 			$item['doa_from_county'] = $row['doa_from_county'];
 			
 			//-- fields to support a consolidated hatchlings event concept
@@ -43,7 +43,7 @@
 	else if (($verb == 'PUT') || ($verb == 'POST'))
 	{
 		$sql = '';
-		$hatchlings_doa_event_id = '';
+
 		if ($verb == 'PUT')
 		{
 			$sql .= 'UPDATE hatchlings_doa_event SET ';
@@ -53,8 +53,6 @@
 			$sql .= 'event_count = :event_count, ';
 			$sql .= 'doa_from_county = :doa_from_county ';
 			$sql .= 'WHERE hatchlings_doa_event_id = :hatchlings_doa_event_id';
-			
-			$hatchlings_doa_event_id = $parameters['hatchlings_doa_event_id'];
 		}
 		else if ($verb == 'POST')
 		{
@@ -62,12 +60,10 @@
 			$sql .= '(hatchlings_doa_event_id, organization_id, species_code, event_date, event_count, doa_from_county) ';
 			$sql .= 'VALUES ';
 			$sql .= '(:hatchlings_doa_event_id, :organization_id, :species_code, :event_date, :event_count, :doa_from_county) ';
-			
-			$hatchlings_doa_event_id = utilCreateGuid();
 		}
 		$stmt = $db->prepare($sql);
 		
-		$stmt->bindValue(':hatchlings_doa_event_id', $hatchlings_doa_event_id);
+		$stmt->bindValue(':hatchlings_doa_event_id', dbGetParameterValue($parameters, 'hatchlings_doa_event_id'));
 		$stmt->bindValue(':organization_id', dbGetParameterValue($parameters, 'organization_id'));
 		$stmt->bindValue(':species_code', dbGetParameterValue($parameters, 'species_code'));
 		$stmt->bindValue(':event_date', dbGetParameterDate($parameters, 'event_date'));

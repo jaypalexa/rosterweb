@@ -29,7 +29,7 @@
 			$item['organization_id'] = $row['organization_id'];
 			$item['species_code'] = $row['species_code'];
 			$item['event_date'] = dbDateOnly($row['event_date']);
-			$item['event_count'] = $row['event_count'];
+			$item['event_count'] = dbIntOrNull($row['event_count']);
 			
 			//-- fields to support a consolidated hatchlings event concept
 			$item['hatchlings_event_id'] = $row['hatchlings_died_event_id'];
@@ -42,7 +42,7 @@
 	else if (($verb == 'PUT') || ($verb == 'POST'))
 	{
 		$sql = '';
-		$hatchlings_died_event_id = '';
+
 		if ($verb == 'PUT')
 		{
 			$sql .= 'UPDATE hatchlings_died_event SET ';
@@ -51,8 +51,6 @@
 			$sql .= 'event_date = :event_date, ';
 			$sql .= 'event_count = :event_count ';
 			$sql .= 'WHERE hatchlings_died_event_id = :hatchlings_died_event_id';
-			
-			$hatchlings_died_event_id = $parameters['hatchlings_died_event_id'];
 		}
 		else if ($verb == 'POST')
 		{
@@ -60,12 +58,10 @@
 			$sql .= '(hatchlings_died_event_id, organization_id, species_code, event_date, event_count) ';
 			$sql .= 'VALUES ';
 			$sql .= '(:hatchlings_died_event_id, :organization_id, :species_code, :event_date, :event_count) ';
-			
-			$hatchlings_died_event_id = utilCreateGuid();
 		}
 		$stmt = $db->prepare($sql);
 		
-		$stmt->bindValue(':hatchlings_died_event_id', $hatchlings_died_event_id);
+		$stmt->bindValue(':hatchlings_died_event_id', dbGetParameterValue($parameters, 'hatchlings_died_event_id'));
 		$stmt->bindValue(':organization_id', dbGetParameterValue($parameters, 'organization_id'));
 		$stmt->bindValue(':species_code', dbGetParameterValue($parameters, 'species_code'));
 		$stmt->bindValue(':event_date', dbGetParameterDate($parameters, 'event_date'));

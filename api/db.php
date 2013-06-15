@@ -72,6 +72,18 @@
 		return $value;
 	}	
 
+	function dbIntOrNull($value)
+	{
+		if ($value == null)
+		{
+			return null;
+		}
+		else
+		{
+			return (int)$value;
+		}
+	}	
+
 	function dbYNtoBoolean($value)
 	{
 		if ($value == null) { return false; }

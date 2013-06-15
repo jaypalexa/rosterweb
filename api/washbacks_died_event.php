@@ -29,7 +29,7 @@
 			$item['organization_id'] = $row['organization_id'];
 			$item['species_code'] = $row['species_code'];
 			$item['event_date'] = dbDateOnly($row['event_date']);
-			$item['event_count'] = $row['event_count'];
+			$item['event_count'] = dbIntOrNull($row['event_count']);
 			$item['under_5cm_clsl'] = dbYNtoBoolean($row['under_5cm_clsl']);
 			
 			//-- fields to support a consolidated washbacks event concept
@@ -43,7 +43,7 @@
 	else if (($verb == 'PUT') || ($verb == 'POST'))
 	{
 		$sql = '';
-		$washbacks_died_event_id = '';
+
 		if ($verb == 'PUT')
 		{
 			$sql .= 'UPDATE washbacks_died_event SET ';
@@ -53,8 +53,6 @@
 			$sql .= 'event_count = :event_count, ';
 			$sql .= 'under_5cm_clsl = :under_5cm_clsl ';
 			$sql .= 'WHERE washbacks_died_event_id = :washbacks_died_event_id';
-			
-			$washbacks_died_event_id = $parameters['washbacks_died_event_id'];
 		}
 		else if ($verb == 'POST')
 		{
@@ -62,12 +60,10 @@
 			$sql .= '(washbacks_died_event_id, organization_id, species_code, event_date, event_count, under_5cm_clsl) ';
 			$sql .= 'VALUES ';
 			$sql .= '(:washbacks_died_event_id, :organization_id, :species_code, :event_date, :event_count, :under_5cm_clsl) ';
-			
-			$washbacks_died_event_id = utilCreateGuid();
 		}
 		$stmt = $db->prepare($sql);
 		
-		$stmt->bindValue(':washbacks_died_event_id', $washbacks_died_event_id);
+		$stmt->bindValue(':washbacks_died_event_id', dbGetParameterValue($parameters, 'washbacks_died_event_id'));
 		$stmt->bindValue(':organization_id', dbGetParameterValue($parameters, 'organization_id'));
 		$stmt->bindValue(':species_code', dbGetParameterValue($parameters, 'species_code'));
 		$stmt->bindValue(':event_date', dbGetParameterDate($parameters, 'event_date'));

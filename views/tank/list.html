@@ -1,5 +1,5 @@
 ﻿<form class="form-search">
-	<div style="float:right;margin-top:0px;margin-bottom:20px;">
+	<div style="float:right;margin-top:3px;margin-bottom:20px;margin-right:6px;">
 		<div class="input-append">
 			<input type="text" ng-model="q" class="input-medium search-query" placeholder="Search">
 			<button ng-click="search()" type="submit" class="btn"><i class="icon-search"></i></button>
@@ -7,7 +7,9 @@
 		<button ng-click="q=''; search()" ng-disabled="!q" type="submit" class="btn">Reset</button>
 	</div>
 </form>
-<h3>Holding Tanks</h3>
+<ul class="breadcrumb">
+	<li class="active">Holding Tanks ({{ $root.recordCounts.tankCount }})</li>
+</ul>
 <table class="table table-striped table-condensed table-hover">
     <thead>
         <th sorted="tank_name">Tank Name</th>

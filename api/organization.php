@@ -20,18 +20,18 @@
 		$item['permit_number'] = $row['permit_number'];
 		$item['contact_name'] = $row['contact_name'];
 		$item['hatchling_balance_as_of_date'] = $row['hatchling_balance_as_of_date'];
-		$item['cc_hatchling_starting_balance'] = $row['cc_hatchling_starting_balance'];
-		$item['cm_hatchling_starting_balance'] = $row['cm_hatchling_starting_balance'];
-		$item['dc_hatchling_starting_balance'] = $row['dc_hatchling_starting_balance'];
-		$item['other_hatchling_starting_balance'] = $row['other_hatchling_starting_balance'];
-		$item['unknown_hatchling_starting_balance'] = $row['unknown_hatchling_starting_balance'];
+		$item['cc_hatchling_starting_balance'] = dbIntOrNull($row['cc_hatchling_starting_balance']);
+		$item['cm_hatchling_starting_balance'] = dbIntOrNull($row['cm_hatchling_starting_balance']);
+		$item['dc_hatchling_starting_balance'] = dbIntOrNull($row['dc_hatchling_starting_balance']);
+		$item['other_hatchling_starting_balance'] = dbIntOrNull($row['other_hatchling_starting_balance']);
+		$item['unknown_hatchling_starting_balance'] = dbIntOrNull($row['unknown_hatchling_starting_balance']);
 		$item['preferred_units_type'] = $row['preferred_units_type'];
 		$item['washback_balance_as_of_date'] = $row['washback_balance_as_of_date'];
-		$item['cc_washback_starting_balance'] = $row['cc_washback_starting_balance'];
-		$item['cm_washback_starting_balance'] = $row['cm_washback_starting_balance'];
-		$item['dc_washback_starting_balance'] = $row['dc_washback_starting_balance'];
-		$item['other_washback_starting_balance'] = $row['other_washback_starting_balance'];
-		$item['unknown_washback_starting_balance'] = $row['unknown_washback_starting_balance'];
+		$item['cc_washback_starting_balance'] = dbIntOrNull($row['cc_washback_starting_balance']);
+		$item['cm_washback_starting_balance'] = dbIntOrNull($row['cm_washback_starting_balance']);
+		$item['dc_washback_starting_balance'] = dbIntOrNull($row['dc_washback_starting_balance']);
+		$item['other_washback_starting_balance'] = dbIntOrNull($row['other_washback_starting_balance']);
+		$item['unknown_washback_starting_balance'] = dbIntOrNull($row['unknown_washback_starting_balance']);
 		
 		return $item;
 	}
@@ -111,7 +111,7 @@
 	else if (($verb == 'PUT') || ($verb == 'POST'))
 	{
 		$sql = '';
-		$organization_id = '';
+
 		if ($verb == 'PUT')
 		{
 			$sql .= 'UPDATE organization SET ';
@@ -140,8 +140,6 @@
 			$sql .= 'other_washback_starting_balance = :other_washback_starting_balance, ';
 			$sql .= 'unknown_washback_starting_balance = :unknown_washback_starting_balance ';
 			$sql .= 'WHERE organization_id = :organization_id';
-			
-			$organization_id = $parameters['organization_id'];
 		}
 		else if ($verb == 'POST')
 		{
@@ -149,12 +147,10 @@
 			$sql .= '(organization_id, organization_name, address_1, address_2, city, state, zip_code, phone, fax, email_address, permit_number, contact_name, hatchling_balance_as_of_date, cc_hatchling_starting_balance, cm_hatchling_starting_balance, dc_hatchling_starting_balance, other_hatchling_starting_balance, unknown_hatchling_starting_balance, preferred_units_type, washback_balance_as_of_date, cc_washback_starting_balance, cm_washback_starting_balance, dc_washback_starting_balance, other_washback_starting_balance, unknown_washback_starting_balance) ';
 			$sql .= 'VALUES ';
 			$sql .= '(:organization_id, :organization_name, :address_1, :address_2, :city, :state, :zip_code, :phone, :fax, :email_address, :permit_number, :contact_name, :hatchling_balance_as_of_date, :cc_hatchling_starting_balance, :cm_hatchling_starting_balance, :dc_hatchling_starting_balance, :other_hatchling_starting_balance, :unknown_hatchling_starting_balance, :preferred_units_type, :washback_balance_as_of_date, :cc_washback_starting_balance, :cm_washback_starting_balance, :dc_washback_starting_balance, :other_washback_starting_balance, :unknown_washback_starting_balance) ';
-			
-			$organization_id = utilCreateGuid();
 		}
 		$stmt = $db->prepare($sql);
 		
-		$stmt->bindValue(':organization_id', $organization_id);
+		$stmt->bindValue(':organization_id', dbGetParameterValue($parameters, 'organization_id'));
 		$stmt->bindValue(':organization_name', dbGetParameterValue($parameters, 'organization_name'));
 		$stmt->bindValue(':address_1', dbGetParameterValue($parameters, 'address_1'));
 		$stmt->bindValue(':address_2', dbGetParameterValue($parameters, 'address_2'));

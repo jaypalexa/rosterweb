@@ -1,5 +1,7 @@
-﻿<h3>Sea Turtle<span ng-show="(item.turtle_name != null)"> - {{item.turtle_name}}</span></h3>
-
+﻿<ul class="breadcrumb">
+	<li><a href='#/turtle'>Sea Turtles</a> <span class="divider">/</span></li>
+	<li class="active">Sea Turtle: {{ item.turtle_name }}</li>
+</ul>
 <form name="form" class="form-horizontal">
     <tabs>
         <pane heading="General Information">
@@ -7,7 +9,7 @@
 				<div class="control-group" ng-class="{error: form.turtle_name.$invalid}">
 					<label class="control-label" for="turtle_name">Turtle Name:</label>
 					<div class="controls">
-						<input type="text" ng-model="item.turtle_name" id="turtle_name" name="turtle_name" required ng-maxlength="255" maxlength="255" autofocus="autofocus" />
+						<input type="text" ng-model="item.turtle_name" id="turtle_name" name="turtle_name" required ng-maxlength="255" maxlength="255" autofocus="autofocus" ng-model-onblur ng-change="save()" />
 						<span class="error" ng-show="form.turtle_name.$error.required">required</span>
 						<span class="error" ng-show="form.turtle_name.$error.maxlength">max length exceeded</span>
 					</div>
@@ -15,114 +17,114 @@
 				<div class="control-group" ng-class="{error: form.sid_number.$invalid}">
 					<label class="control-label" for="sid_number">SID number:</label>
 					<div class="controls">
-						<input type="text" ng-model="item.sid_number" id="sid_number" name="sid_number" ng-maxlength="255" maxlength="255" />
+						<input type="text" ng-model="item.sid_number" id="sid_number" name="sid_number" ng-maxlength="255" maxlength="255" ng-model-onblur ng-change="save()" />
 						<span class="error" ng-show="form.sid_number.$error.maxlength">max length exceeded</span>
 					</div>
 				</div>
 				<div class="control-group" ng-class="{error: form.stranding_id_number.$invalid}">
 					<label class="control-label" for="stranding_id_number">Stranding ID number:</label>
 					<div class="controls">
-						<input type="text" ng-model="item.stranding_id_number" id="stranding_id_number" name="stranding_id_number" ng-maxlength="255" maxlength="255" />
+						<input type="text" ng-model="item.stranding_id_number" id="stranding_id_number" name="stranding_id_number" ng-maxlength="255" maxlength="255" ng-model-onblur ng-change="save()" />
 						<span class="error" ng-show="form.stranding_id_number.$error.maxlength">max length exceeded</span>
 					</div>
 				</div>
 				<div class="control-group" ng-class="{error: form.species.$invalid}">
 					<label class="control-label" for="species">Species:</label>
 					<div class="controls">
-						<select id="species" name="species" ng-model="item.species" ng-options="s.id as s.name for s in species"></select>
+						<select id="species" name="species" ng-model="item.species" ng-options="s.id as s.name for s in species" ng-change="save()" ></select>
 					</div>
 				</div>
 				<div class="control-group" ng-class="{error: form.turtle_size.$invalid}">
 					<label class="control-label" for="turtle_size">Size:</label>
 					<div class="controls">
-						<select id="turtle_size" name="turtle_size" ng-model="item.turtle_size" ng-options="t.id as t.name for t in turtle_sizes"></select>
+						<select id="turtle_size" name="turtle_size" ng-model="item.turtle_size" ng-options="t.id as t.name for t in turtle_sizes" ng-change="save()" ></select>
 					</div>
 				</div>
 				<div class="control-group" ng-class="{error: form.status.$invalid}">
 					<label class="control-label" for="status">Status:</label>
 					<div class="controls">
-						<select id="status" name="status" ng-model="item.status" ng-options="s.id as s.name for s in statuses"></select>
+						<select id="status" name="status" ng-model="item.status" ng-options="s.id as s.name for s in statuses" ng-change="save()" ></select>
 					</div>
 				</div>
 				<div class="control-group input-append" style="display: block" ng-class="{error: form.date_captured.$invalid}">
 					<label class="control-label" for="date_captured">Date captured:</label>
 					<div class="controls">
-						<input id="date_captured" name="date_captured" class="input-small" type="text" ng-model="item.date_captured" data-date-format="dd-MM-yyyy" bs-datepicker />
+						<input id="date_captured" name="date_captured" class="input-small" type="text" ng-model="item.date_captured" data-date-format="dd-MM-yyyy" bs-datepicker ng-model-onblur ng-change="save()" />
 						<button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
 					</div>
 				</div>
 				<div class="control-group input-append" style="display: block" ng-class="{error: form.date_acquired.$invalid}">
 					<label class="control-label" for="date_acquired">Date acquired:</label>
 					<div class="controls">
-						<input id="date_acquired" name="date_acquired" class="input-small" type="text" ng-model="item.date_acquired" data-date-format="dd-MM-yyyy" bs-datepicker />
+						<input id="date_acquired" name="date_acquired" class="input-small" type="text" ng-model="item.date_acquired" data-date-format="dd-MM-yyyy" bs-datepicker ng-model-onblur ng-change="save()" />
 						<button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
 					</div>
 				</div>
 				<div class="control-group" ng-class="{error: form.acquired_from.$invalid}">
 					<label class="control-label" for="acquired_from">Acquired from:</label>
 					<div class="controls">
-						<input type="text" ng-model="item.acquired_from" id="acquired_from" name="acquired_from" ng-maxlength="255" maxlength="255" />
+						<input type="text" ng-model="item.acquired_from" id="acquired_from" name="acquired_from" ng-maxlength="255" maxlength="255" ng-model-onblur ng-change="save()" />
 						<span class="error" ng-show="form.acquired_from.$error.maxlength">max length exceeded</span>
 					</div>
 				</div>
 				<div class="control-group" ng-class="{error: form.acquired_county.$invalid}">
 					<label class="control-label" for="acquired_county">County:</label>
 					<div class="controls">
-						<select id="acquired_county" name="acquired_county" ng-model="item.acquired_county" ng-options="c.county_name as c.county_name for c in counties | orderBy: 'county_name'"></select>
+						<select id="acquired_county" name="acquired_county" ng-model="item.acquired_county" ng-options="c.county_name as c.county_name for c in counties | orderBy: 'county_name'" ng-change="save()" ></select>
 					</div>
 				</div>
 				<div class="control-group" ng-class="{error: form.acquired_latitude.$invalid}">
 					<label class="control-label" for="acquired_latitude">Latitude:</label>
 					<div class="controls">
-						<input type="text" ng-model="item.acquired_latitude" id="acquired_latitude" name="acquired_latitude" ng-maxlength="255" maxlength="255" />
+						<input type="text" ng-model="item.acquired_latitude" id="acquired_latitude" name="acquired_latitude" ng-maxlength="255" maxlength="255" ng-model-onblur ng-change="save()" />
 						<span class="error" ng-show="form.acquired_latitude.$error.maxlength">max length exceeded</span>
 					</div>
 				</div>
 				<div class="control-group" ng-class="{error: form.acquired_longitude.$invalid}">
 					<label class="control-label" for="acquired_longitude">Longitude:</label>
 					<div class="controls">
-						<input type="text" ng-model="item.acquired_longitude" id="acquired_longitude" name="acquired_longitude" ng-maxlength="255" maxlength="255" />
+						<input type="text" ng-model="item.acquired_longitude" id="acquired_longitude" name="acquired_longitude" ng-maxlength="255" maxlength="255" ng-model-onblur ng-change="save()" />
 						<span class="error" ng-show="form.acquired_longitude.$error.maxlength">max length exceeded</span>
 					</div>
 				</div>
 				<div class="control-group input-append" style="display: block" ng-class="{error: form.date_relinquished.$invalid}">
 					<label class="control-label" for="date_relinquished">Date relinquished:</label>
 					<div class="controls">
-						<input id="date_relinquished" name="date_relinquished" class="input-small" type="text" ng-model="item.date_relinquished" data-date-format="dd-MM-yyyy" bs-datepicker />
+						<input id="date_relinquished" name="date_relinquished" class="input-small" type="text" ng-model="item.date_relinquished" data-date-format="dd-MM-yyyy" bs-datepicker ng-model-onblur ng-change="save()" />
 						<button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
 					</div>
 				</div>
 				<div class="control-group" ng-class="{error: form.relinquished_to.$invalid}">
 					<label class="control-label" for="relinquished_to">Relinquished to:</label>
 					<div class="controls">
-						<input type="text" ng-model="item.relinquished_to" id="relinquished_to" name="relinquished_to" ng-maxlength="255" maxlength="255" />
+						<input type="text" ng-model="item.relinquished_to" id="relinquished_to" name="relinquished_to" ng-maxlength="255" maxlength="255" ng-model-onblur ng-change="save()" />
 						<span class="error" ng-show="form.relinquished_to.$error.maxlength">max length exceeded</span>
 					</div>
 				</div>
 				<div class="control-group" ng-class="{error: form.relinquished_county.$invalid}">
 					<label class="control-label" for="relinquished_county">County:</label>
 					<div class="controls">
-						<select id="relinquished_county" name="relinquished_county" ng-model="item.relinquished_county" ng-options="c.county_name as c.county_name for c in counties | orderBy: 'county_name'"></select>
+						<select id="relinquished_county" name="relinquished_county" ng-model="item.relinquished_county" ng-options="c.county_name as c.county_name for c in counties | orderBy: 'county_name'" ng-change="save()" ></select>
 					</div>
 				</div>
 				<div class="control-group" ng-class="{error: form.relinquished_latitude.$invalid}">
 					<label class="control-label" for="relinquished_latitude">Latitude:</label>
 					<div class="controls">
-						<input type="text" ng-model="item.relinquished_latitude" id="relinquished_latitude" name="relinquished_latitude" ng-maxlength="255" maxlength="255" />
+						<input type="text" ng-model="item.relinquished_latitude" id="relinquished_latitude" name="relinquished_latitude" ng-maxlength="255" maxlength="255" ng-model-onblur ng-change="save()" />
 						<span class="error" ng-show="form.relinquished_latitude.$error.maxlength">max length exceeded</span>
 					</div>
 				</div>
 				<div class="control-group" ng-class="{error: form.relinquished_longitude.$invalid}">
 					<label class="control-label" for="relinquished_longitude">Longitude:</label>
 					<div class="controls">
-						<input type="text" ng-model="item.relinquished_longitude" id="relinquished_longitude" name="relinquished_longitude" ng-maxlength="255" maxlength="255" />
+						<input type="text" ng-model="item.relinquished_longitude" id="relinquished_longitude" name="relinquished_longitude" ng-maxlength="255" maxlength="255" ng-model-onblur ng-change="save()" />
 						<span class="error" ng-show="form.relinquished_longitude.$error.maxlength">max length exceeded</span>
 					</div>
 				</div>
 				<div class="control-group" ng-class="{error: form.anomalies.$invalid}">
 					<label class="control-label" for="anomalies">Anomalies:</label>
 					<div class="controls">
-						<input type="text" ng-model="item.anomalies" id="anomalies" name="anomalies" ng-maxlength="255" maxlength="255" />
+						<input type="text" ng-model="item.anomalies" id="anomalies" name="anomalies" ng-maxlength="255" maxlength="255" ng-model-onblur ng-change="save()" />
 						<span class="error" ng-show="form.anomalies.$error.maxlength">max length exceeded</span>
 					</div>
 				</div>
@@ -133,78 +135,74 @@
 					<div class="control-group" style="margin-bottom: 0px;">
 						<div class="controls" style="margin-left: 20px;">
 							<label class="checkbox" for="injury_boat_strike">
-								<input type="checkbox" ng-model="item.injury_boat_strike" ng-checked="item.injury_boat_strike" name="injury_boat_strike" id="injury_boat_strike" />Boat/Propeller strike
+								<input type="checkbox" ng-model="item.injury_boat_strike" ng-checked="item.injury_boat_strike" name="injury_boat_strike" id="injury_boat_strike" ng-change="save()" />Boat/Propeller strike
 							</label>
 						</div>
 					</div>
 					<div class="control-group" style="margin-bottom: 0px;">
 						<div class="controls" style="margin-left: 20px;">
 							<label class="checkbox" for="injury_intestinal_impaction">
-								<input type="checkbox" ng-model="item.injury_intestinal_impaction" ng-checked="item.injury_intestinal_impaction" name="injury_intestinal_impaction" id="injury_intestinal_impaction" />Intestinal impaction
+								<input type="checkbox" ng-model="item.injury_intestinal_impaction" ng-checked="item.injury_intestinal_impaction" name="injury_intestinal_impaction" id="injury_intestinal_impaction" ng-change="save()" />Intestinal impaction
 							</label>
 						</div>
 					</div>	
 					<div class="control-group" style="margin-bottom: 0px;">
 						<div class="controls" style="margin-left: 20px;">
 							<label class="checkbox" for="injury_line_entanglement">
-								<input type="checkbox" ng-model="item.injury_line_entanglement" ng-checked="item.injury_line_entanglement" name="injury_line_entanglement" id="injury_line_entanglement" />Line/Net entanglement
+								<input type="checkbox" ng-model="item.injury_line_entanglement" ng-checked="item.injury_line_entanglement" name="injury_line_entanglement" id="injury_line_entanglement" ng-change="save()" />Line/Net entanglement
 							</label>
 						</div>
 					</div>	
 					<div class="control-group" style="margin-bottom: 0px;">
 						<div class="controls" style="margin-left: 20px;">
 							<label class="checkbox" for="injury_fish_hook">
-								<input type="checkbox" ng-model="item.injury_fish_hook" ng-checked="item.injury_fish_hook" name="injury_fish_hook" id="injury_fish_hook" />Fish hook
+								<input type="checkbox" ng-model="item.injury_fish_hook" ng-checked="item.injury_fish_hook" name="injury_fish_hook" id="injury_fish_hook" ng-change="save()" />Fish hook
 							</label>
 						</div>
 					</div>	
 					<div class="control-group" style="margin-bottom: 0px;">
 						<div class="controls" style="margin-left: 20px;">
 							<label class="checkbox" for="injury_upper_respiratory">
-								<input type="checkbox" ng-model="item.injury_upper_respiratory" ng-checked="item.injury_upper_respiratory" name="injury_upper_respiratory" id="injury_upper_respiratory" />Upper respiratory
+								<input type="checkbox" ng-model="item.injury_upper_respiratory" ng-checked="item.injury_upper_respiratory" name="injury_upper_respiratory" id="injury_upper_respiratory" ng-change="save()" />Upper respiratory
 							</label>
 						</div>
 					</div>	
 					<div class="control-group" style="margin-bottom: 0px;">
 						<div class="controls" style="margin-left: 20px;">
 							<label class="checkbox" for="injury_animal_bite">
-								<input type="checkbox" ng-model="item.injury_animal_bite" ng-checked="item.injury_animal_bite" name="injury_animal_bite" id="injury_animal_bite" />Shark/Bird bite
+								<input type="checkbox" ng-model="item.injury_animal_bite" ng-checked="item.injury_animal_bite" name="injury_animal_bite" id="injury_animal_bite" ng-change="save()" />Shark/Bird bite
 							</label>
 						</div>
 					</div>	
 					<div class="control-group" style="margin-bottom: 0px;">
 						<div class="controls" style="margin-left: 20px;">
 							<label class="checkbox" for="injury_fibropapilloma">
-								<input type="checkbox" ng-model="item.injury_fibropapilloma" ng-checked="item.injury_fibropapilloma" name="injury_fibropapilloma" id="injury_fibropapilloma" />Fibropapilloma
+								<input type="checkbox" ng-model="item.injury_fibropapilloma" ng-checked="item.injury_fibropapilloma" name="injury_fibropapilloma" id="injury_fibropapilloma" ng-change="save()" />Fibropapilloma
 							</label>
 						</div>
 					</div>	
 					<div class="control-group" style="margin-bottom: 0px;">
 						<div class="controls" style="margin-left: 20px;">
 							<label class="checkbox" for="injury_misc_epidemic">
-								<input type="checkbox" ng-model="item.injury_misc_epidemic" ng-checked="item.injury_misc_epidemic" name="injury_misc_epidemic" id="injury_misc_epidemic" />Misc. epidemic
+								<input type="checkbox" ng-model="item.injury_misc_epidemic" ng-checked="item.injury_misc_epidemic" name="injury_misc_epidemic" id="injury_misc_epidemic" ng-change="save()" />Misc. epidemic
 							</label>
 						</div>
 					</div>	
 					<div class="control-group" style="margin-bottom: 0px;">
 						<div class="controls" style="margin-left: 20px;">
 							<label class="checkbox" for="injury_doa">
-								<input type="checkbox" ng-model="item.injury_doa" ng-checked="item.injury_doa" name="injury_doa" id="injury_doa" />DOA
+								<input type="checkbox" ng-model="item.injury_doa" ng-checked="item.injury_doa" name="injury_doa" id="injury_doa" ng-change="save()" />DOA
 							</label>
 						</div>
 					</div>	
 					<div class="control-group" style="margin-bottom: 0px;">
 						<div class="controls" style="margin-left: 20px;">
 							<label class="checkbox" for="injury_other">
-								<input type="checkbox" ng-model="item.injury_other" ng-checked="item.injury_other" name="injury_other" id="injury_other" />Other
+								<input type="checkbox" ng-model="item.injury_other" ng-checked="item.injury_other" name="injury_other" id="injury_other" ng-change="save()" />Other
 							</label>
 						</div>
 					</div>	
 				</div>
-			</div>
-			<div class="form-actions" style="clear:both;">
-				<button ng-click="save()" ng-disabled="form.$invalid || $root.currentUser.organizationId == null" class="btn btn-primary">Save</button>
-				<a href="#/turtle/" class="btn">Cancel</a>
 			</div>
 		</pane>
         <pane heading="Tags ({{ $root.recordCounts.turtleTagCount }})" active="$root.turtleActiveTabName == 'turtle_tag'">
@@ -218,39 +216,39 @@
 					<div class="control-group" style="margin-bottom: 0px;">
 						<div class="controls" style="margin-left: 20px; margin-bottom: 12px;">
 							<label class="checkbox" for="was_carrying_tags_when_enc">
-								<input type="checkbox" ng-model="item.was_carrying_tags_when_enc" ng-checked="item.was_carrying_tags_when_enc" name="was_carrying_tags_when_enc" id="was_carrying_tags_when_enc" />Was turtle carrying tags when initially encountered?
+								<input type="checkbox" ng-model="item.was_carrying_tags_when_enc" ng-checked="item.was_carrying_tags_when_enc" name="was_carrying_tags_when_enc" id="was_carrying_tags_when_enc" ng-change="save()" />Was turtle carrying tags when initially encountered?
 							</label>
 						</div>
 					</div>	
 					<div class="control-group" ng-class="{error: form.recapture_type.$invalid}">
 						<label class="control-label" for="recapture_type">If yes, recapture type:</label>
 						<div class="controls">
-							<select id="recapture_type" name="recapture_type" ng-model="item.recapture_type" ng-options="r.id as r.name for r in recapture_types" ng-disabled="item.was_carrying_tags_when_enc == false"></select>
+							<select id="recapture_type" name="recapture_type" ng-model="item.recapture_type" ng-options="r.id as r.name for r in recapture_types" ng-disabled="item.was_carrying_tags_when_enc == false" ng-change="save()" ></select>
 						</div>
 					</div>
 					<div class="control-group" ng-class="{error: form.tag_return_address.$invalid}">
 						<label class="control-label" for="tag_return_address">Tag return address:</label>
 						<div class="controls">
-							<input type="text" ng-model="item.tag_return_address" id="tag_return_address" name="tag_return_address" ng-maxlength="255" maxlength="255" ng-disabled="item.was_carrying_tags_when_enc == false" />
+							<input type="text" ng-model="item.tag_return_address" id="tag_return_address" name="tag_return_address" ng-maxlength="255" maxlength="255" ng-disabled="item.was_carrying_tags_when_enc == false" ng-model-onblur ng-change="save()" />
 							<span class="error" ng-show="form.tag_return_address.$error.maxlength">max length exceeded</span>
 						</div>
 					</div>		
 					<div class="control-group" ng-class="{error: form.capture_project_type.$invalid}">
 						<label class="control-label" for="capture_project_type">Project type:</label>
 						<div class="controls">
-							<select id="capture_project_type" name="capture_project_type" ng-model="item.capture_project_type" ng-options="c.id as c.name for c in capture_project_types"></select>
+							<select id="capture_project_type" name="capture_project_type" ng-model="item.capture_project_type" ng-options="c.id as c.name for c in capture_project_types" ng-change="save()" ></select>
 						</div>
 					</div>
 					<div class="control-group" ng-class="{error: form.did_turtle_nest.$invalid}">
 						<label class="control-label" for="did_turtle_nest">If "Nesting beach," did turtle nest?:</label>
 						<div class="controls">
-							<select id="did_turtle_nest" name="did_turtle_nest" ng-model="item.did_turtle_nest" ng-options="y.id as y.name for y in yes_no_undetermineds" ng-disabled="item.capture_project_type != 'N'"></select>
+							<select id="did_turtle_nest" name="did_turtle_nest" ng-model="item.did_turtle_nest" ng-options="y.id as y.name for y in yes_no_undetermineds" ng-disabled="item.capture_project_type != 'N'" ng-change="save()" ></select>
 						</div>
 					</div>
 					<div class="control-group" ng-class="{error: form.capture_project_other.$invalid}">
 						<label class="control-label" for="capture_project_other">If "Other," describe:</label>
 						<div class="controls">
-							<input type="text" ng-model="item.capture_project_other" id="capture_project_other" name="capture_project_other" ng-maxlength="255" maxlength="255" ng-disabled="item.capture_project_type != 'O'" />
+							<input type="text" ng-model="item.capture_project_other" id="capture_project_other" name="capture_project_other" ng-maxlength="255" maxlength="255" ng-disabled="item.capture_project_type != 'O'" ng-model-onblur ng-change="save()" />
 							<span class="error" ng-show="form.capture_project_other.$error.maxlength">max length exceeded</span>
 						</div>
 					</div>
@@ -262,60 +260,56 @@
 					<div class="control-group" style="margin-bottom: 0px;">
 						<label class="control-label" for="inspected_for_tag_scars">Tag scars:</label>
 						<div class="controls">
-							<input type="checkbox" ng-model="item.inspected_for_tag_scars" ng-checked="item.inspected_for_tag_scars" name="inspected_for_tag_scars" id="inspected_for_tag_scars" />
+							<input type="checkbox" ng-model="item.inspected_for_tag_scars" ng-checked="item.inspected_for_tag_scars" name="inspected_for_tag_scars" id="inspected_for_tag_scars" ng-change="save()" />
 						</div>
 					</div>	
 					<div class="control-group" ng-class="{error: form.tag_scars_located.$invalid}">
 						<label class="control-label" for="tag_scars_located">Location?:</label>
 						<div class="controls">
-							<input type="text" ng-model="item.tag_scars_located" id="tag_scars_located" name="tag_scars_located" ng-maxlength="255" maxlength="255" ng-disabled="item.inspected_for_tag_scars == false" />
+							<input type="text" ng-model="item.tag_scars_located" id="tag_scars_located" name="tag_scars_located" ng-maxlength="255" maxlength="255" ng-disabled="item.inspected_for_tag_scars == false" ng-model-onblur ng-change="save()" />
 							<span class="error" ng-show="form.tag_scars_located.$error.maxlength">max length exceeded</span>
 						</div>
 					</div>
 					<div class="control-group" style="margin-bottom: 0px;">
 						<label class="control-label" for="scanned_for_pit_tags">PIT tags:</label>
 						<div class="controls">
-							<input type="checkbox" ng-model="item.scanned_for_pit_tags" ng-checked="item.scanned_for_pit_tags" name="scanned_for_pit_tags" id="scanned_for_pit_tags" />
+							<input type="checkbox" ng-model="item.scanned_for_pit_tags" ng-checked="item.scanned_for_pit_tags" name="scanned_for_pit_tags" id="scanned_for_pit_tags" ng-change="save()" />
 						</div>
 					</div>	
 					<div class="control-group" ng-class="{error: form.pit_tags_scan_frequency.$invalid}">
 						<label class="control-label" for="pit_tags_scan_frequency">Frequency?:</label>
 						<div class="controls">
-							<input type="text" ng-model="item.pit_tags_scan_frequency" id="pit_tags_scan_frequency" name="pit_tags_scan_frequency" ng-maxlength="255" maxlength="255" ng-disabled="item.scanned_for_pit_tags == false" />
+							<input type="text" ng-model="item.pit_tags_scan_frequency" id="pit_tags_scan_frequency" name="pit_tags_scan_frequency" ng-maxlength="255" maxlength="255" ng-disabled="item.scanned_for_pit_tags == false" ng-model-onblur ng-change="save()" />
 							<span class="error" ng-show="form.pit_tags_scan_frequency.$error.maxlength">max length exceeded</span>
 						</div>
 					</div>
 					<div class="control-group" style="margin-bottom: 0px;">
 						<label class="control-label" for="scanned_for_magnetic_wires">Magnetic wires:</label>
 						<div class="controls">
-							<input type="checkbox" ng-model="item.scanned_for_magnetic_wires" ng-checked="item.scanned_for_magnetic_wires" name="scanned_for_magnetic_wires" id="scanned_for_magnetic_wires" />
+							<input type="checkbox" ng-model="item.scanned_for_magnetic_wires" ng-checked="item.scanned_for_magnetic_wires" name="scanned_for_magnetic_wires" id="scanned_for_magnetic_wires" ng-change="save()" />
 						</div>
 					</div>	
 					<div class="control-group" ng-class="{error: form.magnetic_wires_located.$invalid}">
 						<label class="control-label" for="magnetic_wires_located">Located?:</label>
 						<div class="controls">
-							<input type="text" ng-model="item.magnetic_wires_located" id="magnetic_wires_located" name="magnetic_wires_located" ng-maxlength="255" maxlength="255" ng-disabled="item.scanned_for_magnetic_wires == false" />
+							<input type="text" ng-model="item.magnetic_wires_located" id="magnetic_wires_located" name="magnetic_wires_located" ng-maxlength="255" maxlength="255" ng-disabled="item.scanned_for_magnetic_wires == false" ng-model-onblur ng-change="save()" />
 							<span class="error" ng-show="form.magnetic_wires_located.$error.maxlength">max length exceeded</span>
 						</div>
 					</div>
 					<div class="control-group" style="margin-bottom: 0px;">
 						<label class="control-label" for="inspected_for_living_tags">Living tags:</label>
 						<div class="controls">
-							<input type="checkbox" ng-model="item.inspected_for_living_tags" ng-checked="item.inspected_for_living_tags" name="inspected_for_living_tags" id="inspected_for_living_tags" />
+							<input type="checkbox" ng-model="item.inspected_for_living_tags" ng-checked="item.inspected_for_living_tags" name="inspected_for_living_tags" id="inspected_for_living_tags" ng-change="save()" />
 						</div>
 					</div>	
 					<div class="control-group" ng-class="{error: form.living_tags_located.$invalid}">
 						<label class="control-label" for="living_tags_located">Located?:</label>
 						<div class="controls">
-							<input type="text" ng-model="item.living_tags_located" id="living_tags_located" name="living_tags_located" ng-maxlength="255" maxlength="255" ng-disabled="item.inspected_for_living_tags == false" />
+							<input type="text" ng-model="item.living_tags_located" id="living_tags_located" name="living_tags_located" ng-maxlength="255" maxlength="255" ng-disabled="item.inspected_for_living_tags == false" ng-model-onblur ng-change="save()" />
 							<span class="error" ng-show="form.living_tags_located.$error.maxlength">max length exceeded</span>
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="form-actions" style="clear:both;">
-				<button ng-click="save()" ng-disabled="form.$invalid || $root.currentUser.organizationId == null" class="btn btn-primary">Save</button>
-				<a href="#/turtle/" class="btn">Cancel</a>
 			</div>
 		</pane>
         <pane heading="Morphometrics ({{ $root.recordCounts.turtleMorphometricCount }})" active="$root.turtleActiveTabName == 'turtle_morphometric'">
@@ -329,27 +323,23 @@
 			<div class="control-group" ng-class="{error: form.brochure_comments.$invalid}">
 				<label class="control-label" for="brochure_comments">Brochure comments:</label>
 				<div class="controls">
-					<input type="text" ng-model="item.brochure_comments" id="brochure_comments" name="brochure_comments" ng-maxlength="255" maxlength="255" />
+					<input type="text" ng-model="item.brochure_comments" id="brochure_comments" name="brochure_comments" ng-maxlength="255" maxlength="255" ng-model-onblur ng-change="save()" />
 					<span class="error" ng-show="form.brochure_comments.$error.maxlength">max length exceeded</span>
 				</div>
 			</div>
 			<div class="control-group" ng-class="{error: form.brochure_background_color.$invalid}">
 				<label class="control-label" for="brochure_background_color">Brochure background color:</label>
 				<div class="controls">
-					<input type="text" ng-model="item.brochure_background_color" id="brochure_background_color" name="brochure_background_color" ng-maxlength="255" maxlength="255" />
+					<input type="text" ng-model="item.brochure_background_color" id="brochure_background_color" name="brochure_background_color" ng-maxlength="255" maxlength="255" ng-model-onblur ng-change="save()" />
 					<span class="error" ng-show="form.brochure_background_color.$error.maxlength">max length exceeded</span>
 				</div>
 			</div>
 			<div class="control-group" ng-class="{error: form.brochure_image_file_attachment_id.$invalid}">
 				<label class="control-label" for="brochure_image_file_attachment_id">Brochure image:</label>
 				<div class="controls">
-					<input type="text" ng-model="item.brochure_image_file_attachment_id" id="brochure_image_file_attachment_id" name="brochure_image_file_attachment_id" ng-maxlength="255" maxlength="255" />
+					<input type="text" ng-model="item.brochure_image_file_attachment_id" id="brochure_image_file_attachment_id" name="brochure_image_file_attachment_id" ng-maxlength="255" maxlength="255" ng-model-onblur ng-change="save()" />
 					<span class="error" ng-show="form.brochure_image_file_attachment_id.$error.maxlength">max length exceeded</span>
 				</div>
-			</div>
-			<div class="form-actions" style="clear:both;">
-				<button ng-click="save()" ng-disabled="form.$invalid || $root.currentUser.organizationId == null" class="btn btn-primary">Save</button>
-				<a href="#/turtle/" class="btn">Cancel</a>
 			</div>
 		</pane>
     </tabs>

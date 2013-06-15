@@ -109,12 +109,12 @@
 	else if (($verb == 'PUT') || ($verb == 'POST'))
 	{
 		$sql = '';
-		$turtle_morphometric_id = '';
+
 		if ($verb == 'PUT')
 		{
 			$sql .= 'UPDATE turtle_morphometric SET ';
 			$sql .= 'turtle_id = :turtle_id, ';
-			$sql .= 'date_measured = :date_measured ';
+			$sql .= 'date_measured = :date_measured, ';
 			$sql .= 'scl_notch_notch_value = :scl_notch_notch_value, ';
 			$sql .= 'scl_notch_notch_units = :scl_notch_notch_units, ';
 			$sql .= 'scl_notch_tip_value = :scl_notch_tip_value, ';
@@ -134,8 +134,6 @@
 			$sql .= 'weight_value = :weight_value, ';
 			$sql .= 'weight_units = :weight_units ';
 			$sql .= 'WHERE turtle_morphometric_id = :turtle_morphometric_id';
-			
-			$turtle_morphometric_id = $parameters['turtle_morphometric_id'];
 		}
 		else if ($verb == 'POST')
 		{
@@ -154,12 +152,10 @@
 			$sql .= ':ccl_tip_tip_value, :ccl_tip_tip_units, :ccw_value, :ccw_units, ';
 			$sql .= ':weight_value, :weight_units ';
 			$sql .= ') ';
-			
-			$turtle_morphometric_id = utilCreateGuid();
 		}
 		$stmt = $db->prepare($sql);
 		
-		$stmt->bindValue(':turtle_morphometric_id', $turtle_morphometric_id);
+		$stmt->bindValue(':turtle_morphometric_id', dbGetParameterValue($parameters, 'turtle_morphometric_id'));
 		$stmt->bindValue(':turtle_id', dbGetParameterValue($parameters, 'turtle_id'));
 		$stmt->bindValue(':date_measured', dbGetParameterDate($parameters, 'date_measured'));
 		$stmt->bindValue(':scl_notch_notch_value', dbGetParameterValue($parameters, 'scl_notch_notch_value'));

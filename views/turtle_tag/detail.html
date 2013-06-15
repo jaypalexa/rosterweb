@@ -1,12 +1,14 @@
-﻿<h3>Tag for {{ $root.currentTurtleName }}</h3>
-<!--
-<h5>Turtle ID:  {{ $root.currentTurtleId }}</h5>
--->
+﻿<ul class="breadcrumb">
+	<li><a href='#/turtle'>Sea Turtles</a> <span class="divider">/</span></li>
+	<li><a href='#/turtle/edit/{{ $root.currentTurtleId }}'>Sea Turtle:  {{ $root.currentTurtleName }}</a> <span class="divider">/</span> <a href='#/turtle/edit/{{ $root.currentTurtleId }}'>Tags</a> <span class="divider">/</span></li>
+	<li class="active">Tag: {{ item.tag_number }}</li>
+</ul>
+<h4>Tag</h4>
 <form name="form" class="form-horizontal">
     <div class="control-group" ng-class="{error: form.tag_number.$invalid}">
         <label class="control-label" for="tag_number">Tag number:</label>
         <div class="controls">
-            <input type="text" ng-model="item.tag_number" id="tag_number" name="tag_number" required ng-maxlength="255" maxlength="255" autofocus="autofocus">
+            <input type="text" ng-model="item.tag_number" id="tag_number" name="tag_number" required ng-maxlength="255" maxlength="255" autofocus="autofocus" ng-model-onblur ng-change="save()" />
 			<span class="error" ng-show="form.tag_number.$error.required">required</span>
 			<span class="error" ng-show="form.tag_number.$error.maxlength">max length exceeded</span>
         </div>
@@ -14,25 +16,20 @@
 	<div class="control-group" ng-class="{error: form.tag_type.$invalid}">
 		<label class="control-label" for="tag_type">Tag type:</label>
 		<div class="controls">
-			<select id="tag_type" name="tag_type" ng-model="item.tag_type" ng-options="t.id as t.name for t in tag_types"></select>
+			<select id="tag_type" name="tag_type" ng-model="item.tag_type" ng-options="t.id as t.name for t in tag_types" ng-change="save()" ></select>
 		</div>
 	</div>
 	<div class="control-group" ng-class="{error: form.location.$invalid}">
 		<label class="control-label" for="location">Location on turtle:</label>
 		<div class="controls">
-			<select id="location" name="location" ng-model="item.location" ng-options="t.id as t.name for t in tag_locations"></select>
+			<select id="location" name="location" ng-model="item.location" ng-options="t.id as t.name for t in tag_locations" ng-change="save()" ></select>
 		</div>
 	</div>
 	<div class="control-group input-append" style="display: block" ng-class="{error: form.date_tagged.$invalid}">
 		<label class="control-label" for="date_tagged">Date tagged:</label>
 		<div class="controls">
-			<input id="date_tagged" name="date_tagged" class="input-small" type="text" ng-model="item.date_tagged" data-date-format="dd-MM-yyyy" bs-datepicker />
+			<input id="date_tagged" name="date_tagged" class="input-small" type="text" ng-model="item.date_tagged" data-date-format="dd-MM-yyyy" bs-datepicker ng-model-onblur ng-change="save()" />
 			<button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
 		</div>
 	</div>
-
-    <div class="form-actions">
-        <button ng-click="save()" ng-disabled="form.$invalid || $root.currentTurtleId == null" class="btn btn-primary">Save</button>
-        <a href="#/turtle/edit/{{$root.currentTurtleId}}" class="btn">Cancel</a>
-    </div>
 </form>

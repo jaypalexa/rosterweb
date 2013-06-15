@@ -19,3 +19,21 @@ RosterWebApp.directive('sorted', function() {
         }
     };
 });
+
+// ng-model-onblur:  for text and date INPUTs, updates the model on blur rather than on change; use in conjunction with ng-change="save()"
+RosterWebApp.directive('ngModelOnblur', function() {
+    return {
+        require: 'ngModel',
+        restrict: 'A',
+        link: function(scope, elm, attr, ngModelCtrl) {
+            if (attr.type === 'radio' || attr.type === 'checkbox') return;
+            
+            elm.unbind('input').unbind('keydown').unbind('change');
+            elm.bind('blur', function() {
+                scope.$apply(function() {
+                    ngModelCtrl.$setViewValue(elm.val());
+                });         
+            });
+        }
+    };
+});

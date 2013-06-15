@@ -1,5 +1,7 @@
-﻿<h3>Organization</h3>
-
+﻿<ul class="breadcrumb">
+	<li><a href='#/organization'>Organizations</a> <span class="divider">/</span></li>
+	<li class="active">Organization: {{ item.organization_name }}</li>
+</ul>
 <form name="form" class="form-horizontal">
     <tabs>
         <pane heading="General Information">
@@ -7,7 +9,7 @@
 				<div class="control-group" ng-class="{error: form.organization_name.$invalid}">
 					<label class="control-label" for="organization_name">Organization name:</label>
 					<div class="controls">
-						<input type="text" ng-model="item.organization_name" id="organization_name" name="organization_name" required ng-maxlength="255" maxlength="255" autofocus="autofocus">
+						<input type="text" ng-model="item.organization_name" id="organization_name" name="organization_name" required ng-maxlength="255" maxlength="255" autofocus="autofocus" ng-model-onblur ng-change="save()" />
 						<span class="error" ng-show="form.organization_name.$error.required">required</span>
 						<span class="error" ng-show="form.organization_name.$error.maxlength">max length exceeded</span>
 					</div>
@@ -15,34 +17,34 @@
 				<div class="control-group" ng-class="{error: form.address_1.$invalid}">
 					<label class="control-label" for="address_1">Address 1:</label>
 					<div class="controls">
-						<input type="text" ng-model="item.address_1" id="address_1" name="address_1" ng-maxlength="255" maxlength="255">
+						<input type="text" ng-model="item.address_1" id="address_1" name="address_1" ng-maxlength="255" maxlength="255" ng-model-onblur ng-change="save()" />
 						<span class="error" ng-show="form.address_1.$error.maxlength">max length exceeded</span>
 					</div>
 				</div>
 				<div class="control-group" ng-class="{error: form.address_2.$invalid}">
 					<label class="control-label" for="address_2">Address 2:</label>
 					<div class="controls">
-						<input type="text" ng-model="item.address_2" id="address_2" name="address_2" ng-maxlength="255" maxlength="255">
+						<input type="text" ng-model="item.address_2" id="address_2" name="address_2" ng-maxlength="255" maxlength="255" ng-model-onblur ng-change="save()" />
 						<span class="error" ng-show="form.address_2.$error.maxlength">max length exceeded</span>
 					</div>
 				</div>
 				<div class="control-group" ng-class="{error: form.city.$invalid}">
 					<label class="control-label" for="city">City:</label>
 					<div class="controls">
-						<input type="text" ng-model="item.city" id="city" name="city" ng-maxlength="255" maxlength="255">
+						<input type="text" ng-model="item.city" id="city" name="city" ng-maxlength="255" maxlength="255" ng-model-onblur ng-change="save()" />
 						<span class="error" ng-show="form.city.$error.maxlength">max length exceeded</span>
 					</div>
 				</div>
 				<div class="control-group" ng-class="{error: form.state.$invalid}">
 					<label class="control-label" for="state">State:</label>
 					<div class="controls">
-						<select id="state" name="state" ng-model="item.state" ng-options="s.id as s.name for s in states | orderBy: 'name'"></select>
+						<select id="state" name="state" ng-model="item.state" ng-options="s.id as s.name for s in states | orderBy: 'name'" ng-change="save()"></select>
 					</div>
 				</div>
 				<div class="control-group" ng-class="{error: form.zip_code.$invalid}">
 					<label class="control-label" for="zip_code">ZIP code:</label>
 					<div class="controls">
-						<input type="text" ng-model="item.zip_code" id="zip_code" name="zip_code" ng-maxlength="255" maxlength="255">
+						<input type="text" ng-model="item.zip_code" id="zip_code" name="zip_code" ng-maxlength="255" maxlength="255" ng-model-onblur ng-change="save()" />
 						<span class="error" ng-show="form.zip_code.$error.maxlength">max length exceeded</span>
 					</div>
 				</div>
@@ -51,35 +53,35 @@
 				<div class="control-group" ng-class="{error: form.phone.$invalid}">
 					<label class="control-label" for="phone">Phone:</label>
 					<div class="controls">
-						<input type="text" ng-model="item.phone" id="phone" name="phone" ng-maxlength="255" maxlength="255">
+						<input type="text" ng-model="item.phone" id="phone" name="phone" ng-maxlength="255" maxlength="255" ng-model-onblur ng-change="save()" />
 						<span class="error" ng-show="form.phone.$error.maxlength">max length exceeded</span>
 					</div>
 				</div>
 				<div class="control-group" ng-class="{error: form.fax.$invalid}">
 					<label class="control-label" for="fax">Fax:</label>
 					<div class="controls">
-						<input type="text" ng-model="item.fax" id="fax" name="fax" ng-maxlength="255" maxlength="255">
+						<input type="text" ng-model="item.fax" id="fax" name="fax" ng-maxlength="255" maxlength="255" ng-model-onblur ng-change="save()" />
 						<span class="error" ng-show="form.fax.$error.maxlength">max length exceeded</span>
 					</div>
 				</div>
 				<div class="control-group" ng-class="{error: form.email_address.$invalid}">
 					<label class="control-label" for="email_address">E-mail:</label>
 					<div class="controls">
-						<input type="text" ng-model="item.email_address" id="email_address" name="email_address" ng-maxlength="255" maxlength="255">
+						<input type="text" ng-model="item.email_address" id="email_address" name="email_address" ng-maxlength="255" maxlength="255" ng-model-onblur ng-change="save()" />
 						<span class="error" ng-show="form.email_address.$error.maxlength">max length exceeded</span>
 					</div>
 				</div>
 				<div class="control-group" ng-class="{error: form.permit_number.$invalid}">
 					<label class="control-label" for="permit_number">Permit number:</label>
 					<div class="controls">
-						<input type="text" ng-model="item.permit_number" id="permit_number" name="permit_number" ng-maxlength="255" maxlength="255">
+						<input type="text" ng-model="item.permit_number" id="permit_number" name="permit_number" ng-maxlength="255" maxlength="255" ng-model-onblur ng-change="save()" />
 						<span class="error" ng-show="form.permit_number.$error.maxlength">max length exceeded</span>
 					</div>
 				</div>
 				<div class="control-group" ng-class="{error: form.contact_name.$invalid}">
 					<label class="control-label" for="contact_name">Contact name:</label>
 					<div class="controls">
-						<input type="text" ng-model="item.contact_name" id="contact_name" name="contact_name" ng-maxlength="255" maxlength="255">
+						<input type="text" ng-model="item.contact_name" id="contact_name" name="contact_name" ng-maxlength="255" maxlength="255" ng-model-onblur ng-change="save()">
 						<span class="error" ng-show="form.contact_name.$error.maxlength">max length exceeded</span>
 					</div>
 				</div>
@@ -91,42 +93,42 @@
 				<div class="control-group input-append" style="display: block" ng-class="{error: form.hatchling_balance_as_of_date.$invalid}">
 					<label class="control-label" for="hatchling_balance_as_of_date">Balance as of date:</label>
 					<div class="controls">
-						<input id="hatchling_balance_as_of_date" name="hatchling_balance_as_of_date" class="input-small" type="text" ng-model="item.hatchling_balance_as_of_date" data-date-format="dd-MM-yyyy" bs-datepicker>
+						<input id="hatchling_balance_as_of_date" name="hatchling_balance_as_of_date" class="input-small" type="text" ng-model="item.hatchling_balance_as_of_date" data-date-format="dd-MM-yyyy" bs-datepicker ng-model-onblur ng-change="save()" />
 						<button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
 					</div>
 				</div>
 				<div class="control-group" ng-class="{error: form.cc_hatchling_starting_balance.$invalid}">
 					<label class="control-label" for="cc_hatchling_starting_balance">Loggerhead (Cc):</label>
 					<div class="controls">
-						<input type="number" min="0" ng-model="item.cc_hatchling_starting_balance" id="cc_hatchling_starting_balance" name="cc_hatchling_starting_balance" ng-maxlength="6" maxlength="6">
+						<input type="number" min="0" ng-model="item.cc_hatchling_starting_balance" id="cc_hatchling_starting_balance" name="cc_hatchling_starting_balance" ng-maxlength="6" maxlength="6" ng-model-onblur ng-change="save()" />
 						<span class="error" ng-show="form.cc_hatchling_starting_balance.$error.maxlength">max length exceeded</span>
 					</div>
 				</div>
 				<div class="control-group" ng-class="{error: form.cm_hatchling_starting_balance.$invalid}">
 					<label class="control-label" for="cm_hatchling_starting_balance">Green (Cm):</label>
 					<div class="controls">
-						<input type="number" min="0" ng-model="item.cm_hatchling_starting_balance" id="cm_hatchling_starting_balance" name="cm_hatchling_starting_balance" ng-maxlength="6" maxlength="6">
+						<input type="number" min="0" ng-model="item.cm_hatchling_starting_balance" id="cm_hatchling_starting_balance" name="cm_hatchling_starting_balance" ng-maxlength="6" maxlength="6" ng-model-onblur ng-change="save()" />
 						<span class="error" ng-show="form.cm_hatchling_starting_balance.$error.maxlength">max length exceeded</span>
 					</div>
 				</div>
 				<div class="control-group" ng-class="{error: form.dc_hatchling_starting_balance.$invalid}">
 					<label class="control-label" for="dc_hatchling_starting_balance">Leatherback (Dc):</label>
 					<div class="controls">
-						<input type="number" min="0" ng-model="item.dc_hatchling_starting_balance" id="dc_hatchling_starting_balance" name="dc_hatchling_starting_balance" ng-maxlength="6" maxlength="6">
+						<input type="number" min="0" ng-model="item.dc_hatchling_starting_balance" id="dc_hatchling_starting_balance" name="dc_hatchling_starting_balance" ng-maxlength="6" maxlength="6" ng-model-onblur ng-change="save()" />
 						<span class="error" ng-show="form.dc_hatchling_starting_balance.$error.maxlength">max length exceeded</span>
 					</div>
 				</div>
 				<div class="control-group" ng-class="{error: form.other_hatchling_starting_balance.$invalid}">
 					<label class="control-label" for="other_hatchling_starting_balance">Other:</label>
 					<div class="controls">
-						<input type="number" min="0" ng-model="item.other_hatchling_starting_balance" id="other_hatchling_starting_balance" name="other_hatchling_starting_balance" ng-maxlength="6" maxlength="6">
+						<input type="number" min="0" ng-model="item.other_hatchling_starting_balance" id="other_hatchling_starting_balance" name="other_hatchling_starting_balance" ng-maxlength="6" maxlength="6" ng-model-onblur ng-change="save()" />
 						<span class="error" ng-show="form.other_hatchling_starting_balance.$error.maxlength">max length exceeded</span>
 					</div>
 				</div>
 				<div class="control-group" ng-class="{error: form.unknown_hatchling_starting_balance.$invalid}">
 					<label class="control-label" for="unknown_hatchling_starting_balance">Unknown:</label>
 					<div class="controls">
-						<input type="number" min="0" ng-model="item.unknown_hatchling_starting_balance" id="unknown_hatchling_starting_balance" name="unknown_hatchling_starting_balance" ng-maxlength="6" maxlength="6">
+						<input type="number" min="0" ng-model="item.unknown_hatchling_starting_balance" id="unknown_hatchling_starting_balance" name="unknown_hatchling_starting_balance" ng-maxlength="6" maxlength="6" ng-model-onblur ng-change="save()" />
 						<span class="error" ng-show="form.unknown_hatchling_starting_balance.$error.maxlength">max length exceeded</span>
 					</div>
 				</div>
@@ -136,42 +138,42 @@
 				<div class="control-group input-append" style="display: block" ng-class="{error: form.washback_balance_as_of_date.$invalid}">
 					<label class="control-label" for="washback_balance_as_of_date">Balance as of date:</label>
 					<div class="controls">
-						<input id="washback_balance_as_of_date" name="washback_balance_as_of_date" class="input-small" type="text" ng-model="item.washback_balance_as_of_date" data-date-format="dd-MM-yyyy" bs-datepicker>
+						<input id="washback_balance_as_of_date" name="washback_balance_as_of_date" class="input-small" type="text" ng-model="item.washback_balance_as_of_date" data-date-format="dd-MM-yyyy" bs-datepicker ng-model-onblur ng-change="save()" />
 						<button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
 					</div>
 				</div>
 				<div class="control-group" ng-class="{error: form.cc_washback_starting_balance.$invalid}">
 					<label class="control-label" for="cc_washback_starting_balance">Loggerhead (Cc):</label>
 					<div class="controls">
-						<input type="number" min="0" ng-model="item.cc_washback_starting_balance" id="cc_washback_starting_balance" name="cc_washback_starting_balance" ng-maxlength="6" maxlength="6">
+						<input type="number" min="0" ng-model="item.cc_washback_starting_balance" id="cc_washback_starting_balance" name="cc_washback_starting_balance" ng-maxlength="6" maxlength="6" ng-model-onblur ng-change="save()" />
 						<span class="error" ng-show="form.cc_washback_starting_balance.$error.maxlength">max length exceeded</span>
 					</div>
 				</div>
 				<div class="control-group" ng-class="{error: form.cm_washback_starting_balance.$invalid}">
 					<label class="control-label" for="cm_washback_starting_balance">Green (Cm):</label>
 					<div class="controls">
-						<input type="number" min="0" ng-model="item.cm_washback_starting_balance" id="cm_washback_starting_balance" name="cm_washback_starting_balance" ng-maxlength="6" maxlength="6">
+						<input type="number" min="0" ng-model="item.cm_washback_starting_balance" id="cm_washback_starting_balance" name="cm_washback_starting_balance" ng-maxlength="6" maxlength="6" ng-model-onblur ng-change="save()" />
 						<span class="error" ng-show="form.cm_washback_starting_balance.$error.maxlength">max length exceeded</span>
 					</div>
 				</div>
 				<div class="control-group" ng-class="{error: form.dc_washback_starting_balance.$invalid}">
 					<label class="control-label" for="dc_washback_starting_balance">Leatherback (Dc):</label>
 					<div class="controls">
-						<input type="number" min="0" ng-model="item.dc_washback_starting_balance" id="dc_washback_starting_balance" name="dc_washback_starting_balance" ng-maxlength="6" maxlength="6">
+						<input type="number" min="0" ng-model="item.dc_washback_starting_balance" id="dc_washback_starting_balance" name="dc_washback_starting_balance" ng-maxlength="6" maxlength="6" ng-model-onblur ng-change="save()" />
 						<span class="error" ng-show="form.dc_washback_starting_balance.$error.maxlength">max length exceeded</span>
 					</div>
 				</div>
 				<div class="control-group" ng-class="{error: form.other_washback_starting_balance.$invalid}">
 					<label class="control-label" for="other_washback_starting_balance">Other:</label>
 					<div class="controls">
-						<input type="number" min="0" ng-model="item.other_washback_starting_balance" id="other_washback_starting_balance" name="other_washback_starting_balance" ng-maxlength="6" maxlength="6">
+						<input type="number" min="0" ng-model="item.other_washback_starting_balance" id="other_washback_starting_balance" name="other_washback_starting_balance" ng-maxlength="6" maxlength="6" ng-model-onblur ng-change="save()" />
 						<span class="error" ng-show="form.other_washback_starting_balance.$error.maxlength">max length exceeded</span>
 					</div>
 				</div>
 				<div class="control-group" ng-class="{error: form.unknown_washback_starting_balance.$invalid}">
 					<label class="control-label" for="unknown_washback_starting_balance">Unknown:</label>
 					<div class="controls">
-						<input type="number" min="0" ng-model="item.unknown_washback_starting_balance" id="unknown_washback_starting_balance" name="unknown_washback_starting_balance" ng-maxlength="6" maxlength="6">
+						<input type="number" min="0" ng-model="item.unknown_washback_starting_balance" id="unknown_washback_starting_balance" name="unknown_washback_starting_balance" ng-maxlength="6" maxlength="6" ng-model-onblur ng-change="save()" />
 						<span class="error" ng-show="form.unknown_washback_starting_balance.$error.maxlength">max length exceeded</span>
 					</div>
 				</div>
@@ -181,14 +183,9 @@
 			<div class="control-group" ng-class="{error: form.preferred_units_type.$invalid}">
 				<label class="control-label" for="preferred_units_type">Units type:</label>
 				<div class="controls">
-					<select id="preferred_units_type" name="preferred_units_type" ng-model="item.preferred_units_type" ng-options="u.id as u.name for u in unit_types | orderBy: 'name'"></select>
+					<select id="preferred_units_type" name="preferred_units_type" ng-model="item.preferred_units_type" ng-options="u.id as u.name for u in unit_types | orderBy: 'name'" ng-change="save()"></select>
 				</div>
 			</div>
 		</pane>
     </tabs>
-
-	<div class="form-actions" style="clear:both;">
-		<button ng-click="save()" ng-disabled="form.$invalid" class="btn btn-primary">Save</button>
-		<button ng-click="cancel()" class="btn">Cancel</button>
-	</div>
 </form>

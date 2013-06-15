@@ -15,11 +15,24 @@
 	//--------------------------------------------------------------------------------
 	//-- GET /api/record_count.php
 	//--------------------------------------------------------------------------------
-	//-- expecting turtle_id -OR- organization_id, but not both
+	//-- expecting organization_id -OR- turtle_id -OR- tank_id, but not multiple
 	//--------------------------------------------------------------------------------
 	if ($verb == 'GET') 
 	{
-		if (isset($parameters['turtle_id']))
+		if (isset($parameters['tank_id']))
+		{
+			$item['tank_water_count'] = 0;
+			$sql = 'SELECT COUNT(*) AS record_count FROM tank_water ';
+			$sql .= 'WHERE tank_id = :tank_id ';
+			$stmt = $db->prepare($sql);
+			$stmt->bindValue(':tank_id', $parameters['tank_id']);
+			$stmt->execute();
+			if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) 
+			{
+				$item['tank_water_count'] = $row['record_count'];
+			}
+		}
+		else if (isset($parameters['turtle_id']))
 		{
 			$item['turtle_tag_count'] = 0;
 			$sql = 'SELECT COUNT(*) AS record_count FROM turtle_tag ';

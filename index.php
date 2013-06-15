@@ -34,14 +34,14 @@
 	<script src="/rosterweb/js/services.js"></script>
 </head>
 <body ng-controller="MainCtrl">
-	<h1 style="text-align: center; margin-bottom: 0px;"><a href='#' style='text-decoration: none'>RosterWeb</a></h1>
+	<h1 style="text-align: center; margin-bottom: 0px;"><a href='#/turtle' style='text-decoration: none'>RosterWeb</a></h1>
 	<div style="text-align: center; font-size: small; margin-bottom: 6px;"><a href='http://www.turtlegeek.com'>TurtleGeek.com</a></div>
 	<div style="text-align: center; font-size: small; margin-bottom: 6px;" ng-hide="$root.currentUser.isLoggedIn">Not logged in</div>
 	<div style="text-align: center; font-size: small; margin-bottom: 6px;" ng-show="$root.currentUser.isLoggedIn">Logged in as:  <span style="font-weight: bold;">{{ $root.currentUser.userName }}</span>&nbsp;&nbsp;<a href='#/logout/'>(log out)</a></div>
 	<div style="text-align: center; font-size: small; margin-bottom: 6px; height: 24px; line-height: 24px;" ng-show="$root.currentUser.isAdmin">Organization:  <select id="root_organization_id" name="root_organization_id" ng-model="$root.currentUser.organizationId" ng-change="organizationChanged();" ng-options="o.organization_id as o.organization_name for o in $root.organizations | orderBy: 'organization_name'" style="height: 24px; margin-top: -3px; margin-bottom: 0px; font-size: small; padding: 0px;"></select>&nbsp;&nbsp;<a href="#/organization/edit/{{$root.currentUser.organizationId}}" bs-tooltip="'Edit organization information, hatchling and washback starting balances, and preferences'">(edit)</a></div>
 	<div style="text-align: center; font-size: small; margin-bottom: 6px;" ng-show="$root.currentUser.isLoggedIn && !$root.currentUser.isAdmin">Organization:  <span style="font-weight: bold;">{{ $root.currentUser.organizationName }}</span>&nbsp;&nbsp;<a href="#/organization/edit/{{$root.currentUser.organizationId}}" bs-tooltip="'Edit organization information, hatchling and washback starting balances, and preferences'">(edit)</a></div>
 	<hr />
-	<div style="text-align: center; font-size: large;">
+	<div style="text-align: center; font-size: larger; font-weight: 650; margin-bottom: 12px;">
 		<span ng-show="$root.currentUser.isLoggedIn"><a href='#/turtle'>Sea Turtles ({{ $root.recordCounts.turtleCount }})</a>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
 		<span ng-show="$root.currentUser.isLoggedIn"><a href='#/tank'>Holding Tanks ({{ $root.recordCounts.tankCount }})</a>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
 		<span ng-show="$root.currentUser.isLoggedIn"><a href='#/hatchlings_event'>Hatchlings ({{ $root.recordCounts.hatchlingCount }})</a>&nbsp;&nbsp;|&nbsp;&nbsp;</span>

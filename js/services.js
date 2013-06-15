@@ -172,7 +172,7 @@ RosterWebApp.service('countyService', function(County) {
     };
 	
 	this.save = function(county, success, error) {
-		if (county.county_id == null) {
+		if (county.is_new) {
 			//-- insert
 			County.save(county, success, error);
 		} else {
@@ -222,42 +222,42 @@ RosterWebApp.service('hatchlingsEventService', function($rootScope, HatchlingsEv
 		switch(hatchlings_event.event_type_code)
 		{
 			case 'acquired':
-				if (hatchlings_event.hatchlings_event_id == null) {
+				hatchlings_event.hatchlings_acquired_event_id = hatchlings_event.hatchlings_event_id;
+				if (hatchlings_event.is_new) {
 					//-- insert
 					HatchlingsAcquiredEvent.save(hatchlings_event, success, error);
 				} else {
 					//-- update
-					hatchlings_event.hatchlings_acquired_event_id = hatchlings_event.hatchlings_event_id;
 					HatchlingsAcquiredEvent.update({ hatchlings_acquired_event_id: hatchlings_event.hatchlings_acquired_event_id }, hatchlings_event, success, error);
 				}
 				break;
 			case 'died':
-				if (hatchlings_event.hatchlings_event_id == null) {
+				hatchlings_event.hatchlings_died_event_id = hatchlings_event.hatchlings_event_id;
+				if (hatchlings_event.is_new) {
 					//-- insert
 					HatchlingsDiedEvent.save(hatchlings_event, success, error);
 				} else {
 					//-- update
-					hatchlings_event.hatchlings_died_event_id = hatchlings_event.hatchlings_event_id;
 					HatchlingsDiedEvent.update({ hatchlings_died_event_id: hatchlings_event.hatchlings_died_event_id }, hatchlings_event, success, error);
 				}
 				break;
 			case 'released':
-				if (hatchlings_event.hatchlings_event_id == null) {
+				hatchlings_event.hatchlings_released_event_id = hatchlings_event.hatchlings_event_id;
+				if (hatchlings_event.is_new) {
 					//-- insert
 					HatchlingsReleasedEvent.save(hatchlings_event, success, error);
 				} else {
 					//-- update
-					hatchlings_event.hatchlings_released_event_id = hatchlings_event.hatchlings_event_id;
 					HatchlingsReleasedEvent.update({ hatchlings_released_event_id: hatchlings_event.hatchlings_released_event_id }, hatchlings_event, success, error);
 				}
 				break;
 			case 'doa':
-				if (hatchlings_event.hatchlings_event_id == null) {
+				hatchlings_event.hatchlings_doa_event_id = hatchlings_event.hatchlings_event_id;
+				if (hatchlings_event.is_new) {
 					//-- insert
 					HatchlingsDoaEvent.save(hatchlings_event, success, error);
 				} else {
 					//-- update
-					hatchlings_event.hatchlings_doa_event_id = hatchlings_event.hatchlings_event_id;
 					HatchlingsDoaEvent.update({ hatchlings_doa_event_id: hatchlings_event.hatchlings_doa_event_id }, hatchlings_event, success, error);
 				}
 				break;
@@ -315,13 +315,13 @@ RosterWebApp.service('loginService', function($rootScope, $http, $location) {
 		.success(function(data, status, headers, config) {
 			console.log('[loginService::doLogin().success] data = ' + data);
 			console.log('[loginService::doLogin().success] status = ' + status);
-			console.log('[loginService::doLogin().success] headers = ' + utilPrintHash(headers));
+			console.log('[loginService::doLogin().success] headers = ' + util_print_hash(headers));
 			console.log('[loginService::doLogin().success] config = ' + config);
 		})
 		.error(function(data, status, headers, config) {
 			console.error('[loginService::doLogin().error] data = ' + data);
 			console.error('[loginService::doLogin().error] status = ' + status);
-			console.error('[loginService::doLogin().error] headers = ' + utilPrintHash(headers));
+			console.error('[loginService::doLogin().error] headers = ' + util_print_hash(headers));
 			console.error('[loginService::doLogin().error] headers(\'Content-Type\') = ' + headers('Content-Type'));
 			console.error('[loginService::doLogin().error] headers(\'Location\') = ' + headers('Location'));
 			console.error('[loginService::doLogin().error] config = ' + config);
@@ -350,14 +350,14 @@ RosterWebApp.service('logoutService', function($rootScope, $http, $location, $co
 		.success(function(data, status, headers, config) {
 			console.log('[logoutService::doLogout().success] data = ' + data);
 			console.log('[logoutService::doLogout().success] status = ' + status);
-			console.log('[logoutService::doLogout().success] headers = ' + utilPrintHash(headers));
+			console.log('[logoutService::doLogout().success] headers = ' + util_print_hash(headers));
 			console.log('[logoutService::doLogout().success] config = ' + config);
 			
 		})
 		.error(function(data, status, headers, config) {
 			console.error('[logoutService::doLogout().error] data = ' + data);
 			console.error('[logoutService::doLogout().error] status = ' + status);
-			console.error('[logoutService::doLogout().error] headers = ' + utilPrintHash(headers));
+			console.error('[logoutService::doLogout().error] headers = ' + util_print_hash(headers));
 			console.error('[logoutService::doLogout().error] headers(\'Content-Type\') = ' + headers('Content-Type'));
 			console.error('[logoutService::doLogout().error] headers(\'Location\') = ' + headers('Location'));
 			console.error('[logoutService::doLogout().error] config = ' + config);
@@ -369,7 +369,9 @@ RosterWebApp.service('logoutService', function($rootScope, $http, $location, $co
 		$cookieStore.remove('is_registered');
 		$cookieStore.remove('rootScopeCurrentUser');
 		$cookieStore.remove('rootScopeCurrentTurtleId');
+		$cookieStore.remove('rootScopeCurrentTurtleName');
 		$cookieStore.remove('rootScopeCurrentTankId');
+		$cookieStore.remove('rootScopeCurrentTankName');
 		$rootScope.currentUser = null;
 		$rootScope.currentTurtleId = null;
 		console.log('[logoutService::doLogout()] *** USER IS LOGGED OUT ***');
@@ -382,7 +384,7 @@ RosterWebApp.service('organizationListItemService', function(OrganizationListIte
     };	
 });
 
-RosterWebApp.service('organizationService', function(Organization) {
+RosterWebApp.service('organizationService', function($q, $http, Organization) {
     this.search = function(q, sort_order, sort_desc, success, error) {
         return Organization.query({ q: q, sort: sort_order, desc: sort_desc, ver: util_new_guid() }, success, error);
     };	
@@ -392,15 +394,30 @@ RosterWebApp.service('organizationService', function(Organization) {
     };	
 	
     this.get = function(organization_id, success, error) {
-        return Organization.get({ organization_id: organization_id }, success, error);
+		var deferred = $q.defer();
+		
+		$http({
+			method: 'GET', 
+			url: '/rosterweb/api/organization.php', 
+			params: {organization_id: organization_id} 
+		})
+		.success(function(data, status, headers, config) {
+			deferred.resolve(data);
+		})
+		.error(function(data, status, headers, config) {
+			deferred.reject();
+		})
+		;
+
+		return deferred.promise;		
     };
-	
+		
 	this.save = function(organization, success, error) {
-		if (organization.organization_id == null) {
-			//-- insert
+		if (organization.is_new) {
+			//-- insert / POST
 			Organization.save(organization, success, error);
 		} else {
-			//-- update
+			//-- update / PUT
 			Organization.update({ organization_id: organization.organization_id }, organization, success, error);
 		}
 	};
@@ -410,9 +427,9 @@ RosterWebApp.service('organizationService', function(Organization) {
     };
 });
 
-RosterWebApp.service('recordCountService', function($rootScope, RecordCount) {
-    this.resetAll = function(organizationId, success, error) {
-        RecordCount.get({ ver: util_new_guid(), organization_id: organizationId }, 
+RosterWebApp.service('recordCountService', function($q, $http, $rootScope, RecordCount) {
+    this.resetAll = function(organization_id, success, error) {
+        RecordCount.get({ ver: util_new_guid(), organization_id: organization_id }, 
 			function(result, success) {
 				$recordCounts = result;
 				$rootScope.recordCounts = { 
@@ -427,6 +444,7 @@ RosterWebApp.service('recordCountService', function($rootScope, RecordCount) {
 				success(result);
 			}, error);
     };	
+	
     this.resetAllForTurtle = function(turtleId, success, error) {
 		if (turtleId != null)
 		{
@@ -442,6 +460,22 @@ RosterWebApp.service('recordCountService', function($rootScope, RecordCount) {
 		{
 			$rootScope.recordCounts.turtleTagCount = 0; 
 			$rootScope.recordCounts.turtleMorphometricCount = 0;
+		}
+    };	
+	
+    this.resetAllForTank = function(tankId, success, error) {
+		if (tankId != null)
+		{
+			RecordCount.get({ ver: util_new_guid(), tank_id: tankId }, 
+				function(result, success) {
+					$recordCounts = result;
+					$rootScope.recordCounts.tankWaterCount = $recordCounts.tank_water_count; 
+					success(result);
+				}, error);
+		}
+		else
+		{
+			$rootScope.recordCounts.tankWaterCount = 0; 
 		}
     };	
 });
@@ -476,7 +510,7 @@ RosterWebApp.service('tankService', function($q, $http, $rootScope, Tank) {
     };
 	
 	this.save = function(tank, success, error) {
-		if (tank.tank_id == null) {
+		if (tank.is_new) {
 			//-- insert
 			Tank.save(tank, success, error);
 		} else {
@@ -504,7 +538,7 @@ RosterWebApp.service('tankWaterService', function($rootScope, TankWater) {
     };
 	
 	this.save = function(tank_water, success, error) {
-		if (tank_water.tank_water_id == null) {
+		if (tank_water.is_new) {
 			//-- insert
 			TankWater.save(tank_water, success, error);
 		} else {
@@ -548,7 +582,7 @@ RosterWebApp.service('turtleService', function($q, $http, $rootScope, Turtle) {
     };
 	
 	this.save = function(turtle, success, error) {
-		if (turtle.turtle_id == null) {
+		if (turtle.is_new) {
 			//-- insert
 			Turtle.save(turtle, success, error);
 		} else {
@@ -562,7 +596,7 @@ RosterWebApp.service('turtleService', function($q, $http, $rootScope, Turtle) {
     };
 });
 
-RosterWebApp.service('turtleMorphometricService', function($rootScope, TurtleMorphometric) {
+RosterWebApp.service('turtleMorphometricService', function($q, $http, $rootScope, TurtleMorphometric) {
     this.search = function(q, sort_order, sort_desc, success, error) {
         return TurtleMorphometric.query({ q: q, sort: sort_order, desc: sort_desc, ver: util_new_guid(), turtle_id: $rootScope.currentTurtleId }, success, error);
     };	
@@ -572,11 +606,26 @@ RosterWebApp.service('turtleMorphometricService', function($rootScope, TurtleMor
     };	
 	
     this.get = function(turtle_morphometric_id, success, error) {
-        return TurtleMorphometric.get({ turtle_morphometric_id: turtle_morphometric_id }, success, error);
+		var deferred = $q.defer();
+		
+		$http({
+			method: 'GET', 
+			url: '/rosterweb/api/turtle_morphometric.php', 
+			params: {turtle_morphometric_id: turtle_morphometric_id} 
+		})
+		.success(function(data, status, headers, config) {
+			deferred.resolve(data);
+		})
+		.error(function(data, status, headers, config) {
+			deferred.reject();
+		})
+		;
+
+		return deferred.promise;		
     };
 	
 	this.save = function(turtle_morphometric, success, error) {
-		if (turtle_morphometric.turtle_morphometric_id == null) {
+		if (turtle_morphometric.is_new) {
 			//-- insert
 			TurtleMorphometric.save(turtle_morphometric, success, error);
 		} else {
@@ -604,7 +653,7 @@ RosterWebApp.service('turtleTagService', function($rootScope, TurtleTag) {
     };
 	
 	this.save = function(turtle_tag, success, error) {
-		if (turtle_tag.turtle_tag_id == null) {
+		if (turtle_tag.is_new) {
 			//-- insert
 			TurtleTag.save(turtle_tag, success, error);
 		} else {
@@ -640,20 +689,9 @@ RosterWebApp.service('userService', function($q, $http, User) {
 			params: {user_email: user_email} 
 		})
 		.success(function(data, status, headers, config) {
-			console.log('[userService::getByEmail().success] data = ' + data);
-			console.log('[userService::getByEmail().success] status = ' + status);
-			console.log('[userService::getByEmail().success] headers = ' + utilPrintHash(headers));
-			console.log('[userService::getByEmail().success] config = ' + config);
 			deferred.resolve(data);
 		})
 		.error(function(data, status, headers, config) {
-			console.error('[userService::getByEmail().error] data = ' + data);
-			console.error('[userService::getByEmail().error] status = ' + status);
-			console.error('[userService::getByEmail().error] headers = ' + utilPrintHash(headers));
-			console.error('[userService::getByEmail().error] headers(\'Content-Type\') = ' + headers('Content-Type'));
-			console.error('[userService::getByEmail().error] headers(\'Location\') = ' + headers('Location'));
-			console.error('[userService::getByEmail().error] config = ' + config);
-			console.error('[userService::getByEmail().error] config.url = ' + config.url);
 			deferred.reject();
 		})
 		;
@@ -662,7 +700,7 @@ RosterWebApp.service('userService', function($q, $http, User) {
     };
 	
 	this.save = function(user, success, error) {
-		if (user.user_id == null) {
+		if (user.is_new) {
 			//-- insert
 			User.save(user, success, error);
 		} else {
@@ -712,42 +750,42 @@ RosterWebApp.service('washbacksEventService', function($rootScope, WashbacksEven
 		switch(washbacks_event.event_type_code)
 		{
 			case 'acquired':
-				if (washbacks_event.washbacks_event_id == null) {
+				washbacks_event.washbacks_acquired_event_id = washbacks_event.washbacks_event_id;
+				if (washbacks_event.is_new) {
 					//-- insert
 					WashbacksAcquiredEvent.save(washbacks_event, success, error);
 				} else {
 					//-- update
-					washbacks_event.washbacks_acquired_event_id = washbacks_event.washbacks_event_id;
 					WashbacksAcquiredEvent.update({ washbacks_acquired_event_id: washbacks_event.washbacks_acquired_event_id }, washbacks_event, success, error);
 				}
 				break;
 			case 'died':
+				washbacks_event.washbacks_died_event_id = washbacks_event.washbacks_event_id;
 				if (washbacks_event.washbacks_event_id == null) {
 					//-- insert
 					WashbacksDiedEvent.save(washbacks_event, success, error);
 				} else {
 					//-- update
-					washbacks_event.washbacks_died_event_id = washbacks_event.washbacks_event_id;
 					WashbacksDiedEvent.update({ washbacks_died_event_id: washbacks_event.washbacks_died_event_id }, washbacks_event, success, error);
 				}
 				break;
 			case 'released':
+				washbacks_event.washbacks_released_event_id = washbacks_event.washbacks_event_id;
 				if (washbacks_event.washbacks_event_id == null) {
 					//-- insert
 					WashbacksReleasedEvent.save(washbacks_event, success, error);
 				} else {
 					//-- update
-					washbacks_event.washbacks_released_event_id = washbacks_event.washbacks_event_id;
 					WashbacksReleasedEvent.update({ washbacks_released_event_id: washbacks_event.washbacks_released_event_id }, washbacks_event, success, error);
 				}
 				break;
 			case 'doa':
+				washbacks_event.washbacks_doa_event_id = washbacks_event.washbacks_event_id;
 				if (washbacks_event.washbacks_event_id == null) {
 					//-- insert
 					WashbacksDoaEvent.save(washbacks_event, success, error);
 				} else {
 					//-- update
-					washbacks_event.washbacks_doa_event_id = washbacks_event.washbacks_event_id;
 					WashbacksDoaEvent.update({ washbacks_doa_event_id: washbacks_event.washbacks_doa_event_id }, washbacks_event, success, error);
 				}
 				break;

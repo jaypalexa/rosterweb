@@ -135,7 +135,7 @@
 	else if (($verb == 'PUT') || ($verb == 'POST'))
 	{
 		$sql = '';
-		$turtle_id = '';
+
 		if ($verb == 'PUT')
 		{
 			$sql .= 'UPDATE turtle SET ';
@@ -186,8 +186,6 @@
 			$sql .= 'brochure_background_color = :brochure_background_color, ';
 			$sql .= 'brochure_image_file_attachment_id = :brochure_image_file_attachment_id ';
 			$sql .= 'WHERE turtle_id = :turtle_id';
-			
-			$turtle_id = $parameters['turtle_id'];
 		}
 		else if ($verb == 'POST')
 		{
@@ -212,12 +210,10 @@
 			$sql .= ':scanned_for_magnetic_wires, :magnetic_wires_located, :inspected_for_living_tags, :living_tags_located, ';
 			$sql .= ':brochure_comments, :brochure_background_color, :brochure_image_file_attachment_id ';
 			$sql .= ') ';
-			
-			$turtle_id = utilCreateGuid();
 		}
 		$stmt = $db->prepare($sql);
 		
-		$stmt->bindValue(':turtle_id', $turtle_id);
+		$stmt->bindValue(':turtle_id', dbGetParameterValue($parameters, 'turtle_id'));
 		$stmt->bindValue(':organization_id', dbGetParameterValue($parameters, 'organization_id'));
 		$stmt->bindValue(':turtle_name', dbGetParameterValue($parameters, 'turtle_name'));
 		$stmt->bindValue(':sid_number', dbGetParameterValue($parameters, 'sid_number'));

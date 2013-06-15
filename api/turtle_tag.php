@@ -94,7 +94,7 @@
 	else if (($verb == 'PUT') || ($verb == 'POST'))
 	{
 		$sql = '';
-		$turtle_tag_id = '';
+
 		if ($verb == 'PUT')
 		{
 			$sql .= 'UPDATE turtle_tag SET ';
@@ -104,8 +104,6 @@
 			$sql .= 'location = :location, ';
 			$sql .= 'date_tagged = :date_tagged ';
 			$sql .= 'WHERE turtle_tag_id = :turtle_tag_id';
-			
-			$turtle_tag_id = $parameters['turtle_tag_id'];
 		}
 		else if ($verb == 'POST')
 		{
@@ -114,12 +112,10 @@
 			$sql .= ') VALUES (';
 			$sql .= ':turtle_tag_id, :turtle_id, :tag_number, :tag_type, :location, :date_tagged ';
 			$sql .= ') ';
-			
-			$turtle_tag_id = utilCreateGuid();
 		}
 		$stmt = $db->prepare($sql);
 		
-		$stmt->bindValue(':turtle_tag_id', $turtle_tag_id);
+		$stmt->bindValue(':turtle_tag_id', dbGetParameterValue($parameters, 'turtle_tag_id'));
 		$stmt->bindValue(':turtle_id', dbGetParameterValue($parameters, 'turtle_id'));
 		$stmt->bindValue(':tag_number', dbGetParameterValue($parameters, 'tag_number'));
 		$stmt->bindValue(':tag_type', dbGetParameterValue($parameters, 'tag_type'));

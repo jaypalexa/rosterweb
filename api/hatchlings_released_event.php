@@ -29,8 +29,8 @@
 			$item['organization_id'] = $row['organization_id'];
 			$item['species_code'] = $row['species_code'];
 			$item['event_date'] = dbDateOnly($row['event_date']);
-			$item['beach_event_count'] = $row['beach_event_count'];
-			$item['offshore_event_count'] = $row['offshore_event_count'];
+			$item['beach_event_count'] = dbIntOrNull($row['beach_event_count']);
+			$item['offshore_event_count'] = dbIntOrNull($row['offshore_event_count']);
 			
 			//-- fields to support a consolidated hatchlings event concept
 			$item['hatchlings_event_id'] = $row['hatchlings_released_event_id'];
@@ -43,7 +43,7 @@
 	else if (($verb == 'PUT') || ($verb == 'POST'))
 	{
 		$sql = '';
-		$hatchlings_released_event_id = '';
+
 		if ($verb == 'PUT')
 		{
 			$sql .= 'UPDATE hatchlings_released_event SET ';
@@ -53,8 +53,6 @@
 			$sql .= 'beach_event_count = :beach_event_count, ';
 			$sql .= 'offshore_event_count = :offshore_event_count ';
 			$sql .= 'WHERE hatchlings_released_event_id = :hatchlings_released_event_id';
-			
-			$hatchlings_released_event_id = $parameters['hatchlings_released_event_id'];
 		}
 		else if ($verb == 'POST')
 		{
@@ -62,12 +60,10 @@
 			$sql .= '(hatchlings_released_event_id, organization_id, species_code, event_date, beach_event_count, offshore_event_count) ';
 			$sql .= 'VALUES ';
 			$sql .= '(:hatchlings_released_event_id, :organization_id, :species_code, :event_date, :beach_event_count, :offshore_event_count) ';
-			
-			$hatchlings_released_event_id = utilCreateGuid();
 		}
 		$stmt = $db->prepare($sql);
 		
-		$stmt->bindValue(':hatchlings_released_event_id', $hatchlings_released_event_id);
+		$stmt->bindValue(':hatchlings_released_event_id', dbGetParameterValue($parameters, 'hatchlings_released_event_id'));
 		$stmt->bindValue(':organization_id', dbGetParameterValue($parameters, 'organization_id'));
 		$stmt->bindValue(':species_code', dbGetParameterValue($parameters, 'species_code'));
 		$stmt->bindValue(':event_date', dbGetParameterDate($parameters, 'event_date'));

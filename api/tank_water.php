@@ -84,7 +84,7 @@
 	else if (($verb == 'PUT') || ($verb == 'POST'))
 	{
 		$sql = '';
-		$tank_water_id = '';
+
 		if ($verb == 'PUT')
 		{
 			$sql .= 'UPDATE tank_water SET ';
@@ -94,8 +94,6 @@
 			$sql .= 'salinity = :salinity, ';
 			$sql .= 'ph = :ph ';
 			$sql .= 'WHERE tank_water_id = :tank_water_id';
-			
-			$tank_water_id = $parameters['tank_water_id'];
 		}
 		else if ($verb == 'POST')
 		{
@@ -104,12 +102,10 @@
 			$sql .= ') VALUES (';
 			$sql .= ':date_measured, :tank_water_id, :tank_id, :temperature, :salinity, :ph ';
 			$sql .= ') ';
-			
-			$tank_water_id = utilCreateGuid();
 		}
 		$stmt = $db->prepare($sql);
 		
-		$stmt->bindValue(':tank_water_id', $tank_water_id);
+		$stmt->bindValue(':tank_water_id', dbGetParameterValue($parameters, 'tank_water_id'));
 		$stmt->bindValue(':tank_id', dbGetParameterValue($parameters, 'tank_id'));
 		$stmt->bindValue(':date_measured', dbGetParameterDate($parameters, 'date_measured'));
 		$stmt->bindValue(':temperature', dbGetParameterValue($parameters, 'temperature'));

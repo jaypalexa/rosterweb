@@ -1,4 +1,6 @@
-﻿<h3>Hatchlings Events</h3>
+﻿<ul class="breadcrumb">
+	<li class="active">Hatchlings Events ({{ $root.recordCounts.hatchlingCount }})</li>
+</ul>
 <a href="#/hatchlings_acquired_event/new" class="btn">Add hatchlings acquired event</a>&nbsp;
 <a href="#/hatchlings_died_event/new" class="btn">Add hatchlings died event</a>&nbsp;
 <a href="#/hatchlings_released_event/new" class="btn">Add hatchlings released event</a>&nbsp;
@@ -10,9 +12,6 @@
         <th sorted="event_date">Date</th>
         <th sorted="event_count">Count</th>
         <th sorted="county_name">County</th>
-		<!--
-        <th><a href="#/hatchlings_acquired_event/new" bs-tooltip="'Add a new acquired hatchling event'"><i class="icon-plus-sign"></i></a></th>
-		-->
 		<th></th>
     </thead>
     <tbody>

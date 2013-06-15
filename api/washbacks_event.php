@@ -21,11 +21,11 @@
 	{
 		$items = array();
 		
-		$sql = 'SELECT washbacks_acquired_event_id AS washbacks_event_id, species_code, event_date, \'Acquired\' AS event_type, \'acquired\' AS event_type_code, event_count, acquired_from_county AS county_name ';
+		$sql = 'SELECT washbacks_acquired_event_id AS washbacks_event_id, species_code, event_date, \'Acquired\' AS event_type, \'acquired\' AS event_type_code, IFNULL(event_count, 0) AS event_count, acquired_from_county AS county_name ';
 		$sql .= 'FROM washbacks_acquired_event ';
 		$sql .= 'WHERE organization_id = :organization_id ';
 		$sql .= 'UNION ALL ';
-		$sql .= 'SELECT washbacks_died_event_id AS washbacks_event_id, species_code, event_date, \'Died\' AS event_type, \'died\' AS event_type_code, event_count, \'\' AS county_name ';
+		$sql .= 'SELECT washbacks_died_event_id AS washbacks_event_id, species_code, event_date, \'Died\' AS event_type, \'died\' AS event_type_code, IFNULL(event_count, 0) AS event_count, \'\' AS county_name ';
 		$sql .= 'FROM washbacks_died_event ';
 		$sql .= 'WHERE organization_id = :organization_id ';
 		$sql .= 'UNION ALL ';
@@ -33,7 +33,7 @@
 		$sql .= 'FROM washbacks_released_event ';
 		$sql .= 'WHERE organization_id = :organization_id ';
 		$sql .= 'UNION ALL ';
-		$sql .= 'SELECT washbacks_doa_event_id AS washbacks_event_id, species_code, event_date, \'DOA\' AS event_type, \'doa\' AS event_type_code, event_count, doa_from_county AS county_name ';
+		$sql .= 'SELECT washbacks_doa_event_id AS washbacks_event_id, species_code, event_date, \'DOA\' AS event_type, \'doa\' AS event_type_code, IFNULL(event_count, 0) AS event_count, doa_from_county AS county_name ';
 		$sql .= 'FROM washbacks_doa_event ';
 		$sql .= 'WHERE organization_id = :organization_id ';
 		$sql .= 'ORDER BY %sort_column% %sort_order%';
@@ -61,7 +61,7 @@
 			$item['event_date'] = dbDateOnly($row['event_date']);
 			$item['event_type'] = $row['event_type'];
 			$item['event_type_code'] = $row['event_type_code'];
-			$item['event_count'] = $row['event_count'];
+			$item['event_count'] = dbIntOrNull($row['event_count']);
 			$item['county_name'] = $row['county_name'];
 	
 			$items[] = $item;

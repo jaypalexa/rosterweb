@@ -34,7 +34,7 @@ function util_open_delete_dialog($dialog, item_type, item_name, callback) {
 	});
 };
 
-function utilPrintHash(data) {
+function util_print_hash(data) {
 	var str = '';
 	for (var key in data) {
 		if (typeof data[key] == 'object') str += key + printData(data[key]) + ' ';
