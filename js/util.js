@@ -8,29 +8,116 @@ function util_delete_dialog_controller($scope, dialog) {
 	};
 }
 
-var util_delete_dialog_template = '<div class="modal-body">'+
-	'<p>Delete {item_type} \'{item_name}\'?  This cannot be undone.</p>'+
-	'</div>'+
-	'<div class="modal-footer">'+
-	'<button ng-click="close(\'yes\')" class="btn" >Yes</button>'+
-	'<button ng-click="close(\'no\')" class="btn btn-primary" >No</button>'+
-	'</div>';
-
-var util_delete_dialog_opts = {
-	backdrop: true,
-	backdropFade: true,
-	dialogFade: true,
-	keyboard: true,
-	backdropClick: false,
-	controller: 'util_delete_dialog_controller'
-};
-
 function util_open_delete_dialog($dialog, item_type, item_name, callback) {
-	var delete_dialog_opts = util_delete_dialog_opts;
-	delete_dialog_opts.template = util_delete_dialog_template.replace('{item_type}', item_type).replace('{item_name}', item_name);
-	var dlg = $dialog.dialog(delete_dialog_opts);
+
+	var dlgTemplate = '<div class="modal-body">'+
+		'<p>Delete {item_type} \'{item_name}\'?  This cannot be undone.</p>'+
+		'</div>'+
+		'<div class="modal-footer">'+
+		'<button ng-click="close(\'yes\')" class="btn" >Yes</button>'+
+		'<button ng-click="close(\'no\')" class="btn btn-primary" >No</button>'+
+		'</div>';
+
+	var dlgOpts = {
+		backdrop: true,
+		backdropFade: true,
+		dialogFade: true,
+		keyboard: true,
+		backdropClick: false,
+		controller: 'util_delete_dialog_controller', 
+		template: dlgTemplate.replace('{item_type}', item_type).replace('{item_name}', item_name)
+	};
+	
+	var dlg = $dialog.dialog(dlgOpts);
 	dlg.open().then(function(result) {
 		callback(result);
+	});
+};
+
+function util_open_map_dialog($dialog, inLat, inLng, callback) {
+		
+	var marker, map;
+	
+	function initialize(inLat, inLng) {
+        //var myLatlng = new google.maps.LatLng(29.45664, -82.25533);
+		var startLat = 29.45664;
+		var startLng = -82.25533;
+		
+		if ((inLat != undefined) && (inLat != null) && (inLat != ''))
+		{
+			startLat = parseFloat(inLat);
+		}
+		
+		if ((inLng != undefined) && (inLng != null) && (inLng != ''))
+		{
+			startLng = parseFloat(inLng);
+		}
+		
+        var myLatlng = new google.maps.LatLng(startLat, startLng);
+		
+        var mapOptions = {
+			zoom: 6,
+			center: myLatlng,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+		
+        map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+		
+		addMarker(myLatlng);
+		showCoords(myLatlng);
+
+        google.maps.event.addListener(map, 'click', function(event) {
+            addMarker(event.latLng);
+			showCoords(event.latLng);
+        });
+      }
+
+    function addMarker(latLng) {       
+        //-- clear the previous marker
+        if (marker != null) {
+            marker.setMap(null);
+        }
+
+        marker = new google.maps.Marker({
+            position: latLng,
+            map: map,
+            draggable:true
+        });
+
+		google.maps.event.addListener(marker, 'dragend', function(event) {
+			showCoords(event.latLng);
+        });		
+    }
+	
+	function showCoords(latLng) {
+		document.getElementById("lat").innerHTML = latLng.lat().toFixed(5);
+		document.getElementById("lng").innerHTML = latLng.lng().toFixed(5);
+	}
+	
+	$('#modalMap').on('shown', function() {
+		initialize(inLat, inLng);
+		google.maps.event.trigger(map, "resize");
+	});
+
+	$.get("/rosterweb/views/map_dialog.html", function(data) {
+	
+		$('#modalMapContainer').html(data);
+		
+		$('#modalMap .cancel-button').click(function() {
+			$('#modalMap').modal('hide');
+			return false;
+		});
+
+		$('#modalMap .save-button').click(function() {
+			$('#modalMap').modal('hide');
+			var myLatLng = {};
+			myLatLng.lat = $('#lat').text();
+			myLatLng.lng = $('#lng').text();
+			callback(myLatLng);
+			return false;
+		});
+	
+		$('#modalMap').modal({show: true, backdrop: 'static', keyboard: true});
 	});
 };
 

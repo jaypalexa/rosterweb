@@ -14,6 +14,7 @@
 	<link rel="stylesheet" type="text/css" href="/rosterweb/styles/rosterweb.css" />
 	
 	<!-- third-party libraries -->
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 	<script src="/rosterweb/js/lib/jquery/jquery-1.9.1.js"></script>
 	<script src="/rosterweb/js/lib/jquery/jquery-cookie.js"></script>
 	<script src="/rosterweb/js/lib/angular/angular.js"></script>
@@ -24,6 +25,7 @@
 	<script src="/rosterweb/js/lib/angular-strap/angular-strap-0.7.3.js"></script>
 	<script src="/rosterweb/js/lib/bootstrap-datepicker/bootstrap-datepicker.js"></script>
 	<script src="/rosterweb/js/lib/bootstrap-tooltip/bootstrap-tooltip.js"></script>
+	<script src="/rosterweb/js/lib/bootstrap/bootstrap.js"></script>
 
     <!-- app-specific scripts -->
 	<script src="/rosterweb/js/app.js"></script>

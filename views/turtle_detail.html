@@ -74,12 +74,16 @@
 					</div>
 				</div>
 				<div class="control-group" ng-class="{error: form.acquired_latitude.$invalid}">
-					<label class="control-label" for="acquired_latitude">Latitude:</label>
+					<label class="control-label" for="acquired_latitude">Lat / Lon (dec deg):</label>
 					<div class="controls">
-						<input type="text" ng-model="item.acquired_latitude" id="acquired_latitude" name="acquired_latitude" ng-maxlength="255" maxlength="255" ng-model-onblur ng-change="save()" />
+						<input type="text" ng-model="item.acquired_latitude" id="acquired_latitude" name="acquired_latitude" style="width:95px;" ng-maxlength="255" maxlength="255" ng-model-onblur ng-change="save()" />
 						<span class="error" ng-show="form.acquired_latitude.$error.maxlength">max length exceeded</span>
+						<input type="text" ng-model="item.acquired_longitude" id="acquired_longitude" name="acquired_longitude" style="width:95px;" ng-maxlength="255" maxlength="255" ng-model-onblur ng-change="save()" />
+						<span class="error" ng-show="form.acquired_longitude.$error.maxlength">max length exceeded</span>
+						<a title="Locate on map" href="" ng-click="mapAcquiredLatLng();" bs-tooltip data-placement="right"><img src="/rosterweb/img/globe.png" style="height:30px; width:30px;"></a>
 					</div>
 				</div>
+<!--
 				<div class="control-group" ng-class="{error: form.acquired_longitude.$invalid}">
 					<label class="control-label" for="acquired_longitude">Longitude:</label>
 					<div class="controls">
@@ -87,6 +91,7 @@
 						<span class="error" ng-show="form.acquired_longitude.$error.maxlength">max length exceeded</span>
 					</div>
 				</div>
+-->
 				<div class="control-group input-append" style="display: block" ng-class="{error: form.date_relinquished.$invalid}">
 					<label class="control-label" for="date_relinquished">Date relinquished:</label>
 					<div class="controls">
@@ -344,3 +349,7 @@
 		</pane>
     </tabs>
 </form>
+<div id="modalMap" class="modal hide fade" role="dialog">
+	<div id="modalMapContainer">
+	</div>
+</div>

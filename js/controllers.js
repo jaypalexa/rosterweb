@@ -634,7 +634,7 @@ var TurtleListCtrl = function ($rootScope, $scope, $location, $dialog, turtleSer
     $scope.search();
 };
 
-var TurtleEditCtrl = function($rootScope, $scope, $routeParams, $location, $cookieStore, turtleService, codeTableService, countyService, recordCountService) {
+var TurtleEditCtrl = function($rootScope, $scope, $routeParams, $location, $cookieStore, $dialog, turtleService, codeTableService, countyService, recordCountService) {
 
 	$rootScope.currentTurtle = {};
 
@@ -669,6 +669,21 @@ var TurtleEditCtrl = function($rootScope, $scope, $routeParams, $location, $cook
 			};
 		};
 	}, true);
+	
+	$scope.mapAcquiredLatLng = function() {
+		util_open_map_dialog($dialog, $scope.item.acquired_latitude, $scope.item.acquired_longitude, function(result) {
+			// if (result == 'yes') {
+				// turtleService.delete(item.turtle_id, function() {
+					// recordCountService.resetAll($rootScope.currentUser.organizationId);
+					// $("#item_" + item.turtle_id).fadeOut();
+				// });
+			// }
+			//console.log('[TurtleEditCtrl::locateOnMap()] result.lat = ' + result.lat);
+			$scope.item.acquired_latitude = result.lat;
+			$scope.item.acquired_longitude = result.lng;
+			$scope.$apply();
+		});
+	};
 
 	$scope.save = function() {
         turtleService.save($scope.item, function() {
