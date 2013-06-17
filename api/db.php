@@ -61,11 +61,11 @@
 		return $value;
 	}	
 
-	function dbGetParameterFloat($parameters, $name)
+	function dbGetParameterFloat($parameters, $name, $decimals = 0)
 	{
 		$value = dbGetParameterValue($parameters, $name);
 	
-		return dbFloatOrNull($value);
+		return dbFloatOrNull($value, $decimals);
 	}
 
 	function dbGetParameterInt($parameters, $name)
@@ -86,7 +86,7 @@
 		return $value;
 	}	
 
-	function dbFloatOrNull($value)
+	function dbFloatOrNull($value, $decimals = 0)
 	{
 		if (($value == null) || !(is_numeric($value)))
 		{
@@ -94,7 +94,7 @@
 		}
 		else
 		{
-			return (float)$value;
+			return number_format((float)$value, $decimals);
 		}
 	}	
 

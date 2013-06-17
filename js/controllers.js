@@ -672,15 +672,18 @@ var TurtleEditCtrl = function($rootScope, $scope, $routeParams, $location, $cook
 	
 	$scope.mapAcquiredLatLng = function() {
 		util_open_map_dialog($dialog, $scope.item.acquired_latitude, $scope.item.acquired_longitude, function(result) {
-			// if (result == 'yes') {
-				// turtleService.delete(item.turtle_id, function() {
-					// recordCountService.resetAll($rootScope.currentUser.organizationId);
-					// $("#item_" + item.turtle_id).fadeOut();
-				// });
-			// }
-			//console.log('[TurtleEditCtrl::locateOnMap()] result.lat = ' + result.lat);
 			$scope.item.acquired_latitude = result.lat;
 			$scope.item.acquired_longitude = result.lng;
+			$scope.save();
+			$scope.$apply();
+		});
+	};
+
+	$scope.mapRelinquishedLatLng = function() {
+		util_open_map_dialog($dialog, $scope.item.relinquished_latitude, $scope.item.relinquished_longitude, function(result) {
+			$scope.item.relinquished_latitude = result.lat;
+			$scope.item.relinquished_longitude = result.lng;
+			$scope.save();
 			$scope.$apply();
 		});
 	};

@@ -73,7 +73,7 @@
 						<select id="acquired_county" name="acquired_county" ng-model="item.acquired_county" ng-options="c.county_name as c.county_name for c in counties | orderBy: 'county_name'" ng-change="save()" ></select>
 					</div>
 				</div>
-				<div class="control-group" ng-class="{error: form.acquired_latitude.$invalid}">
+				<div class="control-group" ng-class="{error: form.acquired_latitude.$invalid || form.acquired_longitude.$invalid}">
 					<label class="control-label" for="acquired_latitude">Lat / Lon (dec deg):</label>
 					<div class="controls">
 						<input type="text" ng-model="item.acquired_latitude" id="acquired_latitude" name="acquired_latitude" style="width:95px;" ng-maxlength="255" maxlength="255" ng-model-onblur ng-change="save()" />
@@ -112,13 +112,17 @@
 						<select id="relinquished_county" name="relinquished_county" ng-model="item.relinquished_county" ng-options="c.county_name as c.county_name for c in counties | orderBy: 'county_name'" ng-change="save()" ></select>
 					</div>
 				</div>
-				<div class="control-group" ng-class="{error: form.relinquished_latitude.$invalid}">
-					<label class="control-label" for="relinquished_latitude">Latitude:</label>
+				<div class="control-group" ng-class="{error: form.relinquished_latitude.$invalid || form.relinquished_longitude.$invalid}">
+					<label class="control-label" for="relinquished_latitude">Lat / Lon (dec deg):</label>
 					<div class="controls">
-						<input type="text" ng-model="item.relinquished_latitude" id="relinquished_latitude" name="relinquished_latitude" ng-maxlength="255" maxlength="255" ng-model-onblur ng-change="save()" />
+						<input type="text" ng-model="item.relinquished_latitude" id="relinquished_latitude" name="relinquished_latitude" style="width:95px;" ng-maxlength="255" maxlength="255" ng-model-onblur ng-change="save()" />
 						<span class="error" ng-show="form.relinquished_latitude.$error.maxlength">max length exceeded</span>
+						<input type="text" ng-model="item.relinquished_longitude" id="relinquished_longitude" name="relinquished_longitude" style="width:95px;" ng-maxlength="255" maxlength="255" ng-model-onblur ng-change="save()" />
+						<span class="error" ng-show="form.relinquished_longitude.$error.maxlength">max length exceeded</span>
+						<a title="Locate on map" href="" ng-click="mapRelinquishedLatLng();" bs-tooltip data-placement="right"><img src="/rosterweb/img/globe.png" style="height:30px; width:30px;"></a>
 					</div>
 				</div>
+<!--
 				<div class="control-group" ng-class="{error: form.relinquished_longitude.$invalid}">
 					<label class="control-label" for="relinquished_longitude">Longitude:</label>
 					<div class="controls">
@@ -126,6 +130,7 @@
 						<span class="error" ng-show="form.relinquished_longitude.$error.maxlength">max length exceeded</span>
 					</div>
 				</div>
+-->
 				<div class="control-group" ng-class="{error: form.anomalies.$invalid}">
 					<label class="control-label" for="anomalies">Anomalies:</label>
 					<div class="controls">
