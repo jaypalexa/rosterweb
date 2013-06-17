@@ -38,7 +38,7 @@ function util_open_map_dialog($dialog, inLat, inLng, callback) {
 		
 	var marker, map;
 	
-	function initialize(inLat, inLng) {
+	function initializeMap(inLat, inLng) {
         //var myLatlng = new google.maps.LatLng(29.45664, -82.25533);
 		var startLat = 29.45664;
 		var startLng = -82.25533;
@@ -95,7 +95,7 @@ function util_open_map_dialog($dialog, inLat, inLng, callback) {
 	}
 	
 	$('#modalMap').on('shown', function() {
-		initialize(inLat, inLng);
+		initializeMap(inLat, inLng);
 		google.maps.event.trigger(map, "resize");
 	});
 

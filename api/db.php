@@ -61,6 +61,20 @@
 		return $value;
 	}	
 
+	function dbGetParameterFloat($parameters, $name)
+	{
+		$value = dbGetParameterValue($parameters, $name);
+	
+		return dbFloatOrNull($value);
+	}
+
+	function dbGetParameterInt($parameters, $name)
+	{
+		$value = dbGetParameterValue($parameters, $name);
+	
+		return dbIntOrNull($value);
+	}
+
 	function dbDateOnly($value)
 	{
 		if ($value != null)
@@ -72,9 +86,21 @@
 		return $value;
 	}	
 
+	function dbFloatOrNull($value)
+	{
+		if (($value == null) || !(is_numeric($value)))
+		{
+			return null;
+		}
+		else
+		{
+			return (float)$value;
+		}
+	}	
+
 	function dbIntOrNull($value)
 	{
-		if ($value == null)
+		if (($value == null) || !(is_int($value)))
 		{
 			return null;
 		}

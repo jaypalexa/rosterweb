@@ -19,13 +19,13 @@
 		$item['date_acquired'] = dbDateOnly($row['date_acquired']);
 		$item['acquired_from'] = $row['acquired_from'];
 		$item['acquired_county'] = $row['acquired_county'];
-		$item['acquired_latitude'] = $row['acquired_latitude'];
-		$item['acquired_longitude'] = $row['acquired_longitude'];
+		$item['acquired_latitude'] = dbFloatOrNull($row['acquired_latitude']);
+		$item['acquired_longitude'] = dbFloatOrNull($row['acquired_longitude']);
 		$item['date_relinquished'] = dbDateOnly($row['date_relinquished']);
 		$item['relinquished_to'] = $row['relinquished_to'];
 		$item['relinquished_county'] = $row['relinquished_county'];
-		$item['relinquished_latitude'] = $row['relinquished_latitude'];
-		$item['relinquished_longitude'] = $row['relinquished_longitude'];
+		$item['relinquished_latitude'] = dbFloatOrNull($row['relinquished_latitude']);
+		$item['relinquished_longitude'] = dbFloatOrNull($row['relinquished_longitude']);
 		$item['anomalies'] = $row['anomalies'];
 		$item['injury_boat_strike'] = dbYNtoBoolean($row['injury_boat_strike']);
 		$item['injury_intestinal_impaction'] = dbYNtoBoolean($row['injury_intestinal_impaction']);
