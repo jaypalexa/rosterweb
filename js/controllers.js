@@ -440,7 +440,7 @@ var OrganizationEditCtrl = function($rootScope, $scope, $routeParams, $location,
 	//--------------------------------------------------------------------------------
 	if ($routeParams.organization_id == undefined)
 	{
-		$scope.item = { is_new: true, organization_id: util_new_guid(), organization_name: '[new organization]' };
+		$scope.item = { is_new: true, organization_id: util_new_guid() };
 		console.log('[OrganizationEditCtrl] Calling $scope.save(); $scope.item.is_new = ' + $scope.item.is_new);
 		$scope.save();
 	}
@@ -513,7 +513,7 @@ var TankEditCtrl = function($rootScope, $scope, $routeParams, $location, $cookie
 	//--------------------------------------------------------------------------------
 	if ($routeParams.tank_id == undefined)
 	{
-		$scope.item = { is_new: true, tank_id: util_new_guid(), tank_name: '[new tank]', organization_id: $rootScope.currentUser.organizationId };
+		$scope.item = { is_new: true, tank_id: util_new_guid(), organization_id: $rootScope.currentUser.organizationId };
 		$scope.save();
 	}
 	//--------------------------------------------------------------------------------
@@ -700,13 +700,13 @@ var TurtleEditCtrl = function($rootScope, $scope, $routeParams, $location, $cook
 			}
 		});
     };
-
+	
 	//--------------------------------------------------------------------------------
 	//-- if there in no ID in the route, then we are creating a new item...
 	//--------------------------------------------------------------------------------
 	if ($routeParams.turtle_id == undefined)
 	{
-		$scope.item = { is_new: true, turtle_id: util_new_guid(), turtle_name: '[new turtle]', organization_id: $rootScope.currentUser.organizationId };
+		$scope.item = { is_new: true, turtle_id: util_new_guid(), organization_id: $rootScope.currentUser.organizationId };
 		$scope.save();
 	}
 	//--------------------------------------------------------------------------------
@@ -1028,7 +1028,7 @@ var UserEditCtrl = function($rootScope, $scope, $routeParams, $location, userSer
 	//--------------------------------------------------------------------------------
 	if ($routeParams.user_id == undefined)
 	{
-		$scope.item = { is_new: true, user_id: util_new_guid(), user_name: '[new user]', user_email: '[new email]' };
+		$scope.item = { is_new: true, user_id: util_new_guid() };
 		$scope.save();
 	}
 	//--------------------------------------------------------------------------------

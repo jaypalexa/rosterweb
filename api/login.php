@@ -36,9 +36,9 @@
 	utilLog('[login.php] $_GET[\'openid_identifier\'] = ' . $_GET['openid_identifier']);
 	$openid_identifier = $_GET['openid_identifier'];
 	
-	if ($openid_identifier == 'backdoor')
+	if ($openid_identifier == 'guest')
 	{
-		utilLog('[login.php] Logging in via backdoor...');
+		utilLog('[login.php] Logging in via guest...');
 		header('HTTP/1.1 201 Created', true, 201); //!!!IMPORTANT!!!
 		//--------------------------------------------------------------------------------
 		//-- set PHP session variables for use in subsequent resource requests
@@ -54,7 +54,7 @@
 		//--------------------------------------------------------------------------------
 		//-- set cookies that expire in one hour for the entire domain
 		//--------------------------------------------------------------------------------
-		setcookie('user_id', 'jpalexa@gmail.com', time()+3600*1, '/');
+		setcookie('user_id', 'guest@guest.com', time()+3600*1, '/');
 		setcookie('is_logged_in', 'true', time()+3600*1, '/');
 			
 		exit();

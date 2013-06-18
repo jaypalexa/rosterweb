@@ -58,7 +58,7 @@ CREATE TABLE `deleted_turtle` (
   `inspected_for_living_tags` varchar(1) DEFAULT NULL,
   `living_tags_located` varchar(255) DEFAULT NULL,
   `brochure_comments` varchar(255) DEFAULT NULL,
-  `brochure_background_color` int(11) DEFAULT NULL,
+  `brochure_background_color` varchar(255) DEFAULT NULL,
   `brochure_image_file_attachment_id` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8$$
 
@@ -255,7 +255,7 @@ CREATE TABLE `turtle` (
   `inspected_for_living_tags` varchar(1) DEFAULT NULL,
   `living_tags_located` varchar(255) DEFAULT NULL,
   `brochure_comments` varchar(255) DEFAULT NULL,
-  `brochure_background_color` int(11) DEFAULT NULL,
+  `brochure_background_color` varchar(255) DEFAULT NULL,
   `brochure_image_file_attachment_id` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8$$
 

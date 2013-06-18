@@ -12,28 +12,33 @@
 	<link rel="stylesheet" type="text/css" href="/rosterweb/styles/bootstrap-datepicker.css" />
 	<link rel="stylesheet" type="text/css" href="/rosterweb/styles/openid.css" />
 	<link rel="stylesheet" type="text/css" href="/rosterweb/styles/rosterweb.css" />
-	
-	<!-- third-party libraries -->
-	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-	<script src="/rosterweb/js/lib/jquery/jquery-1.9.1.js"></script>
-	<script src="/rosterweb/js/lib/jquery/jquery-cookie.js"></script>
-	<script src="/rosterweb/js/lib/angular/angular.js"></script>
-	<script src="/rosterweb/js/lib/angular/angular-resource.js"></script>
-	<script src="/rosterweb/js/lib/angular/angular-cookies.js"></script>
-	<script src="/rosterweb/js/lib/ui-bootstrap/ui-bootstrap-tpls-0.3.0.js"></script>
-	<script src="/rosterweb/js/lib/polyfills/number-polyfill.js"></script>
-	<script src="/rosterweb/js/lib/angular-strap/angular-strap-0.7.3.js"></script>
-	<script src="/rosterweb/js/lib/bootstrap-datepicker/bootstrap-datepicker.js"></script>
-	<script src="/rosterweb/js/lib/bootstrap-tooltip/bootstrap-tooltip.js"></script>
-	<script src="/rosterweb/js/lib/bootstrap/bootstrap.js"></script>
 
+	<!-- third-party libraries -->
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+	<script type="text/javascript" src="/rosterweb/js/lib/jquery/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="/rosterweb/js/lib/jquery/jquery-cookie.js"></script>
+	<script type="text/javascript" src="/rosterweb/js/lib/angular/angular.js"></script>
+	<script type="text/javascript" src="/rosterweb/js/lib/angular/angular-resource.js"></script>
+	<script type="text/javascript" src="/rosterweb/js/lib/angular/angular-cookies.js"></script>
+	<script type="text/javascript" src="/rosterweb/js/lib/ui-bootstrap/ui-bootstrap-tpls-0.3.0.js"></script>
+	<script type="text/javascript" src="/rosterweb/js/lib/polyfills/number-polyfill.js"></script>
+	<script type="text/javascript" src="/rosterweb/js/lib/angular-strap/angular-strap-0.7.3.js"></script>
+	<script type="text/javascript" src="/rosterweb/js/lib/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+	<script type="text/javascript" src="/rosterweb/js/lib/bootstrap-tooltip/bootstrap-tooltip.js"></script>
+	<script type="text/javascript" src="/rosterweb/js/lib/bootstrap/bootstrap.js"></script>
+	<script type="text/javascript" src="/rosterweb/js/lib/jquery/jquery-cookie.js"></script>
+	
+	<script type="text/javascript" src="/rosterweb/js/lib/jquery/jquery.ui.widget.js"></script>
+	<script type="text/javascript" src="/rosterweb/js/lib/jquery/jquery.iframe-transport.js"></script>
+	<script type="text/javascript" src="/rosterweb/js/lib/jquery/jquery.fileupload.js"></script>
+	
     <!-- app-specific scripts -->
-	<script src="/rosterweb/js/app.js"></script>
-	<script src="/rosterweb/js/util.js"></script>
-	<script src="/rosterweb/js/controllers.js"></script>
-	<script src="/rosterweb/js/directives.js"></script>
-	<script src="/rosterweb/js/resources.js"></script>
-	<script src="/rosterweb/js/services.js"></script>
+	<script type="text/javascript" src="/rosterweb/js/app.js"></script>
+	<script type="text/javascript" src="/rosterweb/js/util.js"></script>
+	<script type="text/javascript" src="/rosterweb/js/controllers.js"></script>
+	<script type="text/javascript" src="/rosterweb/js/directives.js"></script>
+	<script type="text/javascript" src="/rosterweb/js/resources.js"></script>
+	<script type="text/javascript" src="/rosterweb/js/services.js"></script>
 </head>
 <body ng-controller="MainCtrl">
 	<h1 style="text-align: center; margin-bottom: 0px;"><a href='#/turtle' style='text-decoration: none'>RosterWeb</a></h1>

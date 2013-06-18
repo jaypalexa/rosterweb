@@ -329,26 +329,31 @@
 		</pane>
         <pane heading="Attachments">
 		</pane>
-        <pane heading="Brochures">
+        <pane heading="Brochure">
 			<div class="control-group" ng-class="{error: form.brochure_comments.$invalid}">
-				<label class="control-label" for="brochure_comments">Brochure comments:</label>
+				<label class="control-label" for="brochure_comments">Comments:</label>
 				<div class="controls">
-					<input type="text" ng-model="item.brochure_comments" id="brochure_comments" name="brochure_comments" ng-maxlength="255" maxlength="255" ng-model-onblur ng-change="save()" />
+					<textarea style="height: 120px; vertical-align:top;" ng-model="item.brochure_comments" id="brochure_comments" name="brochure_comments" ng-maxlength="255" maxlength="255" ng-model-onblur ng-change="save()"></textarea>
 					<span class="error" ng-show="form.brochure_comments.$error.maxlength">max length exceeded</span>
 				</div>
 			</div>
 			<div class="control-group" ng-class="{error: form.brochure_background_color.$invalid}">
-				<label class="control-label" for="brochure_background_color">Brochure background color:</label>
+				<label class="control-label" for="brochure_background_color">Background color:</label>
 				<div class="controls">
-					<input type="text" ng-model="item.brochure_background_color" id="brochure_background_color" name="brochure_background_color" ng-maxlength="255" maxlength="255" ng-model-onblur ng-change="save()" />
+					<input type="color" ng-model="item.brochure_background_color" id="brochure_background_color" name="brochure_background_color" ng-maxlength="255" maxlength="255" ng-change="save()" />
 					<span class="error" ng-show="form.brochure_background_color.$error.maxlength">max length exceeded</span>
 				</div>
 			</div>
 			<div class="control-group" ng-class="{error: form.brochure_image_file_attachment_id.$invalid}">
-				<label class="control-label" for="brochure_image_file_attachment_id">Brochure image:</label>
+				<label class="control-label" for="brochure_image_file_attachment_id">Image:</label>
 				<div class="controls">
-					<input type="text" ng-model="item.brochure_image_file_attachment_id" id="brochure_image_file_attachment_id" name="brochure_image_file_attachment_id" ng-maxlength="255" maxlength="255" ng-model-onblur ng-change="save()" />
-					<span class="error" ng-show="form.brochure_image_file_attachment_id.$error.maxlength">max length exceeded</span>
+					<div style="float:left; margin-right: 12px;">
+						<input type="hidden" value="{{ item.brochure_image_file_attachment_id }}" id="brochure_image_file_attachment_id" name="brochure_image_file_attachment_id" />
+						<img ng-show="item.brochure_image_file_attachment_id != null" ng-src="{{ item.brochure_image_file_attachment_id }}" height="220px" width="220px" />
+					</div>
+					<div style="float:left;">
+						<ng-upload-brochure-image>
+					</div>
 				</div>
 			</div>
 		</pane>
