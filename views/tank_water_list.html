@@ -2,25 +2,45 @@
 	<ul class="breadcrumb">
 		<li class="active">Water Quality Measurements ({{ $root.recordCounts.tankWaterCount }})</li>
 	</ul>
-	<table class="table table-striped table-condensed table-hover">
-		<thead>
-			<th sorted="date_measured">Date Measured</th>
-			<th sorted="temperature">Temperature</th>
-			<th sorted="salinity">Salinity</th>
-			<th sorted="ph">Ph</th>
-			<th><a href="#/tank_water/new" bs-tooltip="'Add a new water quality measurement'"><i class="icon-plus-sign"></i></a></th>
-		</thead>
-		<tbody>
-			<tr ng-repeat="item in items" id="item_{{item.tank_water_id}}">
-				<td>{{item.date_measured}}</td>
-				<td>{{item.temperature}}</td>
-				<td>{{item.salinity}}</td>
-				<td>{{item.ph}}</td>
-				<td>
-					<a href="#/tank_water/edit/{{item.tank_water_id}}" bs-tooltip="'Edit'"><i class="icon-pencil"></i></a>
-					<a href ng-click="delete(item)" bs-tooltip="'Delete'"><i class="icon-trash"></i></a>
-				</td>
-			</tr>
-		</tbody>
-	</table>
+    <tabs>
+        <pane heading="Measurements">
+			<h6>Measurements must be taken each week for every turtle holding tank with a separate water supply</h6>
+			<table class="table table-striped table-condensed table-hover">
+				<thead>
+					<th sorted="date_measured">Date Measured</th>
+					<th sorted="temperature">Temperature (°F)</th>
+					<th sorted="salinity">Salinity (in ppt)</th>
+					<th sorted="ph">pH</th>
+					<th><a href="#/tank_water/new" bs-tooltip="'Add a new water quality measurement'"><i class="icon-plus-sign"></i></a></th>
+				</thead>
+				<tbody>
+					<tr ng-repeat="item in items" id="item_{{item.tank_water_id}}">
+						<td>{{item.date_measured}}</td>
+						<td>{{item.temperature}}</td>
+						<td>{{item.salinity}}</td>
+						<td>{{item.ph}}</td>
+						<td>
+							<a href="#/tank_water/edit/{{item.tank_water_id}}" bs-tooltip="'Edit'"><i class="icon-pencil"></i></a>
+							<a href ng-click="delete(item)" bs-tooltip="'Delete'"><i class="icon-trash"></i></a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</pane>
+		<pane heading="Temperature Graph">
+			<div>
+				<ng-temperature-graph val="items"></ng-temperature-graph>
+			</div>
+		</pane>
+		<pane heading="Salinity Graph">
+			<div>
+				<ng-salinity-graph val="items"></ng-salinity-graph>
+			</div>
+		</pane>
+		<pane heading="pH Graph">
+			<div>
+				<ng-ph-graph val="items"></ng-ph-graph>
+			</div>
+		</pane>
+	</tabs>
 </div>

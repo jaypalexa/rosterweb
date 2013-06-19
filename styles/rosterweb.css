@@ -50,3 +50,15 @@
 #drop input{
     display:none;
 }
+
+/*----------------------------
+    D3 graph styles
+-----------------------------*/
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+

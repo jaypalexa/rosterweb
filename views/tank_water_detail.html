@@ -13,21 +13,21 @@
 		</div>
 	</div>
     <div class="control-group" ng-class="{error: form.temperature.$invalid}">
-        <label class="control-label" for="temperature">Temperature:</label>
+        <label class="control-label" for="temperature">Temperature (°F):</label>
         <div class="controls">
             <input type="text" ng-model="item.temperature" id="temperature" name="temperature" ng-maxlength="10" maxlength="10" ng-model-onblur ng-change="save()" />
 			<span class="error" ng-show="form.temperature.$error.maxlength">max length exceeded</span>
         </div>
     </div>
     <div class="control-group" ng-class="{error: form.salinity.$invalid}">
-        <label class="control-label" for="salinity">Salinity:</label>
+        <label class="control-label" for="salinity">Salinity (in ppt):</label>
         <div class="controls">
             <input type="text" ng-model="item.salinity" id="salinity" name="salinity" ng-maxlength="10" maxlength="10" ng-model-onblur ng-change="save()" />
 			<span class="error" ng-show="form.salinity.$error.maxlength">max length exceeded</span>
         </div>
     </div>
     <div class="control-group" ng-class="{error: form.ph.$invalid}">
-        <label class="control-label" for="ph">Ph:</label>
+        <label class="control-label" for="ph">pH:</label>
         <div class="controls">
             <input type="text" ng-model="item.ph" id="ph" name="ph" ng-maxlength="10" maxlength="10" ng-model-onblur ng-change="save()" />
 			<span class="error" ng-show="form.ph.$error.maxlength">max length exceeded</span>

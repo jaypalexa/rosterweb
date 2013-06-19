@@ -27,10 +27,10 @@
 	<script type="text/javascript" src="/rosterweb/js/lib/bootstrap-tooltip/bootstrap-tooltip.js"></script>
 	<script type="text/javascript" src="/rosterweb/js/lib/bootstrap/bootstrap.js"></script>
 	<script type="text/javascript" src="/rosterweb/js/lib/jquery/jquery-cookie.js"></script>
-	
 	<script type="text/javascript" src="/rosterweb/js/lib/jquery/jquery.ui.widget.js"></script>
 	<script type="text/javascript" src="/rosterweb/js/lib/jquery/jquery.iframe-transport.js"></script>
 	<script type="text/javascript" src="/rosterweb/js/lib/jquery/jquery.fileupload.js"></script>
+	<script type="text/javascript" src="/rosterweb/js/lib/d3.v3/d3.v3.min.js"></script>
 	
     <!-- app-specific scripts -->
 	<script type="text/javascript" src="/rosterweb/js/app.js"></script>

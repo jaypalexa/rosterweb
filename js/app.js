@@ -1,4 +1,6 @@
-﻿var RosterWebApp = angular.module('RosterWebApp', ['ngResource', 'ui.bootstrap', '$strap.directives', 'ngCookies'])
+﻿'use strict';
+
+var RosterWebApp = angular.module('RosterWebApp', ['ngResource', 'ui.bootstrap', '$strap.directives', 'ngCookies'])
     .config(['$routeProvider', function($routeProvider) {
         $routeProvider
             .when('/', { templateUrl: '/rosterweb/views/home_detail.html' })
