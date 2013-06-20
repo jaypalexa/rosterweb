@@ -100,7 +100,7 @@
 
 	function dbIntOrNull($value)
 	{
-		if (($value == null) || !(is_int($value)))
+		if ($value == null)
 		{
 			return null;
 		}
