@@ -158,17 +158,18 @@ RosterWebApp.directive('ngUploadBrochureImage', function() {
 	}
 });
 
-RosterWebApp.directive('ngTankWaterGraph', function () {
+RosterWebApp.directive('ngMorphometricsGraph', function () {
 	return {
 		restrict: 'E',
 		terminal: true,
 		scope: {
-			val: '='
+			val: '=', 
+			isChecked: '='
 		},
 		link: function (scope, element, attrs) {
 			// set up initial svg object
-			var margin = {top: 20, right: 80, bottom: 120, left: 50},
-				width = 640 - margin.left - margin.right,
+			var margin = {top: 20, right: 20, bottom: 120, left: 50},
+				width = 800 - margin.left - margin.right,
 				height = 380 - margin.top - margin.bottom;
 
 			var parseDate = d3.time.format("%Y-%m-%d").parse;
@@ -180,41 +181,133 @@ RosterWebApp.directive('ngTankWaterGraph', function () {
 				.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 			scope.$watch('val', function (newVal, oldVal) {
+				refresh();
+			}, true);
+
+			scope.$watch('isChecked', function (newVal, oldVal) {
+				refresh();
+			}, true);
+			
+			var refresh = function()
+			{
+				// if scope.val is undefined, exit
+				if (!scope.val) { return; }
+				if (scope.val.length == 0) { return; }
 
 				// clear the elements inside of the directive
 				svg.selectAll('*').remove();
 
-				// if 'val' is undefined, exit
-				if (!newVal) { return; }
-				if (newVal.length == 0) { return; }
+				var items = scope.val;
+				var data = {};
+
+				if (scope.isChecked.sclNotchNotch)
+				{
+					var sclNotchNotchData = items.map(function(d) { 
+						return { 
+							dataType: 'sclNotchNotch',
+							date: parseDate(d.date_measured),
+							dataValue: +d.scl_notch_notch_value 
+						}; 
+					});
+					Array.prototype.push.apply(data, sclNotchNotchData);
+				}
+
+				if (scope.isChecked.sclNotchTip)
+				{
+					var sclNotchTipData = items.map(function(d) { 
+						return { 
+							dataType: 'sclNotchTip',
+							date: parseDate(d.date_measured),
+							dataValue: +d.scl_notch_tip_value 
+						}; 
+					});
+					Array.prototype.push.apply(data, sclNotchTipData);
+				}
+
+				if (scope.isChecked.sclTipTip)
+				{
+					var sclTipTipData = items.map(function(d) { 
+						return { 
+							dataType: 'sclTipTip',
+							date: parseDate(d.date_measured),
+							dataValue: +d.scl_tip_tip_value 
+						}; 
+					});
+					Array.prototype.push.apply(data, sclTipTipData);
+				}
 				
-				var items = newVal;
-
-				var temperatureData = items.map(function(d) { 
-					return { 
-						dataType: 'Temperature',
-						date: parseDate(d.date_measured),
-						dataValue: +d.temperature 
-					}; 
-				});
-
-				var salinityData = items.map(function(d) { 
-					return { 
-						dataType: 'Salinity',
-						date: parseDate(d.date_measured),
-						dataValue: +d.salinity 
-					}; 
-				});
-
-				var phData = items.map(function(d) { 
-					return { 
-						dataType: 'pH',
-						date: parseDate(d.date_measured),
-						dataValue: +d.ph 
-					}; 
-				});
+				if (scope.isChecked.scw)
+				{
+					var scwData = items.map(function(d) { 
+						return { 
+							dataType: 'scw',
+							date: parseDate(d.date_measured),
+							dataValue: +d.scw_value 
+						}; 
+					});
+					Array.prototype.push.apply(data, scwData);
+				}
 				
-				var data = temperatureData.concat(salinityData).concat(phData);
+				if (scope.isChecked.cclNotchNotch)
+				{
+					var cclNotchNotchData = items.map(function(d) { 
+						return { 
+							dataType: 'cclNotchNotch',
+							date: parseDate(d.date_measured),
+							dataValue: +d.ccl_notch_notch_value 
+						}; 
+					});
+					Array.prototype.push.apply(data, cclNotchNotchData);
+				}
+				
+				if (scope.isChecked.cclNotchTip)
+				{
+					var cclNotchTipData = items.map(function(d) { 
+						return { 
+							dataType: 'cclNotchTip',
+							date: parseDate(d.date_measured),
+							dataValue: +d.ccl_notch_tip_value 
+						}; 
+					});
+					Array.prototype.push.apply(data, cclNotchTipData);
+				}
+					
+				if (scope.isChecked.cclTipTip)
+				{
+					var cclTipTipData = items.map(function(d) { 
+						return { 
+							dataType: 'cclTipTip',
+							date: parseDate(d.date_measured),
+							dataValue: +d.ccl_tip_tip_value 
+						}; 
+					});
+					Array.prototype.push.apply(data, cclTipTipData);
+				}
+				
+				if (scope.isChecked.ccw)
+				{
+					var ccwData = items.map(function(d) { 
+						return { 
+							dataType: 'ccw',
+							date: parseDate(d.date_measured),
+							dataValue: +d.ccw_value 
+						}; 
+					});
+					Array.prototype.push.apply(data, ccwData);
+				}
+				
+				if (scope.isChecked.weight)
+				{
+					var weightData = items.map(function(d) { 
+						return { 
+							dataType: 'weight',
+							date: parseDate(d.date_measured),
+							dataValue: +d.weight_value 
+						}; 
+					});
+					Array.prototype.push.apply(data, weightData);
+				}			
+					
 				// then we need to nest the data on dataType since we want to only draw one line per data type
 				data = d3.nest().key(function(d) { return d.dataType; }).entries(data);
 
@@ -225,11 +318,20 @@ RosterWebApp.directive('ngTankWaterGraph', function () {
 					.nice(d3.time.day);
 
 				var y = d3.scale.linear()
-					.domain([0, d3.max(data, function(d) { return d3.max(d.values, function (d) { return d.dataValue; }); })])
+					.domain([d3.min(data, function(d) { return d3.min(d.values, function (d) { return d.dataValue; }); }) - 2,
+							 d3.max(data, function(d) { return d3.max(d.values, function (d) { return d.dataValue; }); }) + 2])
 					.range([height, 0]);
-																								   
-				var color = d3.scale.category10()
-					.domain(d3.keys(data[0]).filter(function(key) { return key === "dataType"; }));
+				
+				var colors = {};
+				colors["sclNotchNotch"] = 'lightcoral';
+				colors["sclNotchTip"] = 'red';
+				colors["sclTipTip"] = 'darkred';
+				colors["scw"] = 'darkorange';
+				colors["cclNotchNotch"] = 'lightgreen';
+				colors["cclNotchTip"] = 'limegreen';
+				colors["cclTipTip"] = 'darkgreen';
+				colors["ccw"] = 'mediumturquoise';
+				colors["weight"] = 'violet';
 
 				var xAxis = d3.svg.axis()
 					.scale(x)
@@ -269,10 +371,9 @@ RosterWebApp.directive('ngTankWaterGraph', function () {
 				dataTypes.append("path")
 					.attr("fill", "none")
 					.attr("stroke-width", "1.5px")
-					.attr("stroke", function(d) { return color(d.key); })
-					.attr("d", function(d) { return line(d.values); });
-	  
-			}, true);
+					.attr("stroke", function(d) { return colors[d.key]; })
+					.attr("d", function(d) { return line(d.values); });			
+			};
 		}
 	}
 });
@@ -636,6 +737,27 @@ RosterWebApp.directive('ngPhGraph', function () {
 					.style("color", "white")
 					.style("background-color", "darkgreen");
 	  
+			}, true);
+		}
+	}
+});
+
+RosterWebApp.directive('ngFuckYou', function () {
+	return {
+		restrict: 'E',
+		terminal: true,
+		scope: {
+			val: '=',
+			sortOrder: '='
+		},
+		link: function (scope, element, attrs) {
+
+			scope.$watch('sortOrder', function (newVal, oldVal) {
+
+				if (!scope.sortOrder) { return; }
+				if (!newVal) { return; }
+				if (newVal.length == 0) { return; }
+  
 			}, true);
 		}
 	}

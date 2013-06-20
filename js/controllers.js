@@ -735,6 +735,17 @@ var TurtleEditCtrl = function($rootScope, $scope, $routeParams, $location, $cook
 
 var TurtleMorphometricListCtrl = function ($rootScope, $scope, $location, $dialog, turtleMorphometricService, recordCountService) {
 
+	$scope.isChecked = {};
+	$scope.isChecked.sclNotchNotch = true;
+	$scope.isChecked.sclNotchTip = true;
+	$scope.isChecked.sclTipTip = true;
+	$scope.isChecked.scw = true;
+	$scope.isChecked.cclNotchNotch = true;
+	$scope.isChecked.cclNotchTip = true;
+	$scope.isChecked.cclTipTip = true;
+	$scope.isChecked.ccw = true;
+	$scope.isChecked.weight = true;
+
     $scope.search = function() {
 		$scope.items = turtleMorphometricService.search($scope.q, $scope.sort_order, $scope.sort_desc);
     };
