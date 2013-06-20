@@ -180,6 +180,28 @@ RosterWebApp.directive('ngMorphometricsGraph', function () {
 				.append("g")
 				.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+			var colors = {};
+				colors["sclNotchNotch"] = 'lightcoral';
+				colors["sclNotchTip"] = 'red';
+				colors["sclTipTip"] = 'darkred';
+				colors["scw"] = 'darkorange';
+				colors["cclNotchNotch"] = 'lightgreen';
+				colors["cclNotchTip"] = 'limegreen';
+				colors["cclTipTip"] = 'darkgreen';
+				colors["ccw"] = 'mediumturquoise';
+				colors["weight"] = 'violet';
+
+			var tooltip = d3.select("body")
+				.append("div")
+				.style("position", "absolute")
+				.style("z-index", "10")
+				.style("visibility", "hidden")
+				.style("border-radius", "15px")
+				.style("padding", "6px")
+				.style("font-weight", "bold")
+				.style("color", "white")
+				.style("background-color", "black");
+				
 			scope.$watch('val', function (newVal, oldVal) {
 				refresh();
 			}, true);
@@ -200,9 +222,10 @@ RosterWebApp.directive('ngMorphometricsGraph', function () {
 				var items = scope.val;
 				var data = {};
 
+				var sclNotchNotchData = {};
 				if (scope.isChecked.sclNotchNotch)
 				{
-					var sclNotchNotchData = items.map(function(d) { 
+					sclNotchNotchData = items.map(function(d) { 
 						return { 
 							dataType: 'sclNotchNotch',
 							date: parseDate(d.date_measured),
@@ -212,9 +235,10 @@ RosterWebApp.directive('ngMorphometricsGraph', function () {
 					Array.prototype.push.apply(data, sclNotchNotchData);
 				}
 
+				var sclNotchTipData = {};
 				if (scope.isChecked.sclNotchTip)
 				{
-					var sclNotchTipData = items.map(function(d) { 
+					sclNotchTipData = items.map(function(d) { 
 						return { 
 							dataType: 'sclNotchTip',
 							date: parseDate(d.date_measured),
@@ -321,22 +345,164 @@ RosterWebApp.directive('ngMorphometricsGraph', function () {
 					.domain([d3.min(data, function(d) { return d3.min(d.values, function (d) { return d.dataValue; }); }) - 2,
 							 d3.max(data, function(d) { return d3.max(d.values, function (d) { return d.dataValue; }); }) + 2])
 					.range([height, 0]);
-				
-				var colors = {};
-				colors["sclNotchNotch"] = 'lightcoral';
-				colors["sclNotchTip"] = 'red';
-				colors["sclTipTip"] = 'darkred';
-				colors["scw"] = 'darkorange';
-				colors["cclNotchNotch"] = 'lightgreen';
-				colors["cclNotchTip"] = 'limegreen';
-				colors["cclTipTip"] = 'darkgreen';
-				colors["ccw"] = 'mediumturquoise';
-				colors["weight"] = 'violet';
 
+				if (scope.isChecked.sclNotchNotch)
+				{
+					svg.selectAll(".point")
+						.data(sclNotchNotchData)
+						.enter()
+						.append("svg:circle")
+						.attr("stroke", "lightcoral")
+						.attr("stroke-width", "1.5px")
+						.attr("fill", "lightcoral")
+						.attr("r", 2)
+						.attr("cx", function(d, i) { return x(d.date) })
+						.attr("cy", function(d, i) { return y(d.dataValue) })
+						.on("mouseover", function(d){return tooltip.style("visibility", "visible").style("background-color", "lightcoral").html("Date measured: " + d3.time.format("%Y-%m-%d")(d.date) + "<br />SCL notch-notch: " + d.dataValue);})
+						.on("mousemove", function(){return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
+						.on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+				}
+				
+				if (scope.isChecked.sclNotchTip)
+				{
+					svg.selectAll(".point")
+						.data(sclNotchTipData)
+						.enter()
+						.append("svg:circle")
+						.attr("stroke", "red")
+						.attr("stroke-width", "1.5px")
+						.attr("fill", "red")
+						.attr("r", 2)
+						.attr("cx", function(d, i) { return x(d.date) })
+						.attr("cy", function(d, i) { return y(d.dataValue) })
+						.on("mouseover", function(d){return tooltip.style("visibility", "visible").style("background-color", "red").html("Date measured: " + d3.time.format("%Y-%m-%d")(d.date) + "<br />SCL notch-tip: " + d.dataValue);})
+						.on("mousemove", function(){return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
+						.on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+				}
+				
+				if (scope.isChecked.sclTipTip)
+				{
+					svg.selectAll(".point")
+						.data(sclTipTipData)
+						.enter()
+						.append("svg:circle")
+						.attr("stroke", "darkred")
+						.attr("stroke-width", "1.5px")
+						.attr("fill", "darkred")
+						.attr("r", 2)
+						.attr("cx", function(d, i) { return x(d.date) })
+						.attr("cy", function(d, i) { return y(d.dataValue) })
+						.on("mouseover", function(d){return tooltip.style("visibility", "visible").style("background-color", "darkred").html("Date measured: " + d3.time.format("%Y-%m-%d")(d.date) + "<br />SCL tip-tip: " + d.dataValue);})
+						.on("mousemove", function(){return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
+						.on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+				}
+				
+				if (scope.isChecked.scw)
+				{
+					svg.selectAll(".point")
+						.data(scwData)
+						.enter()
+						.append("svg:circle")
+						.attr("stroke", "darkorange")
+						.attr("stroke-width", "1.5px")
+						.attr("fill", "darkorange")
+						.attr("r", 2)
+						.attr("cx", function(d, i) { return x(d.date) })
+						.attr("cy", function(d, i) { return y(d.dataValue) })
+						.on("mouseover", function(d){return tooltip.style("visibility", "visible").style("background-color", "darkorange").html("Date measured: " + d3.time.format("%Y-%m-%d")(d.date) + "<br />SCW: " + d.dataValue);})
+						.on("mousemove", function(){return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
+						.on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+				}
+
+				if (scope.isChecked.cclNotchNotch)
+				{
+					svg.selectAll(".point")
+						.data(cclNotchNotchData)
+						.enter()
+						.append("svg:circle")
+						.attr("stroke", "lightgreen")
+						.attr("stroke-width", "1.5px")
+						.attr("fill", "lightgreen")
+						.attr("r", 2)
+						.attr("cx", function(d, i) { return x(d.date) })
+						.attr("cy", function(d, i) { return y(d.dataValue) })
+						.on("mouseover", function(d){return tooltip.style("visibility", "visible").style("background-color", "lightgreen").html("Date measured: " + d3.time.format("%Y-%m-%d")(d.date) + "<br />CCL notch-notch: " + d.dataValue);})
+						.on("mousemove", function(){return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
+						.on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+				}
+				
+				if (scope.isChecked.cclNotchTip)
+				{
+					svg.selectAll(".point")
+						.data(cclNotchTipData)
+						.enter()
+						.append("svg:circle")
+						.attr("stroke", "limegreen")
+						.attr("stroke-width", "1.5px")
+						.attr("fill", "limegreen")
+						.attr("r", 2)
+						.attr("cx", function(d, i) { return x(d.date) })
+						.attr("cy", function(d, i) { return y(d.dataValue) })
+						.on("mouseover", function(d){return tooltip.style("visibility", "visible").style("background-color", "limegreen").html("Date measured: " + d3.time.format("%Y-%m-%d")(d.date) + "<br />CCL notch-tip: " + d.dataValue);})
+						.on("mousemove", function(){return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
+						.on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+				}
+				
+				if (scope.isChecked.cclTipTip)
+				{
+					svg.selectAll(".point")
+						.data(cclTipTipData)
+						.enter()
+						.append("svg:circle")
+						.attr("stroke", "darkgreen")
+						.attr("stroke-width", "1.5px")
+						.attr("fill", "darkgreen")
+						.attr("r", 2)
+						.attr("cx", function(d, i) { return x(d.date) })
+						.attr("cy", function(d, i) { return y(d.dataValue) })
+						.on("mouseover", function(d){return tooltip.style("visibility", "visible").style("background-color", "darkgreen").html("Date measured: " + d3.time.format("%Y-%m-%d")(d.date) + "<br />CCL tip-tip: " + d.dataValue);})
+						.on("mousemove", function(){return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
+						.on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+				}
+				
+				if (scope.isChecked.ccw)
+				{
+					svg.selectAll(".point")
+						.data(ccwData)
+						.enter()
+						.append("svg:circle")
+						.attr("stroke", "mediumturquoise")
+						.attr("stroke-width", "1.5px")
+						.attr("fill", "mediumturquoise")
+						.attr("r", 2)
+						.attr("cx", function(d, i) { return x(d.date) })
+						.attr("cy", function(d, i) { return y(d.dataValue) })
+						.on("mouseover", function(d){return tooltip.style("visibility", "visible").style("background-color", "mediumturquoise").html("Date measured: " + d3.time.format("%Y-%m-%d")(d.date) + "<br />CCW: " + d.dataValue);})
+						.on("mousemove", function(){return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
+						.on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+				}
+				
+				if (scope.isChecked.weight)
+				{
+					svg.selectAll(".point")
+						.data(weightData)
+						.enter()
+						.append("svg:circle")
+						.attr("stroke", "violet")
+						.attr("stroke-width", "1.5px")
+						.attr("fill", "violet")
+						.attr("r", 2)
+						.attr("cx", function(d, i) { return x(d.date) })
+						.attr("cy", function(d, i) { return y(d.dataValue) })
+						.on("mouseover", function(d){return tooltip.style("visibility", "visible").style("background-color", "violet").html("Date measured: " + d3.time.format("%Y-%m-%d")(d.date) + "<br />Weight: " + d.dataValue);})
+						.on("mousemove", function(){return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
+						.on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+				}
+				
 				var xAxis = d3.svg.axis()
 					.scale(x)
 					.orient("bottom")
-					.ticks(10)
+					.ticks(d3.time.days)
 					.tickFormat(d3.time.format("%Y-%m-%d")); 
 
 				var yAxis = d3.svg.axis()
@@ -345,8 +511,8 @@ RosterWebApp.directive('ngMorphometricsGraph', function () {
 
 				var line = d3.svg.line()
 					.x(function(d) { return x(d.date); })
-					.y(function(d) { return y(d.dataValue); });
-				
+					.y(function(d) { return y(d.dataValue); });			
+
 				svg.append("g")
 					.attr("class", "x axis")
 					.attr("transform", "translate(0," + height + ")")
@@ -372,7 +538,8 @@ RosterWebApp.directive('ngMorphometricsGraph', function () {
 					.attr("fill", "none")
 					.attr("stroke-width", "1.5px")
 					.attr("stroke", function(d) { return colors[d.key]; })
-					.attr("d", function(d) { return line(d.values); });			
+					.attr("d", function(d) { return line(d.values); });
+					
 			};
 		}
 	}
