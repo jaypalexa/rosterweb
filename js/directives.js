@@ -741,24 +741,3 @@ RosterWebApp.directive('ngPhGraph', function () {
 		}
 	}
 });
-
-RosterWebApp.directive('ngFuckYou', function () {
-	return {
-		restrict: 'E',
-		terminal: true,
-		scope: {
-			val: '=',
-			sortOrder: '='
-		},
-		link: function (scope, element, attrs) {
-
-			scope.$watch('sortOrder', function (newVal, oldVal) {
-
-				if (!scope.sortOrder) { return; }
-				if (!newVal) { return; }
-				if (newVal.length == 0) { return; }
-  
-			}, true);
-		}
-	}
-});
