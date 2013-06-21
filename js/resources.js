@@ -46,6 +46,10 @@ RosterWebApp.factory('Turtle', function($resource) {
     return $resource('/rosterweb/api/turtle.php', {}, { 'update': { method: 'PUT' } });
 });
 
+RosterWebApp.factory('TurtleAttachment', function($resource) {
+    return $resource('/rosterweb/api/turtle_attachment.php', {}, { 'update': { method: 'PUT' } });
+});
+
 RosterWebApp.factory('TurtleMorphometric', function($resource) {
     return $resource('/rosterweb/api/turtle_morphometric.php', {}, { 'update': { method: 'PUT' } });
 });

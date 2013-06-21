@@ -8,12 +8,6 @@
     File upload styles
 -----------------------------*/
 
-#file-upload-div {
-    border-radius: 5px;
-    /* margin: 0 auto; */
-    width: 220px;
-}
-
 #drop {
     background-color: #fff;
     padding: 20px 0;

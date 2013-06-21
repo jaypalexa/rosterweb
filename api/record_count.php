@@ -55,6 +55,13 @@
 			{
 				$item['turtle_morphometric_count'] = $row['record_count'];
 			}
+			
+			$i = 0;
+			foreach (glob($utilUploadsAttachmentsRelPath . '/' . $parameters['turtle_id'] . '-' . '*.*') as $filename) 
+			{
+				$i++;
+			}
+			$item['turtle_attachment_count'] = $i;
 		}
 		else
 		{

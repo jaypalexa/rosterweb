@@ -18,7 +18,7 @@ RosterWebApp.directive('sorted', function() {
             $scope.do_show = function(asc) {
                 return (asc != $scope.sort_desc) && ($scope.sort_order == $scope.sort);
             };
-        }
+        }
     };
 });
 
@@ -40,15 +40,14 @@ RosterWebApp.directive('ngModelOnblur', function() {
     };
 });
 
-// ng-upload-brochure-image:  for uploading turtle brochure image files
-RosterWebApp.directive('ngUploadBrochureImage', function() {
+// ng-upload-turtle_brochure-image:  for uploading turtle brochure image files
+RosterWebApp.directive('ngUploadTurtleBrochureImage', function() {
 	return {
 		restrict: 'E',
-		
 		link: function(scope, elem, attr, ctrl) {
 		
 			var dragForm = '' + 
-				'<div id="file-upload-div">' +
+				'<div id="upload-turtle-brochure-image-div" style="border-radius: 5px;width: 220px;">' +
 					'<div id="drop">' + 
 						'Drag Image Here<br />' + 
 						'<a>Browse...</a>' +
@@ -77,9 +76,11 @@ RosterWebApp.directive('ngUploadBrochureImage', function() {
 			});
 		  
 			//-- initialize the jQuery File Upload plugin
-			$('#file-upload-div').fileupload({
+			$('#upload-turtle-brochure-image-div').fileupload({
 				//-- this element will accept file drag/drop uploading
 				dropZone: $('#drop'),
+				maxNumberOfFiles: 1,
+				getNumberOfFiles: function () { return 1 }, 
 
 				//-- called when a file is added via the browse button or drag-and-drop
 				add: function (e, data) {
@@ -95,7 +96,7 @@ RosterWebApp.directive('ngUploadBrochureImage', function() {
 					xhr.upload.addEventListener('error', onErrorHandler, false);
 					xhr.upload.addEventListener('abort', onAbortHandler, false);
 					xhr.addEventListener('readystatechange', onReadyStateChangeHandler, false);
-					xhr.open("POST", "/rosterweb/api/upload_brochure_image.php", true);
+					xhr.open("POST", "/rosterweb/api/turtle_brochure_upload_image.php", true);
 					xhr.send(fd);
 
 					function onLoadStartHandler(evt) {
@@ -154,6 +155,182 @@ RosterWebApp.directive('ngUploadBrochureImage', function() {
 					}
 				}
 			});
+		}
+	}
+});
+
+// *OLD* ng-upload-turtle-attachments:  for uploading turtle attachment files
+RosterWebApp.directive('ngOldUploadTurtleAttachments', function() {
+	return {
+		restrict: 'E',
+		
+		link: function(scope, elem, attr, ctrl) {
+		
+			var dragForm = '' + 
+				'<div id="upload-turtle-attachments-div" style="border-radius: 5px;margin: 0 auto;">' +
+					'<div id="drop">' + 
+						'Drag Files Here<br />' + 
+						'<a>Browse...</a>' +
+						'<input type="file" id="MOO_uploadfiles" />' +
+						'<br /><br />' +
+						'<p id="upload-status"></p>' +
+						'<p id="progress"></p>' +
+						'<p id="result"></p>' +
+					'</div>';
+				'</div>';
+				
+			elem.html(dragForm);
+
+			$(document).on('click', '#drop a', function() {
+				$(this).parent().find('input').click();
+			});
+
+			$(document).on('dragover', function (e) {
+				e.preventDefault();
+				$('#drop').addClass('active');
+			});
+
+			$(document).on('drop dragleave', function (e) {
+				e.preventDefault();
+				$('#drop').removeClass('active');
+			});
+		  
+			//-- initialize the jQuery File Upload plugin
+			$('#upload-turtle-attachments-div').fileupload({
+				//-- this element will accept file drag/drop uploading
+				dropZone: $('#drop'),
+
+				drop: function (e, data) {
+					$.each(data.files, function (index, file) {
+						alert('Dropped file: ' + file.name);
+					});	
+				},
+				
+				//-- called when a file is added via the browse button or drag-and-drop
+				add: function (e, data) {
+				
+					var fd = new FormData();
+					fd.append("uploadfiles", data.files[0]);
+					fd.append("turtle_id", scope.item.turtle_id);
+						
+					var xhr = new XMLHttpRequest();
+					xhr.upload.addEventListener('loadstart', onLoadStartHandler, false);
+					xhr.upload.addEventListener('progress', onProgressHandler, false);
+					xhr.upload.addEventListener('load', onLoadHandler, false);
+					xhr.upload.addEventListener('error', onErrorHandler, false);
+					xhr.upload.addEventListener('abort', onAbortHandler, false);
+					xhr.addEventListener('readystatechange', onReadyStateChangeHandler, false);
+					xhr.open("POST", "/rosterweb/api/turtle_attachment_upload_files.php", true);
+					xhr.send(fd);
+
+					function onLoadStartHandler(evt) {
+						var div = document.getElementById('upload-status');
+						div.innerHTML = 'Upload started';
+					}
+
+					function onProgressHandler(evt) {
+						var div = document.getElementById('progress');
+						var percent = evt.loaded/evt.total*100;
+						if (percent != 100) {
+							div.innerHTML = 'Progress: ' + percent.toFixed(0) + '%';
+						} else {
+							div.innerHTML = '';
+						}
+					}
+
+					function onErrorHandler(evt) {
+						var div = document.getElementById('upload-status');
+						div.innerHTML = 'Upload error';
+					}
+
+					function onAbortHandler(evt) {
+						var div = document.getElementById('upload-status');
+						div.innerHTML = 'Upload aborted';
+					}
+
+					function onLoadHandler(evt) {
+						var div = document.getElementById('upload-status');
+						div.innerHTML = 'Finished';
+					}
+
+					function onReadyStateChangeHandler(evt) {
+						var status = null;
+
+						try {
+							status = evt.target.status;
+						}
+						catch(e) {
+							return;
+						}
+
+						var div = document.getElementById('upload-status');
+						if (status == '200') {
+							div.innerHTML = 'Upload complete';
+							
+							//???TODO: call scope.refresh() to reload list?
+							scope.refresh();
+							
+							// if (evt.target.responseText) {
+								// var result = document.getElementById('result');
+								// //result.innerHTML = '<img src="' + evt.target.responseText + '" height="200px" width="200px" />';
+								// scope.item.brochure_image_file_attachment_id = evt.target.responseText;
+								// scope.save();
+							// } else {
+								// div.innerHTML = evt.target.responseText;
+							// }
+						} else {
+							div.innerHTML = 'Error:  ' + evt.target.responseText + '<br />(status code = ' + status + ')';
+						}						
+					}
+				}
+			});
+		}
+	}
+});
+
+// ng-upload-turtle-attachments:  for uploading turtle attachment files
+RosterWebApp.directive('ngUploadTurtleAttachments', function($timeout) {
+	return {
+		restrict: 'E',
+		link: function(scope, elem, attr, ctrl) {
+		
+			var dragForm = '' + 
+				'<div id="upload-turtle-attachments-div" class="dropzone dz-clickable">' +
+				'</div>';
+				
+			elem.html(dragForm);
+			
+			var myDropzone = new Dropzone("div#upload-turtle-attachments-div", 
+				{ 
+					url: "/rosterweb/api/turtle_attachment_upload_files.php?turtle_id=" + scope.item.turtle_id,
+					paramName: "uploadfiles", // The name that will be used to transfer the file
+					maxFilesize: 2, // MB
+					clickable: true, 
+					accept: function(file, done) {
+						done(); 
+					}
+				}
+			);
+		
+			myDropzone.on("success", function(file) {
+				scope.refresh();
+			});
+		
+			myDropzone.on("complete", function(file) {
+				$timeout(function() { myDropzone.removeFile(file); }, 5000);
+				//this.removeAllFiles();
+			});
+
+			// //-- use this to restrict to a single file
+			// Dropzone.prototype.handleFiles = function(files) {
+				// var file, _i, _len, _results;
+				// _results = [];
+				// for (_i = 0, _len = 1; _i < _len; _i++) {
+					// file = files[_i];
+					// _results.push(this.addFile(file));
+				// }
+				// return _results;
+			// };
 		}
 	}
 });

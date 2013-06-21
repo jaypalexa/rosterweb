@@ -11,6 +11,7 @@
 	<link rel="stylesheet" type="text/css" href="/rosterweb/styles/bootstrap-responsive.css" />
 	<link rel="stylesheet" type="text/css" href="/rosterweb/styles/bootstrap-datepicker.css" />
 	<link rel="stylesheet" type="text/css" href="/rosterweb/styles/openid.css" />
+	<link rel="stylesheet" type="text/css" href="/rosterweb/styles/dropzone.css" />
 	<link rel="stylesheet" type="text/css" href="/rosterweb/styles/rosterweb.css" />
 
 	<!-- third-party libraries -->
@@ -31,6 +32,7 @@
 	<script type="text/javascript" src="/rosterweb/js/lib/jquery/jquery.iframe-transport.js"></script>
 	<script type="text/javascript" src="/rosterweb/js/lib/jquery/jquery.fileupload.js"></script>
 	<script type="text/javascript" src="/rosterweb/js/lib/d3.v3/d3.v3.min.js"></script>
+	<script type="text/javascript" src="/rosterweb/js/lib/dropzone/dropzone.js"></script>
 	
     <!-- app-specific scripts -->
 	<script type="text/javascript" src="/rosterweb/js/app.js"></script>

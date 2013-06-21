@@ -1,15 +1,19 @@
 <?php
 	require_once('chromephp.php');
 	
-	function utilLog() 
+	$utilUploadsBrochureImagesUriPath = '/rosterweb/uploads/brochure_images';
+	$utilUploadsBrochureImagesRelPath = '../uploads/brochure_images';
+	$utilUploadsAttachmentsUriPath = '/rosterweb/uploads/attachments';
+	$utilUploadsAttachmentsRelPath = '../uploads/attachments';
+
+	function utilArraySortByColumn(&$arr, $col, $dir = SORT_ASC) 
 	{
-		$args = func_get_args();
-	 
-		if ( 1 == count( $args ) )
-			ChromePhp::log( $args[0] );
-		else
-			ChromePhp::log( $args[1], $args[1] );
-	};
+		$sort_col = array();
+		foreach ($arr as $key=> $row) {
+			$sort_col[$key] = $row[$col];
+		}
+		array_multisort($sort_col, $dir, $arr);
+	}
 
 	function utilCreateGuid()
 	{
@@ -32,6 +36,68 @@
 		}
 	}
 	
+	function utilGetFingerprint()
+	{
+		//-- must only get first part of User-Agent as sometimes PHP only gets the first bit anyway?...ugh...sometimes it is not there at all...
+		//return md5('969CA064-57EC-4ECF-92C4-AB4EEF46B461' . substr($_SERVER['HTTP_USER_AGENT'], 0, 32) . session_id());
+		//-- the above is broken...the below is worthless...actually, it is all worthless outside of HTTPS...but I was trying to make it a bit harder...
+		return md5('969CA064-57EC-4ECF-92C4-AB4EEF46B461' . session_id());
+	}
+
+	function utilGetPhpFileUploadErrorMessage($code) 
+    { 
+        switch ($code) { 
+            case UPLOAD_ERR_INI_SIZE: 
+                $message = "The uploaded file exceeds the upload_max_filesize directive in php.ini"; 
+                break; 
+            case UPLOAD_ERR_FORM_SIZE: 
+                $message = "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form"; 
+                break; 
+            case UPLOAD_ERR_PARTIAL: 
+                $message = "The uploaded file was only partially uploaded"; 
+                break; 
+            case UPLOAD_ERR_NO_FILE: 
+                $message = "No file was uploaded"; 
+                break; 
+            case UPLOAD_ERR_NO_TMP_DIR: 
+                $message = "Missing a temporary folder"; 
+                break; 
+            case UPLOAD_ERR_CANT_WRITE: 
+                $message = "Failed to write file to disk"; 
+                break; 
+            case UPLOAD_ERR_EXTENSION: 
+                $message = "File upload stopped by extension"; 
+                break; 
+
+            default: 
+                $message = "Unknown upload error"; 
+                break; 
+        } 
+        return $message; 
+	}
+	
+	function utilIsSessionValid()
+	{
+		if ((isset($_SESSION['fingerprint'])) &&(utilGetFingerprint() == $_SESSION['fingerprint']) && (isset($_SESSION['is_logged_in'])) && ($_SESSION['is_logged_in'] == 'true'))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	function utilLog() 
+	{
+		$args = func_get_args();
+	 
+		if ( 1 == count( $args ) )
+			ChromePhp::log( $args[0] );
+		else
+			ChromePhp::log( $args[1], $args[1] );
+	};
+
 	function utilParseHttpParameters() 
 	{
         $parameters = array();
@@ -81,78 +147,4 @@
 		array_multisort($keys, $sortType, $array);
 	}
 
-	/**
-	 * Logs messages/variables/data to browser console from within php
-	 *
-	 * @param $name: message to be shown for optional data/vars
-	 * @param $data: variable (scalar/mixed) arrays/objects, etc to be logged
-	 * @param $jsEval: whether to apply JS eval() to arrays/objects
-	 *
-	 * @return none
-	 * @author Sarfraz
-	 */
-	//logConsole('$name var', $name, true);
-	//logConsole('An array of fruits', $fruits, true);
-	//logConsole('$user object', $user, true);
-	function utilLogConsole($name, $data = NULL, $jsEval = FALSE)
-	{
-		if (! $name) return false;
-
-		$isevaled = false;
-		$type = ($data || gettype($data)) ? 'Type: ' . gettype($data) : '';
-
-		if ($jsEval && (is_array($data) || is_object($data)))
-		{
-			$data = 'eval(' . preg_replace('#[\s\r\n\t\0\x0B]+#', '', json_encode($data)) . ')';
-			$isevaled = true;
-		}
-		else
-		{
-			$data = json_encode($data);
-		}
-
-		# sanitalize
-		$data = $data ? $data : '';
-		$search_array = array("#'#", '#""#', "#''#", "#\n#", "#\r\n#");
-		$replace_array = array('"', '', '', '\\n', '\\n');
-		$data = preg_replace($search_array,  $replace_array, $data);
-		$data = ltrim(rtrim($data, '"'), '"');
-		$data = $isevaled ? $data : ($data[0] === "'") ? $data : "'" . $data . "'";
-
-		$js = '
-		\n<script>
-			// fallback - to deal with IE (or browsers that do not have console)
-			if (! window.console) console = {};
-			console.log = console.log || function(name, data){};
-			// end of fallback
-
-			console.log(\'$name\');
-			console.log(\'------------------------------------------\');
-			console.log(\'$type\');
-			console.log($data);
-			console.log(\'\\n\');
-		</script>
-		';
-		echo $js;
-	}
- 
-	function utilGetFingerprint()
-	{
-		//-- must only get first part of User-Agent as sometimes PHP only gets the first bit anyway?...ugh...sometimes it is not there at all...
-		//return md5('969CA064-57EC-4ECF-92C4-AB4EEF46B461' . substr($_SERVER['HTTP_USER_AGENT'], 0, 32) . session_id());
-		//-- the above is broken...the below is worthless...actually, it is all worthless outside of HTTPS...but I was trying to make it a bit harder...
-		return md5('969CA064-57EC-4ECF-92C4-AB4EEF46B461' . session_id());
-	}
-	
-	function utilIsSessionValid()
-	{
-		if ((isset($_SESSION['fingerprint'])) &&(utilGetFingerprint() == $_SESSION['fingerprint']) && (isset($_SESSION['is_logged_in'])) && ($_SESSION['is_logged_in'] == 'true'))
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
 ?>

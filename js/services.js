@@ -451,6 +451,7 @@ RosterWebApp.service('recordCountService', function($q, $http, $rootScope, Recor
 					$recordCounts = result;
 					$rootScope.recordCounts.turtleTagCount = $recordCounts.turtle_tag_count; 
 					$rootScope.recordCounts.turtleMorphometricCount = $recordCounts.turtle_morphometric_count;
+					$rootScope.recordCounts.turtleAttachmentCount = $recordCounts.turtle_attachment_count;
 					success(result);
 				}, error);
 		}
@@ -458,6 +459,7 @@ RosterWebApp.service('recordCountService', function($q, $http, $rootScope, Recor
 		{
 			$rootScope.recordCounts.turtleTagCount = 0; 
 			$rootScope.recordCounts.turtleMorphometricCount = 0;
+			$rootScope.recordCounts.turtleAttachmentCount = 0;
 		}
     };	
 	
@@ -591,6 +593,20 @@ RosterWebApp.service('turtleService', function($q, $http, $rootScope, Turtle) {
 	
     this.delete = function(turtle_id, success, error) {
         return Turtle.delete({ turtle_id: turtle_id }, success, error);
+    };
+});
+
+RosterWebApp.service('turtleAttachmentService', function($q, $http, $rootScope, TurtleAttachment) {
+    this.search = function(q, sort_order, sort_desc, success, error) {
+        return TurtleAttachment.query({ q: q, sort: sort_order, desc: sort_desc, ver: util_new_guid(), turtle_id: $rootScope.currentTurtle.turtleId }, success, error);
+    };	
+	
+    this.getAll = function(sort_order, sort_desc, success, error) {
+        return TurtleAttachment.query({ sort: sort_order, desc: sort_desc, ver: util_new_guid(), turtle_id: $rootScope.currentTurtle.turtleId }, success, error);
+    };	
+	
+    this.delete = function(turtle_id, base_file_name, success, error) {
+        return TurtleAttachment.delete({ turtle_id: turtle_id, base_file_name: base_file_name }, success, error);
     };
 });
 

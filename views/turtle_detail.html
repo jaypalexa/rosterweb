@@ -83,15 +83,6 @@
 						<a title="Locate on map" href="" ng-click="mapAcquiredLatLng();" bs-tooltip data-placement="right"><img src="/rosterweb/img/globe.png" style="height:30px; width:30px;"></a>
 					</div>
 				</div>
-<!--
-				<div class="control-group" ng-class="{error: form.acquired_longitude.$invalid}">
-					<label class="control-label" for="acquired_longitude">Longitude:</label>
-					<div class="controls">
-						<input type="text" ng-model="item.acquired_longitude" id="acquired_longitude" name="acquired_longitude" ng-maxlength="255" maxlength="255" ng-model-onblur ng-change="save()" />
-						<span class="error" ng-show="form.acquired_longitude.$error.maxlength">max length exceeded</span>
-					</div>
-				</div>
--->
 				<div class="control-group input-append" style="display: block" ng-class="{error: form.date_relinquished.$invalid}">
 					<label class="control-label" for="date_relinquished">Date relinquished:</label>
 					<div class="controls">
@@ -122,15 +113,6 @@
 						<a title="Locate on map" href="" ng-click="mapRelinquishedLatLng();" bs-tooltip data-placement="right"><img src="/rosterweb/img/globe.png" style="height:30px; width:30px;"></a>
 					</div>
 				</div>
-<!--
-				<div class="control-group" ng-class="{error: form.relinquished_longitude.$invalid}">
-					<label class="control-label" for="relinquished_longitude">Longitude:</label>
-					<div class="controls">
-						<input type="text" ng-model="item.relinquished_longitude" id="relinquished_longitude" name="relinquished_longitude" ng-maxlength="255" maxlength="255" ng-model-onblur ng-change="save()" />
-						<span class="error" ng-show="form.relinquished_longitude.$error.maxlength">max length exceeded</span>
-					</div>
-				</div>
--->
 				<div class="control-group" ng-class="{error: form.anomalies.$invalid}">
 					<label class="control-label" for="anomalies">Anomalies:</label>
 					<div class="controls">
@@ -327,10 +309,11 @@
 				<ng-include src="'/rosterweb/views/turtle_morphometric_list.html'"></ng-include>
 			</div>
 		</pane>
-<!--
-        <pane heading="Attachments">
+        <pane heading="Attachments ({{ $root.recordCounts.turtleAttachmentCount }})">
+			<div>
+				<ng-include src="'/rosterweb/views/turtle_attachment_list.html'"></ng-include>
+			</div>
 		</pane>
--->
         <pane heading="Brochure">
 			<div class="control-group" ng-class="{error: form.brochure_comments.$invalid}">
 				<label class="control-label" for="brochure_comments">Comments:</label>
@@ -354,7 +337,7 @@
 						<img ng-show="item.brochure_image_file_attachment_id != null" ng-src="{{ item.brochure_image_file_attachment_id }}" height="220px" width="220px" />
 					</div>
 					<div style="float:left;">
-						<ng-upload-brochure-image>
+						<ng-upload-turtle_brochure-image>
 					</div>
 				</div>
 			</div>

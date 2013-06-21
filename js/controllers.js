@@ -733,6 +733,43 @@ var TurtleEditCtrl = function($rootScope, $scope, $routeParams, $location, $cook
 	recordCountService.resetAllForTurtle($rootScope.currentTurtle.turtleId);
 };
 
+var TurtleAttachmentListCtrl = function ($rootScope, $scope, $location, $dialog, turtleAttachmentService, recordCountService) {
+
+    $scope.search = function() {
+		$scope.items = turtleAttachmentService.search($scope.q, $scope.sort_order, $scope.sort_desc);
+    };
+
+    $scope.sort_by = function(property_name) {
+        if ($scope.sort_order == property_name) { 
+			$scope.sort_desc = !$scope.sort_desc; 
+		} else { 
+			$scope.sort_desc = false; 
+		}
+        $scope.sort_order = property_name;
+        $scope.search();
+    };
+
+    $scope.delete = function(item) {
+		util_open_delete_dialog($dialog, 'attachment', item.base_file_name, function(result) {
+			if (result == 'yes') {
+				turtleAttachmentService.delete(item.turtle_id, item.base_file_name, function() {
+					recordCountService.resetAllForTurtle($rootScope.currentTurtle.turtleId);
+					$("#item_" + item.turtle_attachment_id).fadeOut();
+				});
+			}
+		});
+	};
+	
+	$scope.refresh = function() {
+		$scope.search();
+		recordCountService.resetAllForTurtle($rootScope.currentTurtle.turtleId);
+	}
+	
+    $scope.sort_order = 'base_file_name';
+    $scope.sort_desc = false;
+    $scope.search();
+};
+
 var TurtleMorphometricListCtrl = function ($rootScope, $scope, $location, $dialog, turtleMorphometricService, recordCountService) {
 
 	$scope.isChecked = {};
