@@ -334,10 +334,13 @@
 				<div class="controls">
 					<div style="float:left; margin-right: 12px;">
 						<input type="hidden" value="{{ item.brochure_image_file_attachment_id }}" id="brochure_image_file_attachment_id" name="brochure_image_file_attachment_id" />
-						<img ng-show="item.brochure_image_file_attachment_id != null" ng-src="{{ item.brochure_image_file_attachment_id }}" height="220px" width="220px" />
+						<img ng-show="item.brochure_image_file_attachment_id != null" ng-src="{{ item.brochure_image_file_attachment_id }}" height="300px" width="300px" />
 					</div>
 					<div style="float:left;">
 						<ng-upload-turtle_brochure-image>
+					</div>
+					<div style="float:left; margin-left:12px;">
+						<a ng-click="previewBrochure(item);"><img ng-src="/rosterweb/img/print-preview.png" alt="Preview Brochure" title="Preview Brochure" style="cursor:pointer;" /></a>
 					</div>
 				</div>
 			</div>

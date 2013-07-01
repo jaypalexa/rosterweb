@@ -634,9 +634,12 @@ var TurtleListCtrl = function ($rootScope, $scope, $location, $dialog, turtleSer
     $scope.search();
 };
 
-var TurtleEditCtrl = function($rootScope, $scope, $routeParams, $location, $cookieStore, $dialog, turtleService, codeTableService, countyService, recordCountService) {
+var TurtleEditCtrl = function($rootScope, $scope, $routeParams, $location, $cookieStore, $dialog, $timeout, turtleService, codeTableService, countyService, recordCountService) {
 
 	$rootScope.currentTurtle = {};
+
+	$scope.arrival_weight_value = '';
+	$scope.arrival_weight_units = '';
 
     $scope.capture_project_types = codeTableService.getCodes('capture_project_type'); 
 	$scope.counties = countyService.getAll('county_name', false);
@@ -688,6 +691,30 @@ var TurtleEditCtrl = function($rootScope, $scope, $routeParams, $location, $cook
 		});
 	};
 
+	$scope.previewBrochure = function(item)
+    {
+		$timeout(function () {
+			var previewWindow = window.open('', 'Brochure for ' + util_blank_if_null(item.turtle_name), 'width=800,height=600,titlebar=0,location=0,menubar=0,toolbar=0');
+			previewWindow.document.write("<html><head><title>Brochure for " + util_blank_if_null(item.turtle_name) + "</title><style>@media print { .non-printable { display: none; } .printable { display: block; } }</style></head><body style='font-family: Arial; background-color: " + item.brochure_background_color + ";'></body></html>")
+			var newDiv = previewWindow.document.createElement('div');
+			newDiv.innerHTML = 
+				"<div class='non-printable'><a href='#' onclick='window.print();return false;'><img src='/rosterweb/img/print.png' height='46px' width='35px'></a><br /></div>" + 
+				"<div class='printable'>" + 
+				"<div style='float:left; margin-left:20px; margin-top:20px;'><img src='" + item.brochure_image_file_attachment_id + "' height='240px' width='240px' /></div>" +
+				"<p><span style='font-weight:bold; margin-left:12px;'>Turtle Name:  </span>" + util_blank_if_null(item.turtle_name) + "</p>" +
+				"<p><span style='font-weight:bold; margin-left:12px;'>Species:  </span>" + angular.element('#species').find(':selected').text() + "</p>" +
+				"<p><span style='font-weight:bold; margin-left:12px;'>Size:  </span>" + util_blank_if_null(item.turtle_size) + "</p>" +
+				"<p><span style='font-weight:bold; margin-left:12px;'>Arrival Weight:  </span>" + $scope.arrival_weight_value + " " + $scope.arrival_weight_units + "</p>" +
+				"<p><span style='font-weight:bold; margin-left:12px;'>Stranding Date:  </span>" + util_blank_if_null(item.date_acquired) + "</p>" +
+				"<p><span style='font-weight:bold; margin-left:12px;'>Location Found:  </span>" + util_blank_if_null(item.acquired_from) + "</p>" +
+				"<p><span style='font-weight:bold; margin-left:12px;'>County:  </span>" + util_blank_if_null(item.acquired_county) + "</p>" +
+				"<div style='clear:both; float:left; margin-left:20px;'><p><span style='font-weight: bold;'>Comments:  </span></p></p>" + util_blank_if_null(item.brochure_comments).replace(/(\r\n|\n|\r)/g,"<br />"); + "</p></div>" +
+				"</div>"
+			previewWindow.document.body.appendChild(newDiv);
+			previewWindow.focus();
+        });
+    };
+	
 	$scope.save = function() {
         turtleService.save($scope.item, function() {
 			$rootScope.currentTurtle.turtleId = $scope.item.turtle_id;
@@ -726,6 +753,12 @@ var TurtleEditCtrl = function($rootScope, $scope, $routeParams, $location, $cook
 				$rootScope.currentTurtle.turtleId = $scope.item.turtle_id;
 				$rootScope.currentTurtle.turtleName = $scope.item.turtle_name;
 				$cookieStore.put('rootScopeCurrentTurtle', $rootScope.currentTurtle);
+				turtleService.getArrivalWeight($scope.item.turtle_id).then(
+					function(result){ //-- success
+						$scope.arrival_weight_value = result.weight_value;
+						$scope.arrival_weight_units = result.weight_units;
+					}
+				);
 			}
 		);
 	}
@@ -761,6 +794,7 @@ var TurtleAttachmentListCtrl = function ($rootScope, $scope, $location, $dialog,
 	};
 	
 	$scope.refresh = function() {
+		console.log('In TurtleAttachmentListCtrl::refresh()...');
 		$scope.search();
 		recordCountService.resetAllForTurtle($rootScope.currentTurtle.turtleId);
 	}
@@ -813,7 +847,7 @@ var TurtleMorphometricListCtrl = function ($rootScope, $scope, $location, $dialo
     $scope.search();
 };
 
-var TurtleMorphometricEditCtrl = function($rootScope, $scope, $routeParams, $location, turtleMorphometricService, codeTableService, recordCountService) {
+var TurtleMorphometricEditCtrl = function($rootScope, $scope, $routeParams, $location, turtleMorphometricService, turtleService, codeTableService, recordCountService) {
 
 	$rootScope.turtleActiveTabName = 'turtle_morphometric';
 
@@ -828,6 +862,12 @@ var TurtleMorphometricEditCtrl = function($rootScope, $scope, $routeParams, $loc
 				$scope.item.is_new = false;
 			}
 		});
+		turtleService.getArrivalWeight($scope.item.turtle_id).then(
+			function(result){ //-- success
+				$scope.arrival_weight_value = result.weight_value;
+				$scope.arrival_weight_units = result.weight_units;
+			}
+		);
     };
 
 	//--------------------------------------------------------------------------------

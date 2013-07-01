@@ -129,3 +129,14 @@ function util_print_hash(data) {
 	}
 	return str;
 };
+
+function util_blank_if_null(s) {
+	if (s)
+	{
+		return s;
+	}
+	else
+	{
+		return '';
+	}
+};

@@ -581,6 +581,25 @@ RosterWebApp.service('turtleService', function($q, $http, $rootScope, Turtle) {
 		return deferred.promise;		
     };
 	
+    this.getArrivalWeight = function(turtle_id, success, error) {
+ 		var deferred = $q.defer();
+		
+		$http({
+			method: 'GET', 
+			url: '/rosterweb/api/turtle_arrival_weight.php', 
+			params: {turtle_id: turtle_id} 
+		})
+		.success(function(data, status, headers, config) {
+			deferred.resolve(data);
+		})
+		.error(function(data, status, headers, config) {
+			deferred.reject();
+		})
+		;
+
+		return deferred.promise;		
+    };
+	
 	this.save = function(turtle, success, error) {
 		if (turtle.is_new) {
 			//-- insert

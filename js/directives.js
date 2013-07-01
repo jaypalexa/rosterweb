@@ -302,7 +302,7 @@ RosterWebApp.directive('ngUploadTurtleAttachments', function($timeout) {
 			
 			var myDropzone = new Dropzone("div#upload-turtle-attachments-div", 
 				{ 
-					url: "/rosterweb/api/turtle_attachment_upload_files.php?turtle_id=" + scope.item.turtle_id,
+					url: "/rosterweb/api/turtle_attachment_upload_files.php?turtle_id=" + scope.currentTurtle.turtleId,
 					paramName: "uploadfiles", // The name that will be used to transfer the file
 					maxFilesize: 2, // MB
 					clickable: true, 
@@ -311,7 +311,18 @@ RosterWebApp.directive('ngUploadTurtleAttachments', function($timeout) {
 					}
 				}
 			);
-		
+
+			scope.$watch(
+				"currentTurtle.turtleId",
+				function( newValue ) {
+					if (newValue != undefined)
+					{
+						myDropzone.url = "/rosterweb/api/turtle_attachment_upload_files.php?turtle_id=" + newValue;
+					}
+				}, 
+				true
+			);
+					
 			myDropzone.on("success", function(file) {
 				scope.refresh();
 			});
