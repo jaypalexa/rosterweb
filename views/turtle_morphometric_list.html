@@ -16,7 +16,7 @@
 					<th><a href="#/turtle_morphometric/new" bs-tooltip="'Add a new measurement'"><i class="icon-plus-sign"></i></a></th>
 				</thead>
 				<tbody>
-					<tr ng-repeat="item in items" id="item_{{item.turtle_morphometric_id}}">
+					<tr ng-repeat="item in items | orderBy:sort_order:sort_desc" id="item_{{item.turtle_morphometric_id}}">
 						<td>{{item.date_measured}}</td>
 						<td>{{item.scl_notch_notch_value}}</td>
 						<td>{{item.scl_notch_tip_value}}</td>

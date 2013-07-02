@@ -14,7 +14,7 @@
 					<th><a href="#/tank_water/new" bs-tooltip="'Add a new water quality measurement'"><i class="icon-plus-sign"></i></a></th>
 				</thead>
 				<tbody>
-					<tr ng-repeat="item in items" id="item_{{item.tank_water_id}}">
+					<tr ng-repeat="item in items | orderBy:sort_order:sort_desc" id="item_{{item.tank_water_id}}">
 						<td>{{item.date_measured}}</td>
 						<td>{{item.temperature}}</td>
 						<td>{{item.salinity}}</td>

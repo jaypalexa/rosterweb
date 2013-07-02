@@ -45,8 +45,12 @@ var CountyListCtrl = function($scope, $location, $dialog, countyService) {
 			$scope.sort_desc = false; 
 		}
         $scope.sort_order = property_name;
-        $scope.search();
     };
+
+	$scope.searchFilter = function(item) {
+		var re = new RegExp($scope.q, 'i');
+		return !$scope.q || re.test(item.county_name);
+	};
 
     $scope.sort_order = 'county_name';
     $scope.sort_desc = false;
@@ -84,8 +88,7 @@ var HatchlingsEventListCtrl = function ($rootScope, $scope, $location, $dialog, 
 			$scope.sort_desc = false; 
 		}
         $scope.sort_order = property_name;
-        $scope.search();
-    };
+     };
 
     $scope.delete = function(item) {
 		util_open_delete_dialog($dialog, 'hatchlings ' + item.event_type_code + ' event', item.species_code + ' - ' + item.event_date, function(result) {
@@ -98,6 +101,11 @@ var HatchlingsEventListCtrl = function ($rootScope, $scope, $location, $dialog, 
 		});
 	};
 	
+	$scope.searchFilter = function(item) {
+		var re = new RegExp($scope.q, 'i');
+		return !$scope.q || re.test(item.event_date) || re.test(item.species_code) || re.test(item.event_type) || re.test(item.event_count) || re.test(item.county_name);
+	};
+
     $scope.sort_order = 'event_date';
     $scope.sort_desc = false;
     $scope.search();
@@ -373,7 +381,6 @@ var OrganizationListCtrl = function ($rootScope, $scope, $location, $dialog, org
 			$scope.sort_desc = false; 
 		}
         $scope.sort_order = property_name;
-        $scope.search();
     };
 
     $scope.delete = function(item) {
@@ -386,6 +393,11 @@ var OrganizationListCtrl = function ($rootScope, $scope, $location, $dialog, org
 				});
 			}
 		});
+	};
+
+	$scope.searchFilter = function(item) {
+		var re = new RegExp($scope.q, 'i');
+		return !$scope.q || re.test(item.organization_name) || re.test(item.city) || re.test(item.state);
 	};
 	
     $scope.sort_order = 'organization_name';
@@ -472,7 +484,6 @@ var TankListCtrl = function ($rootScope, $scope, $location, $dialog, tankService
 			$scope.sort_desc = false; 
 		}
         $scope.sort_order = property_name;
-        $scope.search();
     };
 
     $scope.delete = function(item) {
@@ -486,6 +497,11 @@ var TankListCtrl = function ($rootScope, $scope, $location, $dialog, tankService
 		});
 	};
 	
+	$scope.searchFilter = function(item) {
+		var re = new RegExp($scope.q, 'i');
+		return !$scope.q || re.test(item.tank_name);
+	};
+
     $scope.sort_order = 'tank_name';
     $scope.sort_desc = false;
     $scope.search();
@@ -553,7 +569,6 @@ var TankWaterListCtrl = function ($rootScope, $scope, $location, $dialog, tankWa
 			$scope.sort_desc = false; 
 		}
         $scope.sort_order = property_name;
-        $scope.search();
     };
 
     $scope.delete = function(item) {
@@ -615,7 +630,6 @@ var TurtleListCtrl = function ($rootScope, $scope, $location, $dialog, turtleSer
 			$scope.sort_desc = false; 
 		}
         $scope.sort_order = property_name;
-        $scope.search();
     };
 
     $scope.delete = function(item) {
@@ -629,6 +643,11 @@ var TurtleListCtrl = function ($rootScope, $scope, $location, $dialog, turtleSer
 		});
 	};
 	
+	$scope.searchFilter = function(item) {
+		var re = new RegExp($scope.q, 'i');
+		return !$scope.q || re.test(item.turtle_name) || re.test(item.species) || re.test(item.sid_number) || re.test(item.stranding_id_number);
+	};
+
     $scope.sort_order = 'turtle_name';
     $scope.sort_desc = false;
     $scope.search();
@@ -828,7 +847,6 @@ var TurtleMorphometricListCtrl = function ($rootScope, $scope, $location, $dialo
 			$scope.sort_desc = false; 
 		}
         $scope.sort_order = property_name;
-        $scope.search();
     };
 
     $scope.delete = function(item) {
@@ -1009,7 +1027,6 @@ var TurtleTagListCtrl = function ($rootScope, $scope, $location, $dialog, turtle
 			$scope.sort_desc = false; 
 		}
         $scope.sort_order = property_name;
-        $scope.search();
     };
 
     $scope.delete = function(item) {
@@ -1078,7 +1095,6 @@ var UserListCtrl = function ($rootScope, $scope, $location, $dialog, userService
 			$scope.sort_desc = false; 
 		}
         $scope.sort_order = property_name;
-        $scope.search();
     };
 
     $scope.delete = function(item) {
@@ -1090,6 +1106,11 @@ var UserListCtrl = function ($rootScope, $scope, $location, $dialog, userService
 				});
 			}
 		});
+	};
+	
+	$scope.searchFilter = function(item) {
+		var re = new RegExp($scope.q, 'i');
+		return !$scope.q || re.test(item.user_name) || re.test(item.user_email) || re.test(item.organization_name);
 	};
 	
     $scope.sort_order = 'user_name';
@@ -1142,7 +1163,6 @@ var WashbacksEventListCtrl = function ($rootScope, $scope, $location, $dialog, w
 			$scope.sort_desc = false; 
 		}
         $scope.sort_order = property_name;
-        $scope.search();
     };
 
     $scope.delete = function(item) {
@@ -1156,6 +1176,11 @@ var WashbacksEventListCtrl = function ($rootScope, $scope, $location, $dialog, w
 		});
 	};
 	
+	$scope.searchFilter = function(item) {
+		var re = new RegExp($scope.q, 'i');
+		return !$scope.q || re.test(item.event_date) || re.test(item.species_code) || re.test(item.event_type) || re.test(item.event_count) || re.test(item.county_name);
+	};
+
     $scope.sort_order = 'event_date';
     $scope.sort_desc = false;
     $scope.search();

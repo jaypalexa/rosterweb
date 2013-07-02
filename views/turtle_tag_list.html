@@ -8,7 +8,7 @@
 			<th><a href="#/turtle_tag/new" bs-tooltip="'Add a new tag'"><i class="icon-plus-sign"></i></a></th>
 		</thead>
 		<tbody>
-			<tr ng-repeat="item in items" id="item_{{item.turtle_tag_id}}">
+			<tr ng-repeat="item in items | orderBy:sort_order:sort_desc" id="item_{{item.turtle_tag_id}}">
 				<td>{{item.tag_number}}</td>
 				<td>{{item.tag_type}}</td>
 				<td>{{item.location}}</td>

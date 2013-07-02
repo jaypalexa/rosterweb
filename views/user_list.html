@@ -1,10 +1,8 @@
 ﻿<form class="form-search">
 	<div style="float:right;margin-top:6px;margin-bottom:20px;margin-right:6px;">
 		<div class="input-append">
-			<input type="text" ng-model="q" class="input-medium search-query" placeholder="Search">
-			<button ng-click="search()" type="submit" class="btn"><i class="icon-search"></i></button>
+			<input type="text" ng-model="q" class="input-medium" placeholder="Filter">
 		</div>
-		<button ng-click="q=''; search()" ng-disabled="!q" type="submit" class="btn">Reset</button>
 	</div>
 </form>
 <ul class="breadcrumb">
@@ -19,7 +17,7 @@
         <th><a href="#/user/new" bs-tooltip="'Add a new user'"><i class="icon-plus-sign"></i></a></th>
     </thead>
     <tbody>
-        <tr ng-repeat="item in items" id="item_{{item.user_id}}">
+        <tr ng-repeat="item in items | filter:searchFilter | orderBy:sort_order:sort_desc" id="item_{{item.user_id}}">
             <td>{{item.user_name}}</td>
             <td>{{item.user_email}}</td>
             <td>{{item.organization_name}}</td>
