@@ -1,6 +1,6 @@
 ﻿<div ng-controller="TurtleMorphometricListCtrl">
-    <tabs>
-        <pane heading="Measurements">
+    <tabset>
+        <tab heading="Measurements">
 			<table class="table table-striped table-condensed table-hover">
 				<thead>
 					<th sorted="date_measured">Date Measured</th>
@@ -34,8 +34,8 @@
 					</tr>
 				</tbody>
 			</table>
-		</pane>
-		<pane heading="Graph">
+		</tab>
+		<tab heading="Graph">
 			<div>
 				<div style="float: left;">
 					<ng-morphometrics-graph val="items" is-checked="isChecked"></ng-morphometrics-graph>
@@ -52,6 +52,6 @@
 					<label style="color: violet; font-size: small;"><input type="checkbox" name="chkWeight" ng-model="isChecked.weight" style="margin-top: 0px;margin-right: 6px;" />Weight</label>
 				</div>
 			</div>
-		</pane>
-	</tabs>
+		</tab>
+	</tabset>
 </div>

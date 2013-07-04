@@ -52,6 +52,8 @@ var RosterWebApp = angular.module('RosterWebApp', ['ngResource', 'ui.bootstrap',
     }]
 	)
 	.run(function($rootScope, $location, $window, $cookieStore, recordCountService) {
+		//console.log('[RosterWebApp::run()] In app.run()...');
+	
         $rootScope.$on("$routeChangeStart", function(event, next, current) {
 			// if (current == undefined) 
 			// {

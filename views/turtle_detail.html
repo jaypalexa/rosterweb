@@ -3,8 +3,8 @@
 	<li class="active">Sea Turtle: {{ item.turtle_name }}</li>
 </ul>
 <form name="form" class="form-horizontal">
-    <tabs>
-        <pane heading="General Information">
+    <tabset>
+        <tab heading="General Information">
 			<div style="float:left; margin:3px;">
 				<div class="control-group" ng-class="{error: form.turtle_name.$invalid}">
 					<label class="control-label" for="turtle_name">Turtle Name:</label>
@@ -196,8 +196,8 @@
 					</div>	
 				</div>
 			</div>
-		</pane>
-        <pane heading="Tags ({{ $root.recordCounts.turtleTagCount }})" active="$root.turtleActiveTabName == 'turtle_tag'">
+		</tab>
+        <tab heading="Tags ({{ $root.recordCounts.turtleTagCount }})">
 			<div>
 				<ng-include src="'/rosterweb/views/turtle_tag_list.html'"></ng-include>
 			</div>
@@ -303,18 +303,18 @@
 					</div>
 				</div>
 			</div>
-		</pane>
-        <pane heading="Morphometrics ({{ $root.recordCounts.turtleMorphometricCount }})" active="$root.turtleActiveTabName == 'turtle_morphometric'">
+		</tab>
+        <tab heading="Morphometrics ({{ $root.recordCounts.turtleMorphometricCount }})">
 			<div>
 				<ng-include src="'/rosterweb/views/turtle_morphometric_list.html'"></ng-include>
 			</div>
-		</pane>
-        <pane heading="Attachments ({{ $root.recordCounts.turtleAttachmentCount }})">
+		</tab>
+        <tab heading="Attachments ({{ $root.recordCounts.turtleAttachmentCount }})">
 			<div>
 				<ng-include src="'/rosterweb/views/turtle_attachment_list.html'"></ng-include>
 			</div>
-		</pane>
-        <pane heading="Brochure">
+		</tab>
+        <tab heading="Brochure">
 			<div class="control-group" ng-class="{error: form.brochure_comments.$invalid}">
 				<label class="control-label" for="brochure_comments">Comments:</label>
 				<div class="controls">
@@ -344,8 +344,8 @@
 					</div>
 				</div>
 			</div>
-		</pane>
-    </tabs>
+		</tab>
+    </tabset>
 </form>
 <div id="modalMap" class="modal hide fade" role="dialog">
 	<div id="modalMapContainer">

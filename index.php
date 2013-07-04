@@ -7,8 +7,9 @@
 	<link rel="shortcut icon" href="/rosterweb/favicon.ico">
 	
 	<!-- stylesheets -->
-	<link rel="stylesheet" type="text/css" href="/rosterweb/styles/bootstrap.css" />
-	<link rel="stylesheet" type="text/css" href="/rosterweb/styles/bootstrap-responsive.css" />
+	<link rel="stylesheet" type="text/css" href="/rosterweb/styles/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="/rosterweb/styles/bootstrap-combined.min.css" />
+	<link rel="stylesheet" type="text/css" href="/rosterweb/styles/bootstrap-responsive.min.css" />
 	<link rel="stylesheet" type="text/css" href="/rosterweb/styles/bootstrap-datepicker.css" />
 	<link rel="stylesheet" type="text/css" href="/rosterweb/styles/openid.css" />
 	<link rel="stylesheet" type="text/css" href="/rosterweb/styles/dropzone.css" />
@@ -17,16 +18,15 @@
 	<!-- third-party libraries -->
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 	<script type="text/javascript" src="/rosterweb/js/lib/jquery/jquery-1.9.1.min.js"></script>
-	<script type="text/javascript" src="/rosterweb/js/lib/jquery/jquery-cookie.js"></script>
-	<script type="text/javascript" src="/rosterweb/js/lib/angular/angular.js"></script>
+	<script type="text/javascript" src="/rosterweb/js/lib/angular/angular.min.js"></script>
 	<script type="text/javascript" src="/rosterweb/js/lib/angular/angular-resource.js"></script>
 	<script type="text/javascript" src="/rosterweb/js/lib/angular/angular-cookies.js"></script>
-	<script type="text/javascript" src="/rosterweb/js/lib/ui-bootstrap/ui-bootstrap-tpls-0.3.0.js"></script>
+	<script type="text/javascript" src="/rosterweb/js/lib/ui-bootstrap/ui-bootstrap-tpls-0.4.0.min.js"></script>
 	<script type="text/javascript" src="/rosterweb/js/lib/polyfills/number-polyfill.js"></script>
-	<script type="text/javascript" src="/rosterweb/js/lib/angular-strap/angular-strap-0.7.3.js"></script>
+	<script type="text/javascript" src="/rosterweb/js/lib/angular-strap/angular-strap-0.7.4.min.js"></script>
 	<script type="text/javascript" src="/rosterweb/js/lib/bootstrap-datepicker/bootstrap-datepicker.js"></script>
 	<script type="text/javascript" src="/rosterweb/js/lib/bootstrap-tooltip/bootstrap-tooltip.js"></script>
-	<script type="text/javascript" src="/rosterweb/js/lib/bootstrap/bootstrap.js"></script>
+	<script type="text/javascript" src="/rosterweb/js/lib/bootstrap/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/rosterweb/js/lib/jquery/jquery-cookie.js"></script>
 	<script type="text/javascript" src="/rosterweb/js/lib/jquery/jquery.ui.widget.js"></script>
 	<script type="text/javascript" src="/rosterweb/js/lib/jquery/jquery.iframe-transport.js"></script>

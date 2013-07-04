@@ -3,8 +3,8 @@
 	<li class="active">Organization: {{ item.organization_name }}</li>
 </ul>
 <form name="form" class="form-horizontal">
-    <tabs>
-        <pane heading="General Information">
+    <tabset>
+        <tab heading="General Information">
 			<div style="float:left; margin:3px;">
 				<div class="control-group" ng-class="{error: form.organization_name.$invalid}">
 					<label class="control-label" for="organization_name">Organization name:</label>
@@ -86,8 +86,8 @@
 					</div>
 				</div>
 			</div>
-		</pane>
-        <pane heading="Hatchling and Washback Starting Balances">
+		</tab>
+        <tab heading="Hatchling and Washback Starting Balances">
 			<div style="float:left; margin:3px;">
 				<h4 style="text-align:center; margin-bottom:20px;">Hatchling Starting Balance Values</h4>
 				<div class="control-group input-append" style="display: block" ng-class="{error: form.hatchling_balance_as_of_date.$invalid}">
@@ -178,14 +178,14 @@
 					</div>
 				</div>
 			</div>
-		</pane>
-        <pane heading="Preferences">
+		</tab>
+        <tab heading="Preferences">
 			<div class="control-group" ng-class="{error: form.preferred_units_type.$invalid}">
 				<label class="control-label" for="preferred_units_type">Units type:</label>
 				<div class="controls">
 					<select id="preferred_units_type" name="preferred_units_type" ng-model="item.preferred_units_type" ng-options="u.id as u.name for u in unit_types | orderBy: 'name'" ng-change="save()"></select>
 				</div>
 			</div>
-		</pane>
-    </tabs>
+		</tab>
+    </tabset>
 </form>

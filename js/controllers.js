@@ -656,7 +656,7 @@ var TurtleListCtrl = function ($rootScope, $scope, $location, $dialog, turtleSer
 var TurtleEditCtrl = function($rootScope, $scope, $routeParams, $location, $cookieStore, $dialog, $timeout, turtleService, codeTableService, countyService, recordCountService) {
 
 	$rootScope.currentTurtle = {};
-
+	
 	$scope.arrival_weight_value = '';
 	$scope.arrival_weight_units = '';
 
@@ -710,8 +710,7 @@ var TurtleEditCtrl = function($rootScope, $scope, $routeParams, $location, $cook
 		});
 	};
 
-	$scope.previewBrochure = function(item)
-    {
+	$scope.previewBrochure = function(item) {
 		$timeout(function () {
 			var previewWindow = window.open('', 'Brochure for ' + util_blank_if_null(item.turtle_name), 'width=800,height=600,titlebar=0,location=0,menubar=0,toolbar=0');
 			previewWindow.document.write("<html><head><title>Brochure for " + util_blank_if_null(item.turtle_name) + "</title><style>@media print { .non-printable { display: none; } .printable { display: block; } }</style></head><body style='font-family: Arial; background-color: " + item.brochure_background_color + ";'></body></html>")
@@ -866,8 +865,6 @@ var TurtleMorphometricListCtrl = function ($rootScope, $scope, $location, $dialo
 };
 
 var TurtleMorphometricEditCtrl = function($rootScope, $scope, $routeParams, $location, turtleMorphometricService, turtleService, codeTableService, recordCountService) {
-
-	$rootScope.turtleActiveTabName = 'turtle_morphometric';
 
     $scope.cm_ins = codeTableService.getCodes('cm_in'); 
     $scope.kg_lbs = codeTableService.getCodes('kg_lb'); 
@@ -1046,9 +1043,7 @@ var TurtleTagListCtrl = function ($rootScope, $scope, $location, $dialog, turtle
 };
 
 var TurtleTagEditCtrl = function($rootScope, $scope, $routeParams, $location, turtleTagService, codeTableService, recordCountService) {
-
-	$rootScope.turtleActiveTabName = 'turtle_tag';
-
+0
     $scope.tag_locations = codeTableService.getCodes('tag_location'); 
     $scope.tag_types = codeTableService.getCodes('tag_type'); 
 	
