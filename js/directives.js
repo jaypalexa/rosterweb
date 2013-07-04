@@ -41,14 +41,14 @@ RosterWebApp.directive('ngModelOnblur', function() {
 });
 
 // ng-upload-turtle_brochure-image:  for uploading turtle brochure image files
-RosterWebApp.directive('ngUploadTurtleBrochureImage', function() {
+RosterWebApp.directive('ngUploadTurtleBrochureImage', function($timeout) {
 	return {
 		restrict: 'E',
 		link: function(scope, elem, attr, ctrl) {
 		
 			var dragForm = '' + 
-				'<div id="upload-turtle-brochure-image-div" style="border-radius: 5px;width: 220px;">' +
-					'<div id="drop">' + 
+				'<div id="upload-turtle-brochure-image-div">' +
+					'<div id="drop" style="border-radius: 5px;width: 220px;">' + 
 						'Drag Image Here<br />' + 
 						'<a>Browse...</a>' +
 						'<input type="file" id="uploadfile" />' +
@@ -74,87 +74,91 @@ RosterWebApp.directive('ngUploadTurtleBrochureImage', function() {
 				e.preventDefault();
 				$('#drop').removeClass('active');
 			});
-		  
+			
 			//-- initialize the jQuery File Upload plugin
-			$('#upload-turtle-brochure-image-div').fileupload({
-				//-- this element will accept file drag/drop uploading
-				dropZone: $('#drop'),
-				maxNumberOfFiles: 1,
-				getNumberOfFiles: function () { return 1 }, 
+			var init = function() {
+			  
+				$('#upload-turtle-brochure-image-div').fileupload({
+					//-- this element will accept file drag/drop uploading
+					dropZone: $('#drop'),
+					maxNumberOfFiles: 1,
+					getNumberOfFiles: function () { return 1 }, 
 
-				//-- called when a file is added via the browse button or drag-and-drop
-				add: function (e, data) {
-				
-					var fd = new FormData();
-					fd.append("uploadfile", data.files[0]);
-					fd.append("turtle_id", scope.item.turtle_id);
-						
-					var xhr = new XMLHttpRequest();
-					xhr.upload.addEventListener('loadstart', onLoadStartHandler, false);
-					xhr.upload.addEventListener('progress', onProgressHandler, false);
-					xhr.upload.addEventListener('load', onLoadHandler, false);
-					xhr.upload.addEventListener('error', onErrorHandler, false);
-					xhr.upload.addEventListener('abort', onAbortHandler, false);
-					xhr.addEventListener('readystatechange', onReadyStateChangeHandler, false);
-					xhr.open("POST", "/rosterweb/api/turtle_brochure_upload_image.php", true);
-					xhr.send(fd);
+					//-- called when a file is added via the browse button or drag-and-drop
+					add: function (e, data) {
+						var fd = new FormData();
+						fd.append("uploadfile", data.files[0]);
+						fd.append("turtle_id", scope.item.turtle_id);
+							
+						var xhr = new XMLHttpRequest();
+						xhr.upload.addEventListener('loadstart', onLoadStartHandler, false);
+						xhr.upload.addEventListener('progress', onProgressHandler, false);
+						xhr.upload.addEventListener('load', onLoadHandler, false);
+						xhr.upload.addEventListener('error', onErrorHandler, false);
+						xhr.upload.addEventListener('abort', onAbortHandler, false);
+						xhr.addEventListener('readystatechange', onReadyStateChangeHandler, false);
+						xhr.open("POST", "/rosterweb/api/turtle_brochure_upload_image.php", true);
+						xhr.send(fd);
 
-					function onLoadStartHandler(evt) {
-						var div = document.getElementById('upload-status');
-						div.innerHTML = 'Upload started';
-					}
-
-					function onProgressHandler(evt) {
-						var div = document.getElementById('progress');
-						var percent = evt.loaded/evt.total*100;
-						if (percent != 100) {
-							div.innerHTML = 'Progress: ' + percent.toFixed(0) + '%';
-						} else {
-							div.innerHTML = '';
-						}
-					}
-
-					function onErrorHandler(evt) {
-						var div = document.getElementById('upload-status');
-						div.innerHTML = 'Upload error';
-					}
-
-					function onAbortHandler(evt) {
-						var div = document.getElementById('upload-status');
-						div.innerHTML = 'Upload aborted';
-					}
-
-					function onLoadHandler(evt) {
-						var div = document.getElementById('upload-status');
-						div.innerHTML = 'Finished';
-					}
-
-					function onReadyStateChangeHandler(evt) {
-						var status = null;
-
-						try {
-							status = evt.target.status;
-						}
-						catch(e) {
-							return;
+						function onLoadStartHandler(evt) {
+							var div = document.getElementById('upload-status');
+							div.innerHTML = 'Upload started';
 						}
 
-						var div = document.getElementById('upload-status');
-						if (status == '200') {
-							if (evt.target.responseText) {
-								var result = document.getElementById('result');
-								//result.innerHTML = '<img src="' + evt.target.responseText + '" height="200px" width="200px" />';
-								scope.item.brochure_image_file_attachment_id = evt.target.responseText;
-								scope.save();
+						function onProgressHandler(evt) {
+							var div = document.getElementById('progress');
+							var percent = evt.loaded/evt.total*100;
+							if (percent != 100) {
+								div.innerHTML = 'Progress: ' + percent.toFixed(0) + '%';
 							} else {
-								div.innerHTML = evt.target.responseText;
+								div.innerHTML = '';
 							}
-						} else {
-							div.innerHTML = 'Error:  ' + evt.target.responseText + '<br />(status code = ' + status + ')';
-						}						
+						}
+
+						function onErrorHandler(evt) {
+							var div = document.getElementById('upload-status');
+							div.innerHTML = 'Upload error';
+						}
+
+						function onAbortHandler(evt) {
+							var div = document.getElementById('upload-status');
+							div.innerHTML = 'Upload aborted';
+						}
+
+						function onLoadHandler(evt) {
+							var div = document.getElementById('upload-status');
+							div.innerHTML = 'Finished';
+						}
+
+						function onReadyStateChangeHandler(evt) {
+							var status = null;
+
+							try {
+								status = evt.target.status;
+							}
+							catch(e) {
+								return;
+							}
+
+							var div = document.getElementById('upload-status');
+							if (status == '200') {
+								if (evt.target.responseText) {
+									var result = document.getElementById('result');
+									//result.innerHTML = '<img src="' + evt.target.responseText + '" height="200px" width="200px" />';
+									scope.item.brochure_image_file_attachment_id = evt.target.responseText;
+									scope.save();
+								} else {
+									div.innerHTML = evt.target.responseText;
+								}
+							} else {
+								div.innerHTML = 'Error:  ' + evt.target.responseText + '<br />(status code = ' + status + ')';
+							}						
+						}
 					}
-				}
-			});
+				});
+			}
+			
+			$timeout(function() { init(); }, 0);
 		}
 	}
 });
