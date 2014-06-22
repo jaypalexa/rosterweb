@@ -8,7 +8,7 @@
 	<div class="control-group input-append" style="display: block" ng-class="{error: form.date_measured.$invalid}">
 		<label class="control-label" for="date_measured">Date measured:</label>
 		<div class="controls">
-			<input id="date_measured" name="date_measured" class="input-small" type="text" ng-model="item.date_measured" data-date-format="dd-MM-yyyy" bs-datepicker autofocus="autofocus" ng-model-onblur ng-change="save()" />
+			<input id="date_measured" name="date_measured" class="input-small" type="text" ng-model="item.date_measured" data-date-format="yyyy-mm-dd" bs-datepicker autofocus="autofocus" ng-model-onblur ng-change="save()" />
 			<button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
 		</div>
 	</div>

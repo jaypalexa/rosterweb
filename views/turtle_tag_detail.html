@@ -28,7 +28,7 @@
 	<div class="control-group input-append" style="display: block" ng-class="{error: form.date_tagged.$invalid}">
 		<label class="control-label" for="date_tagged">Date tagged:</label>
 		<div class="controls">
-			<input id="date_tagged" name="date_tagged" class="input-small" type="text" ng-model="item.date_tagged" data-date-format="dd-MM-yyyy" bs-datepicker ng-model-onblur ng-change="save()" />
+			<input id="date_tagged" name="date_tagged" class="input-small" type="text" ng-model="item.date_tagged" data-date-format="yyyy-mm-dd" bs-datepicker ng-model-onblur ng-change="save()" />
 			<button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
 		</div>
 	</div>

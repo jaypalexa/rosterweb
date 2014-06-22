@@ -21,9 +21,9 @@
 	<script type="text/javascript" src="/rosterweb/js/lib/angular/angular.min.js"></script>
 	<script type="text/javascript" src="/rosterweb/js/lib/angular/angular-resource.js"></script>
 	<script type="text/javascript" src="/rosterweb/js/lib/angular/angular-cookies.js"></script>
-	<script type="text/javascript" src="/rosterweb/js/lib/ui-bootstrap/ui-bootstrap-tpls-0.4.0.min.js"></script>
+	<script type="text/javascript" src="/rosterweb/js/lib/ui-bootstrap/ui-bootstrap-tpls-0.11.0.min.js"></script>
 	<script type="text/javascript" src="/rosterweb/js/lib/polyfills/number-polyfill.js"></script>
-	<script type="text/javascript" src="/rosterweb/js/lib/angular-strap/angular-strap-0.7.4.min.js"></script>
+	<script type="text/javascript" src="/rosterweb/js/lib/angular-strap/angular-strap-0.7.5.min.js"></script>
 	<script type="text/javascript" src="/rosterweb/js/lib/bootstrap-datepicker/bootstrap-datepicker.js"></script>
 	<script type="text/javascript" src="/rosterweb/js/lib/bootstrap-tooltip/bootstrap-tooltip.js"></script>
 	<script type="text/javascript" src="/rosterweb/js/lib/bootstrap/js/bootstrap.min.js"></script>
@@ -31,7 +31,7 @@
 	<script type="text/javascript" src="/rosterweb/js/lib/jquery/jquery.ui.widget.js"></script>
 	<script type="text/javascript" src="/rosterweb/js/lib/jquery/jquery.iframe-transport.js"></script>
 	<script type="text/javascript" src="/rosterweb/js/lib/jquery/jquery.fileupload.js"></script>
-	<script type="text/javascript" src="/rosterweb/js/lib/d3.v3/d3.v3.min.js"></script>
+	<script type="text/javascript" src="/rosterweb/js/lib/d3/d3.min.js"></script>
 	<script type="text/javascript" src="/rosterweb/js/lib/dropzone/dropzone.js"></script>
 	
     <!-- app-specific scripts -->

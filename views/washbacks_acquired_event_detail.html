@@ -13,7 +13,7 @@
 	<div class="control-group input-append" style="display: block" ng-class="{error: form.event_date.$invalid}">
 		<label class="control-label" for="event_date">Event date:</label>
 		<div class="controls">
-			<input id="event_date" name="event_date" class="input-small" type="text" ng-model="item.event_date" data-date-format="dd-MM-yyyy" bs-datepicker ng-model-onblur ng-change="save()" />
+			<input id="event_date" name="event_date" class="input-small" type="text" ng-model="item.event_date" data-date-format="yyyy-mm-dd" bs-datepicker ng-model-onblur ng-change="save()" />
 			<button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
 		</div>
 	</div>

@@ -1,0 +1,57 @@
+@media (max-width: 767px) {
+	#content .modal.fade.in {
+		top: 5%;
+	}
+}
+
+/*----------------------------
+    File upload styles
+-----------------------------*/
+
+#drop {
+    background-color: #fff;
+    padding: 20px 0;
+    border: 2px dashed #ddd;
+    border-radius: 3px;
+    text-align: center;
+    text-transform: uppercase;
+    font-size:16px;
+    font-weight:bold;
+    color: #ddd;
+}
+
+#drop:hover, #drop.active {
+    border: 2px dashed #08c;
+    color: #08c;
+}
+
+#drop a{
+    background-color:#007a96;
+    padding:12px 26px;
+    color:#fff;
+    font-size:14px;
+    border-radius:2px;
+    cursor:pointer;
+    display:inline-block;
+    margin-top:12px;
+    line-height:1;
+}
+
+#drop a:hover{
+    background-color:#0986a3;
+}
+
+#drop input{
+    display:none;
+}
+
+/*----------------------------
+    D3 graph styles
+-----------------------------*/
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
