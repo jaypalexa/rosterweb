@@ -1,6 +1,6 @@
 ﻿<ul class="breadcrumb">
-	<li><a href='#/turtle'>Sea Turtles</a> <span class="divider">/</span></li>
-	<li><a href='#/turtle/edit/{{ $root.currentTurtle.turtleId }}'>Sea Turtle:  {{ $root.currentTurtle.turtleName }}</a> <span class="divider">/</span> <a href='#/turtle/edit/{{ $root.currentTurtle.turtleId }}'>Morphometrics</a> <span class="divider">/</span></li>
+	<li><a href='#/turtle'>Sea Turtles</a></li>
+	<li><a href='#/turtle/edit/{{ $root.currentTurtle.turtleId }}'>Sea Turtle:  {{ $root.currentTurtle.turtleName }}</a> <span class="divider">/</span> <a href='#/turtle/edit/{{ $root.currentTurtle.turtleId }}'>Morphometrics</a></li>
 	<li class="active">Morphometric Information</li>
 </ul>
 <h4>Morphometric Information</h4>
@@ -9,7 +9,7 @@
 		<label class="control-label" for="date_measured">Date measured:</label>
 		<div class="controls">
 			<input id="date_measured" name="date_measured" class="input-small" type="text" ng-model="item.date_measured" data-date-format="yyyy-mm-dd" bs-datepicker required autofocus="autofocus" ng-model-onblur ng-change="save()" />
-			<button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
+			<button type="button" class="btn" data-toggle="datepicker"><i class="glyphicon glyphicon-calendar"></i></button>
 		</div>
 	</div>
     <div class="control-group" ng-class="{error: form.scl_notch_notch_value.$invalid}">

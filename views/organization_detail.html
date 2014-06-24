@@ -1,5 +1,5 @@
 ﻿<ul class="breadcrumb">
-	<li><a href='#/organization'>Organizations</a> <span class="divider">/</span></li>
+	<li><a href='#/organization'>Organizations</a></li>
 	<li class="active">Organization: {{ item.organization_name }}</li>
 </ul>
 <form name="form" class="form-horizontal">
@@ -94,7 +94,7 @@
 					<label class="control-label" for="hatchling_balance_as_of_date">Balance as of date:</label>
 					<div class="controls">
 						<input id="hatchling_balance_as_of_date" name="hatchling_balance_as_of_date" class="input-small" type="text" ng-model="item.hatchling_balance_as_of_date" data-date-format="yyyy-mm-dd" bs-datepicker ng-model-onblur ng-change="save()" />
-						<button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
+						<button type="button" class="btn" data-toggle="datepicker"><i class="glyphicon glyphicon-calendar"></i></button>
 					</div>
 				</div>
 				<div class="control-group" ng-class="{error: form.cc_hatchling_starting_balance.$invalid}">
@@ -139,7 +139,7 @@
 					<label class="control-label" for="washback_balance_as_of_date">Balance as of date:</label>
 					<div class="controls">
 						<input id="washback_balance_as_of_date" name="washback_balance_as_of_date" class="input-small" type="text" ng-model="item.washback_balance_as_of_date" data-date-format="yyyy-mm-dd" bs-datepicker ng-model-onblur ng-change="save()" />
-						<button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
+						<button type="button" class="btn" data-toggle="datepicker"><i class="glyphicon glyphicon-calendar"></i></button>
 					</div>
 				</div>
 				<div class="control-group" ng-class="{error: form.cc_washback_starting_balance.$invalid}">

@@ -14,7 +14,7 @@
         <th sorted="sid_number">SID Number</th>
         <th sorted="stranding_id_number">Stranding ID</th>
         <th sorted="species">Species</th>
-        <th><a href="#/turtle/new" bs-tooltip="'Add a new sea turtle'"><i class="icon-plus-sign"></i></a></th>
+        <th><a href="#/turtle/new" tooltip="Add a sea turtle"><i class="glyphicon glyphicon-plus"></i></a></th>
     </thead>
     <tbody>
         <tr ng-repeat="item in items | filter:searchFilter | orderBy:sort_order:sort_desc" id="item_{{item.turtle_id}}">
@@ -23,8 +23,8 @@
             <td>{{item.stranding_id_number}}</td>
             <td>{{item.species}}</td>
             <td>
-                <a href="#/turtle/edit/{{item.turtle_id}}" bs-tooltip="'Edit'"><i class="icon-pencil"></i></a>
-                <a href ng-click="delete(item)" bs-tooltip="'Delete'"><i class="icon-trash"></i></a>
+                <a href="#/turtle/edit/{{item.turtle_id}}" tooltip="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
+                <a href ng-click="delete(item)" tooltip="Delete"><i class="glyphicon glyphicon-trash"></i></a>
             </td>
         </tr>
     </tbody>

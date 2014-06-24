@@ -14,7 +14,7 @@
         <th sorted="user_email">E-mail</th>
         <th sorted="organization_name">Organization</th>
         <th sorted="is_admin">Is Admin?</th>
-        <th><a href="#/user/new" bs-tooltip="'Add a new user'"><i class="icon-plus-sign"></i></a></th>
+        <th><a href="#/user/new" tooltip="Add a new user"><i class="glyphicon glyphicon-plus"></i></a></th>
     </thead>
     <tbody>
         <tr ng-repeat="item in items | filter:searchFilter | orderBy:sort_order:sort_desc" id="item_{{item.user_id}}">
@@ -23,8 +23,8 @@
             <td>{{item.organization_name}}</td>
             <td>{{item.is_admin}}</td>
             <td>
-                <a href="#/user/edit/{{item.user_id}}" bs-tooltip="'Edit'"><i class="icon-pencil"></i></a>
-                <a ng-click="delete(item)" bs-tooltip="'Delete'"><i class="icon-trash"></i></a>
+                <a href="#/user/edit/{{item.user_id}}" tooltip="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
+                <a ng-click="delete(item)" tooltip="Delete"><i class="glyphicon glyphicon-trash"></i></a>
             </td>
         </tr>
     </tbody>

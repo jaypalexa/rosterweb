@@ -1,5 +1,5 @@
 ﻿<ul class="breadcrumb">
-	<li><a href='#/hatchlings_event'>Hatchlings Events</a> <span class="divider">/</span></li>
+	<li><a href='#/hatchlings_event'>Hatchlings Events</a></li>
 	<li class="active">Hatchlings Acquired Event</li>
 </ul>
 
@@ -14,7 +14,7 @@
 		<label class="control-label" for="event_date">Event date:</label>
 		<div class="controls">
 			<input id="event_date" name="event_date" class="input-small" type="text" ng-model="item.event_date" data-date-format="yyyy-mm-dd" bs-datepicker ng-model-onblur ng-change="save()" />
-			<button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
+			<button type="button" class="btn" data-toggle="datepicker"><i class="glyphicon glyphicon-calendar"></i></button>
 		</div>
 	</div>
 	<div class="control-group" ng-class="{error: form.event_count.$invalid}">

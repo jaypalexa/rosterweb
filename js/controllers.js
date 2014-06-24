@@ -1,4 +1,4 @@
-var CountyListItemCtrl = function($rootScope, $scope, $location, $dialog, countyService, recordCountService) {
+var CountyListItemCtrl = function($rootScope, $scope, $location, $modal, countyService, recordCountService) {
 	$scope.edit = function() {
 		$scope.item_copy = angular.copy($scope.item);
 		$scope.is_new = false;
@@ -19,7 +19,7 @@ var CountyListItemCtrl = function($rootScope, $scope, $location, $dialog, county
     };
 
     $scope.delete = function() {
-		util_open_delete_dialog($dialog, 'county', $scope.item.county_name, function(result) {
+		util_open_delete_dialog($modal, 'county', $scope.item.county_name, function(result) {
 			if (result == 'yes') {
 				countyService.delete($scope.item.county_id, function() {
 					recordCountService.resetAll($rootScope.currentUser.organizationId);
@@ -32,7 +32,7 @@ var CountyListItemCtrl = function($rootScope, $scope, $location, $dialog, county
 	$scope.is_editing = false;
 }
 
-var CountyListCtrl = function($scope, $location, $dialog, countyService) {
+var CountyListCtrl = function($scope, $location, $modal, countyService) {
 
     $scope.search = function() {
 		$scope.items = countyService.search($scope.q, $scope.sort_order, $scope.sort_desc);
@@ -75,7 +75,7 @@ var CountyCreateCtrl = function($rootScope, $scope, $location, countyService, re
 
 };
 
-var HatchlingsEventListCtrl = function ($rootScope, $scope, $location, $dialog, hatchlingsEventService, recordCountService) {
+var HatchlingsEventListCtrl = function ($rootScope, $scope, $location, $modal, hatchlingsEventService, recordCountService) {
 
     $scope.search = function() {
 		$scope.items = hatchlingsEventService.search($scope.q, $scope.sort_order, $scope.sort_desc);
@@ -91,7 +91,7 @@ var HatchlingsEventListCtrl = function ($rootScope, $scope, $location, $dialog, 
      };
 
     $scope.delete = function(item) {
-		util_open_delete_dialog($dialog, 'hatchlings ' + item.event_type_code + ' event', item.species_code + ' - ' + item.event_date, function(result) {
+		util_open_delete_dialog($modal, 'hatchlings ' + item.event_type_code + ' event', item.species_code + ' - ' + item.event_date, function(result) {
 			if (result == 'yes') {
 				hatchlingsEventService.delete(item.hatchlings_event_id, item.event_type_code, function() {
 					recordCountService.resetAll($rootScope.currentUser.organizationId);
@@ -284,6 +284,8 @@ var LoginCtrl = function ($rootScope, $scope, $location, $cookieStore, loginServ
 		userService.getByEmail($user_id).then(
 			function(result){ //-- success
 				$currentUser = result; 
+				console.log('[LoginCtrl] Loading organization list items...');
+				$rootScope.organizations = organizationListItemService.getAll();
 				console.log('[LoginCtrl] $currentUser.user_name = ' + $currentUser.user_name);
 				console.log('[LoginCtrl] $currentUser.is_admin = ' + $currentUser.is_admin);
 				if ($currentUser.user_name != undefined)
@@ -330,9 +332,27 @@ var LogoutCtrl = function ($scope, $location, logoutService) {
 };
 
 var MainCtrl = function ($rootScope, $scope, $location, $route, $cookieStore, organizationListItemService, recordCountService) {
+	
+	//-- datepicker
+	$scope.formData = {};
+	$scope.formData.date1 = "";
+	$scope.formData.date2 = "";
+	$scope.opened1 = false;
+	$scope.opened2 = false;
+ 	$scope.dateOptions = {
+		'show-weeks' : false
+	};
+	$scope.open = function($event, opened) {
+		//console.log("open");
+		$event.preventDefault();
+		$event.stopPropagation();
+		$scope[opened] = true;
+	};
 
-	$rootScope.organizations = organizationListItemService.getAll();
-
+	$scope.clear = function () {
+		$scope.ngModel = null;
+	};
+			
 	$scope.organizationChanged = function() {
 		//console.log('[MainCtrl::$scope.organizationChanged] $scope.currentUser = ' + $scope.currentUser);
 		if (($scope.currentUser != null) && ($scope.currentUser.organizationId != null))
@@ -368,7 +388,7 @@ var NotRegisteredCtrl = function ($scope) {
 	return;
 };
 
-var OrganizationListCtrl = function ($rootScope, $scope, $location, $dialog, organizationService, organizationListItemService, recordCountService) {
+var OrganizationListCtrl = function ($rootScope, $scope, $location, $modal, organizationService, organizationListItemService, recordCountService) {
 
     $scope.search = function() {
 		$scope.items = organizationService.search($scope.q, $scope.sort_order, $scope.sort_desc);
@@ -384,7 +404,7 @@ var OrganizationListCtrl = function ($rootScope, $scope, $location, $dialog, org
     };
 
     $scope.delete = function(item) {
-		util_open_delete_dialog($dialog, 'organization', item.organization_name, function(result) {
+		util_open_delete_dialog($modal, 'organization', item.organization_name, function(result) {
 			if (result == 'yes') {
 				organizationService.delete(item.organization_id, function() {
 					$rootScope.organizations = organizationListItemService.getAll();
@@ -471,7 +491,7 @@ var OrganizationEditCtrl = function($rootScope, $scope, $routeParams, $location,
 	}
 };
 
-var TankListCtrl = function ($rootScope, $scope, $location, $dialog, tankService, recordCountService) {
+var TankListCtrl = function ($rootScope, $scope, $location, $modal, tankService, recordCountService) {
 
     $scope.search = function() {
 		$scope.items = tankService.search($scope.q, $scope.sort_order, $scope.sort_desc);
@@ -487,7 +507,7 @@ var TankListCtrl = function ($rootScope, $scope, $location, $dialog, tankService
     };
 
     $scope.delete = function(item) {
-		util_open_delete_dialog($dialog, 'tank', item.tank_name, function(result) {
+		util_open_delete_dialog($modal, 'tank', item.tank_name, function(result) {
 			if (result == 'yes') {
 				tankService.delete(item.tank_id, function() {
 					recordCountService.resetAll($rootScope.currentUser.organizationId);
@@ -556,7 +576,7 @@ var TankEditCtrl = function($rootScope, $scope, $routeParams, $location, $cookie
 	recordCountService.resetAllForTank($rootScope.currentTank.tankId);
 };
 
-var TankWaterListCtrl = function ($rootScope, $scope, $location, $dialog, tankWaterService, recordCountService) {
+var TankWaterListCtrl = function ($rootScope, $scope, $location, $modal, tankWaterService, recordCountService) {
 
     $scope.search = function() {
 		$scope.items = tankWaterService.search($scope.q, $scope.sort_order, $scope.sort_desc);
@@ -572,7 +592,7 @@ var TankWaterListCtrl = function ($rootScope, $scope, $location, $dialog, tankWa
     };
 
     $scope.delete = function(item) {
-		util_open_delete_dialog($dialog, 'measurement', item.date_measured, function(result) {
+		util_open_delete_dialog($modal, 'measurement', item.date_measured, function(result) {
 			if (result == 'yes') {
 				tankWaterService.delete(item.tank_water_id, function() {
 					recordCountService.resetAllForTank($rootScope.currentTank.tankId);
@@ -617,7 +637,7 @@ var TankWaterEditCtrl = function($rootScope, $scope, $routeParams, $location, ta
 	}
 };
 
-var TurtleListCtrl = function ($rootScope, $scope, $location, $dialog, turtleService, recordCountService) {
+var TurtleListCtrl = function ($rootScope, $scope, $location, turtleService, recordCountService) {
 
     $scope.search = function() {
 		$scope.items = turtleService.search($scope.q, $scope.sort_order, $scope.sort_desc);
@@ -632,8 +652,9 @@ var TurtleListCtrl = function ($rootScope, $scope, $location, $dialog, turtleSer
         $scope.sort_order = property_name;
     };
 
+	/*
     $scope.delete = function(item) {
-		util_open_delete_dialog($dialog, 'turtle', item.turtle_name, function(result) {
+		util_open_delete_dialog($modal, 'turtle', item.turtle_name, function(result) {
 			if (result == 'yes') {
 				turtleService.delete(item.turtle_id, function() {
 					recordCountService.resetAll($rootScope.currentUser.organizationId);
@@ -642,6 +663,7 @@ var TurtleListCtrl = function ($rootScope, $scope, $location, $dialog, turtleSer
 			}
 		});
 	};
+	*/
 	
 	$scope.searchFilter = function(item) {
 		var re = new RegExp($scope.q, 'i');
@@ -653,10 +675,27 @@ var TurtleListCtrl = function ($rootScope, $scope, $location, $dialog, turtleSer
     $scope.search();
 };
 
-var TurtleEditCtrl = function($rootScope, $scope, $routeParams, $location, $cookieStore, $dialog, $timeout, turtleService, codeTableService, countyService, recordCountService) {
+var TurtleEditCtrl = function($rootScope, $scope, $routeParams, $location, $cookieStore, $modal, $timeout, turtleService, codeTableService, countyService, recordCountService) {
 
 	$rootScope.currentTurtle = {};
 	
+	$scope.datePicker = {
+		'dateCapturedOpened': false,
+		'dateAcquiredOpened': false,
+		'dateRelinquishedOpened': false
+	};
+ 	$scope.dateOptions = {
+		'show-weeks' : false
+	};
+	$scope.openDatePicker = function($event, opened) {
+		$event.preventDefault();
+		$event.stopPropagation();
+		$scope.datePicker[opened] = true;
+	};
+	//$scope.clear = function () {
+	//	$scope.ngModel = null;
+	//};
+
 	$scope.arrival_weight_value = '';
 	$scope.arrival_weight_units = '';
 
@@ -693,7 +732,7 @@ var TurtleEditCtrl = function($rootScope, $scope, $routeParams, $location, $cook
 	}, true);
 	
 	$scope.mapAcquiredLatLng = function() {
-		util_open_map_dialog($dialog, $scope.item.acquired_latitude, $scope.item.acquired_longitude, function(result) {
+		util_open_map_dialog($modal, $scope.item.acquired_latitude, $scope.item.acquired_longitude, function(result) {
 			$scope.item.acquired_latitude = result.lat;
 			$scope.item.acquired_longitude = result.lng;
 			$scope.save();
@@ -702,7 +741,7 @@ var TurtleEditCtrl = function($rootScope, $scope, $routeParams, $location, $cook
 	};
 
 	$scope.mapRelinquishedLatLng = function() {
-		util_open_map_dialog($dialog, $scope.item.relinquished_latitude, $scope.item.relinquished_longitude, function(result) {
+		util_open_map_dialog($modal, $scope.item.relinquished_latitude, $scope.item.relinquished_longitude, function(result) {
 			$scope.item.relinquished_latitude = result.lat;
 			$scope.item.relinquished_longitude = result.lng;
 			$scope.save();
@@ -784,7 +823,7 @@ var TurtleEditCtrl = function($rootScope, $scope, $routeParams, $location, $cook
 	recordCountService.resetAllForTurtle($rootScope.currentTurtle.turtleId);
 };
 
-var TurtleAttachmentListCtrl = function ($rootScope, $scope, $location, $dialog, turtleAttachmentService, recordCountService) {
+var TurtleAttachmentListCtrl = function ($rootScope, $scope, $location, $modal, turtleAttachmentService, recordCountService) {
 
     $scope.search = function() {
 		$scope.items = turtleAttachmentService.search($scope.q, $scope.sort_order, $scope.sort_desc);
@@ -801,7 +840,7 @@ var TurtleAttachmentListCtrl = function ($rootScope, $scope, $location, $dialog,
     };
 
     $scope.delete = function(item) {
-		util_open_delete_dialog($dialog, 'attachment', item.base_file_name, function(result) {
+		util_open_delete_dialog($modal, 'attachment', item.base_file_name, function(result) {
 			if (result == 'yes') {
 				turtleAttachmentService.delete(item.turtle_id, item.base_file_name, function() {
 					recordCountService.resetAllForTurtle($rootScope.currentTurtle.turtleId);
@@ -822,7 +861,7 @@ var TurtleAttachmentListCtrl = function ($rootScope, $scope, $location, $dialog,
     $scope.search();
 };
 
-var TurtleMorphometricListCtrl = function ($rootScope, $scope, $location, $dialog, turtleMorphometricService, recordCountService) {
+var TurtleMorphometricListCtrl = function ($rootScope, $scope, $location, $modal, turtleMorphometricService, recordCountService) {
 
 	$scope.isChecked = {};
 	$scope.isChecked.sclNotchNotch = true;
@@ -849,7 +888,7 @@ var TurtleMorphometricListCtrl = function ($rootScope, $scope, $location, $dialo
     };
 
     $scope.delete = function(item) {
-		util_open_delete_dialog($dialog, 'morphometric', item.date_measured, function(result) {
+		util_open_delete_dialog($modal, 'morphometric', item.date_measured, function(result) {
 			if (result == 'yes') {
 				turtleMorphometricService.delete(item.turtle_morphometric_id, function() {
 					recordCountService.resetAllForTurtle($rootScope.currentTurtle.turtleId);
@@ -1011,7 +1050,7 @@ var TurtleMorphometricEditCtrl = function($rootScope, $scope, $routeParams, $loc
 	}
 };
 
-var TurtleTagListCtrl = function ($rootScope, $scope, $location, $dialog, turtleTagService, recordCountService) {
+var TurtleTagListCtrl = function ($rootScope, $scope, $location, $modal, turtleTagService, recordCountService) {
 
     $scope.search = function() {
 		$scope.items = turtleTagService.search($scope.q, $scope.sort_order, $scope.sort_desc);
@@ -1027,7 +1066,7 @@ var TurtleTagListCtrl = function ($rootScope, $scope, $location, $dialog, turtle
     };
 
     $scope.delete = function(item) {
-		util_open_delete_dialog($dialog, 'tag', item.tag_number, function(result) {
+		util_open_delete_dialog($modal, 'tag', item.tag_number, function(result) {
 			if (result == 'yes') {
 				turtleTagService.delete(item.turtle_tag_id, function() {
 					recordCountService.resetAllForTurtle($rootScope.currentTurtle.turtleId);
@@ -1043,7 +1082,7 @@ var TurtleTagListCtrl = function ($rootScope, $scope, $location, $dialog, turtle
 };
 
 var TurtleTagEditCtrl = function($rootScope, $scope, $routeParams, $location, turtleTagService, codeTableService, recordCountService) {
-0
+
     $scope.tag_locations = codeTableService.getCodes('tag_location'); 
     $scope.tag_types = codeTableService.getCodes('tag_type'); 
 	
@@ -1077,7 +1116,7 @@ var TurtleTagEditCtrl = function($rootScope, $scope, $routeParams, $location, tu
 	}
 };
 
-var UserListCtrl = function ($rootScope, $scope, $location, $dialog, userService, recordCountService) {
+var UserListCtrl = function ($rootScope, $scope, $location, $modal, userService, recordCountService) {
 
     $scope.search = function() {
 		$scope.items = userService.search($scope.q, $scope.sort_order, $scope.sort_desc);
@@ -1093,7 +1132,7 @@ var UserListCtrl = function ($rootScope, $scope, $location, $dialog, userService
     };
 
     $scope.delete = function(item) {
-		util_open_delete_dialog($dialog, 'user', item.user_name, function(result) {
+		util_open_delete_dialog($modal, 'user', item.user_name, function(result) {
 			if (result == 'yes') {
 				userService.delete(item.user_id, function() {
 					recordCountService.resetAll($rootScope.currentUser.organizationId);
@@ -1145,7 +1184,7 @@ var UserEditCtrl = function($rootScope, $scope, $routeParams, $location, userSer
 	}
 };
 
-var WashbacksEventListCtrl = function ($rootScope, $scope, $location, $dialog, washbacksEventService, recordCountService) {
+var WashbacksEventListCtrl = function ($rootScope, $scope, $location, $modal, washbacksEventService, recordCountService) {
 
     $scope.search = function() {
 		$scope.items = washbacksEventService.search($scope.q, $scope.sort_order, $scope.sort_desc);
@@ -1161,7 +1200,7 @@ var WashbacksEventListCtrl = function ($rootScope, $scope, $location, $dialog, w
     };
 
     $scope.delete = function(item) {
-		util_open_delete_dialog($dialog, 'washbacks ' + item.event_type_code + ' event', item.species_code + ' - ' + item.event_date, function(result) {
+		util_open_delete_dialog($modal, 'washbacks ' + item.event_type_code + ' event', item.species_code + ' - ' + item.event_date, function(result) {
 			if (result == 'yes') {
 				washbacksEventService.delete(item.washbacks_event_id, item.event_type_code, function() {
 					recordCountService.resetAll($rootScope.currentUser.organizationId);

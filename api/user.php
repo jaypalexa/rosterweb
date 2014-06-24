@@ -5,6 +5,8 @@
 	session_start(); 
 	if (!utilIsSessionValid()) { header('Location: /rosterweb/'); exit(0); }
 
+	utilLog('[user.php] In user.php...');
+
 	function fillItem($row)
 	{
 		$item['user_id'] = $row['user_id'];

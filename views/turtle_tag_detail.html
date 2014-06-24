@@ -1,6 +1,6 @@
 ﻿<ul class="breadcrumb">
-	<li><a href='#/turtle'>Sea Turtles</a> <span class="divider">/</span></li>
-	<li><a href='#/turtle/edit/{{ $root.currentTurtle.turtleId }}'>Sea Turtle:  {{ $root.currentTurtle.turtleName }}</a> <span class="divider">/</span> <a href='#/turtle/edit/{{ $root.currentTurtle.turtleId }}'>Tags</a> <span class="divider">/</span></li>
+	<li><a href='#/turtle'>Sea Turtles</a></li>
+	<li><a href='#/turtle/edit/{{ $root.currentTurtle.turtleId }}'>Sea Turtle:  {{ $root.currentTurtle.turtleName }}</a> <span class="divider">/</span> <a href='#/turtle/edit/{{ $root.currentTurtle.turtleId }}'>Tags</a></li>
 	<li class="active">Tag: {{ item.tag_number }}</li>
 </ul>
 <h4>Tag</h4>
@@ -29,7 +29,7 @@
 		<label class="control-label" for="date_tagged">Date tagged:</label>
 		<div class="controls">
 			<input id="date_tagged" name="date_tagged" class="input-small" type="text" ng-model="item.date_tagged" data-date-format="yyyy-mm-dd" bs-datepicker ng-model-onblur ng-change="save()" />
-			<button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
+			<button type="button" class="btn" data-toggle="datepicker"><i class="glyphicon glyphicon-calendar"></i></button>
 		</div>
 	</div>
 </form>

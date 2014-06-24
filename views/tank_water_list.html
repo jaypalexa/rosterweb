@@ -11,7 +11,7 @@
 					<th sorted="temperature">Temperature (°F)</th>
 					<th sorted="salinity">Salinity (in ppt)</th>
 					<th sorted="ph">pH</th>
-					<th><a href="#/tank_water/new" bs-tooltip="'Add a new water quality measurement'"><i class="icon-plus-sign"></i></a></th>
+					<th><a href="#/tank_water/new" tooltip="Add a new water quality measurement"><i class="glyphicon glyphicon-plus"></i></a></th>
 				</thead>
 				<tbody>
 					<tr ng-repeat="item in items | orderBy:sort_order:sort_desc" id="item_{{item.tank_water_id}}">
@@ -20,8 +20,8 @@
 						<td>{{item.salinity}}</td>
 						<td>{{item.ph}}</td>
 						<td>
-							<a href="#/tank_water/edit/{{item.tank_water_id}}" bs-tooltip="'Edit'"><i class="icon-pencil"></i></a>
-							<a href ng-click="delete(item)" bs-tooltip="'Delete'"><i class="icon-trash"></i></a>
+							<a href="#/tank_water/edit/{{item.tank_water_id}}" tooltip="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
+							<a href ng-click="delete(item)" tooltip="Delete"><i class="glyphicon glyphicon-trash"></i></a>
 						</td>
 					</tr>
 				</tbody>

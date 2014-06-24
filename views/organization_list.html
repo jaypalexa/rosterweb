@@ -13,7 +13,7 @@
         <th sorted="organization_name">Organization Name</th>
         <th sorted="city">City</th>
         <th sorted="state">State</th>
-        <th><a href="#/organization/new" bs-tooltip="'Add a new organization'"><i class="icon-plus-sign"></i></a></th>
+        <th><a href="#/organization/new" tooltip="Add a new organization"><i class="glyphicon glyphicon-plus"></i></a></th>
     </thead>
     <tbody>
         <tr ng-repeat="item in items | filter:searchFilter | orderBy:sort_order:sort_desc" id="item_{{item.organization_id}}">
@@ -21,8 +21,8 @@
             <td>{{item.city}}</td>
             <td>{{item.state}}</td>
             <td>
-                <a href="#/organization/edit/{{item.organization_id}}" bs-tooltip="'Edit'"><i class="icon-pencil"></i></a>
-                <a href ng-click="delete(item);" bs-tooltip="'Delete'"><i class="icon-trash"></i></a>
+                <a href="#/organization/edit/{{item.organization_id}}" tooltip="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
+                <a href ng-click="delete(item);" tooltip="Delete"><i class="glyphicon glyphicon-trash"></i></a>
             </td>
         </tr>
     </tbody>

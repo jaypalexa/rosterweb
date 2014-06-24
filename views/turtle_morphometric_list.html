@@ -13,7 +13,7 @@
 					<th sorted="ccl_tip_tip_value">CCL tip-tip</th>
 					<th sorted="ccw_value">CCW</th>
 					<th sorted="weight_value">Weight</th>
-					<th><a href="#/turtle_morphometric/new" bs-tooltip="'Add a new measurement'"><i class="icon-plus-sign"></i></a></th>
+					<th><a href="#/turtle_morphometric/new" tooltip="Add a new measurement"><i class="glyphicon glyphicon-plus"></i></a></th>
 				</thead>
 				<tbody>
 					<tr ng-repeat="item in items | orderBy:sort_order:sort_desc" id="item_{{item.turtle_morphometric_id}}">
@@ -28,8 +28,8 @@
 						<td>{{item.ccw_value}}</td>
 						<td>{{item.weight_value}}</td>
 						<td>
-							<a href="#/turtle_morphometric/edit/{{item.turtle_morphometric_id}}" bs-tooltip="'Edit'"><i class="icon-pencil"></i></a>
-							<a href ng-click="delete(item)" bs-tooltip="'Delete'"><i class="icon-trash"></i></a>
+							<a href="#/turtle_morphometric/edit/{{item.turtle_morphometric_id}}" tooltip="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
+							<a href ng-click="delete(item)" tooltip="Delete"><i class="glyphicon glyphicon-trash"></i></a>
 						</td>
 					</tr>
 				</tbody>

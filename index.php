@@ -8,25 +8,29 @@
 	
 	<!-- stylesheets -->
 	<link rel="stylesheet" type="text/css" href="/rosterweb/styles/bootstrap.min.css" />
-	<link rel="stylesheet" type="text/css" href="/rosterweb/styles/bootstrap-combined.min.css" />
-	<link rel="stylesheet" type="text/css" href="/rosterweb/styles/bootstrap-responsive.min.css" />
-	<link rel="stylesheet" type="text/css" href="/rosterweb/styles/bootstrap-datepicker.css" />
+	<!--<link rel="stylesheet" type="text/css" href="/rosterweb/styles/bootstrap-combined.min.css" />-->
+	<!--<link rel="stylesheet" type="text/css" href="/rosterweb/styles/bootstrap-glyphicons.css" /> -->
+	<!-- <link rel="stylesheet" type="text/css" href="/rosterweb/styles/bootstrap-responsive.min.css" /> -->
+	<!-- <<link rel="stylesheet" type="text/css" href="/rosterweb/styles/bootstrap-datepicker.css" /> -->
 	<link rel="stylesheet" type="text/css" href="/rosterweb/styles/openid.css" />
 	<link rel="stylesheet" type="text/css" href="/rosterweb/styles/dropzone.css" />
 	<link rel="stylesheet" type="text/css" href="/rosterweb/styles/rosterweb.css" />
 
 	<!-- third-party libraries -->
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-	<script type="text/javascript" src="/rosterweb/js/lib/jquery/jquery-1.9.1.min.js"></script>
-	<script type="text/javascript" src="/rosterweb/js/lib/angular/angular.min.js"></script>
+	<script type="text/javascript" src="/rosterweb/js/lib/angular/angular.js"></script>
+	<script type="text/javascript" src="/rosterweb/js/lib/angular/angular-route.js"></script>
 	<script type="text/javascript" src="/rosterweb/js/lib/angular/angular-resource.js"></script>
 	<script type="text/javascript" src="/rosterweb/js/lib/angular/angular-cookies.js"></script>
+	<script type="text/javascript" src="/rosterweb/js/lib/angular/angular-animate.js"></script>
+	<!-- <script type="text/javascript" src="/rosterweb/js/lib/polyfills/number-polyfill.js"></script> -->
+	<!-- <script type="text/javascript" src="/rosterweb/js/lib/bootstrap-datepicker/bootstrap-datepicker.js"></script> -->
+	<!-- <script type="text/javascript" src="/rosterweb/js/lib/bootstrap-tooltip/bootstrap-tooltip.js"></script> -->
+	<!-- <script type="text/javascript" src="/rosterweb/js/lib/bootstrap/js/bootstrap.min.js"></script> -->
 	<script type="text/javascript" src="/rosterweb/js/lib/ui-bootstrap/ui-bootstrap-tpls-0.11.0.min.js"></script>
-	<script type="text/javascript" src="/rosterweb/js/lib/polyfills/number-polyfill.js"></script>
-	<script type="text/javascript" src="/rosterweb/js/lib/angular-strap/angular-strap-0.7.5.min.js"></script>
-	<script type="text/javascript" src="/rosterweb/js/lib/bootstrap-datepicker/bootstrap-datepicker.js"></script>
-	<script type="text/javascript" src="/rosterweb/js/lib/bootstrap-tooltip/bootstrap-tooltip.js"></script>
-	<script type="text/javascript" src="/rosterweb/js/lib/bootstrap/js/bootstrap.min.js"></script>
+	<!-- <script type="text/javascript" src="/rosterweb/js/lib/angular-strap/angular-strap.js"></script> -->
+	<!-- <script type="text/javascript" src="/rosterweb/js/lib/angular-strap/angular-strap.tpl.js"></script> -->
+	<script type="text/javascript" src="/rosterweb/js/lib/jquery/jquery-1.9.1.min.js"></script>
 	<script type="text/javascript" src="/rosterweb/js/lib/jquery/jquery-cookie.js"></script>
 	<script type="text/javascript" src="/rosterweb/js/lib/jquery/jquery.ui.widget.js"></script>
 	<script type="text/javascript" src="/rosterweb/js/lib/jquery/jquery.iframe-transport.js"></script>
@@ -47,10 +51,10 @@
 	<div style="text-align: center; font-size: small; margin-bottom: 6px;"><a href='http://www.turtlegeek.com'>TurtleGeek.com</a></div>
 	<div style="text-align: center; font-size: small; margin-bottom: 6px;" ng-hide="$root.currentUser.isLoggedIn">Not logged in</div>
 	<div style="text-align: center; font-size: small; margin-bottom: 6px;" ng-show="$root.currentUser.isLoggedIn">Logged in as:  <span style="font-weight: bold;">{{ $root.currentUser.userName }}</span>&nbsp;&nbsp;<a href='#/logout/'>(log out)</a></div>
-	<div style="text-align: center; font-size: small; margin-bottom: 6px; height: 24px; line-height: 24px;" ng-show="$root.currentUser.isAdmin">Organization:  <select id="root_organization_id" name="root_organization_id" ng-model="$root.currentUser.organizationId" ng-change="organizationChanged();" ng-options="o.organization_id as o.organization_name for o in $root.organizations | orderBy: 'organization_name'" style="height: 24px; margin-top: -3px; margin-bottom: 0px; font-size: small; padding: 0px;"></select>&nbsp;&nbsp;<a href="#/organization/edit/{{$root.currentUser.organizationId}}" bs-tooltip="'Edit organization information, hatchling and washback starting balances, and preferences'">(edit)</a></div>
-	<div style="text-align: center; font-size: small; margin-bottom: 6px;" ng-show="$root.currentUser.isLoggedIn && !$root.currentUser.isAdmin">Organization:  <span style="font-weight: bold;">{{ $root.currentUser.organizationName }}</span>&nbsp;&nbsp;<a href="#/organization/edit/{{$root.currentUser.organizationId}}" bs-tooltip="'Edit organization information, hatchling and washback starting balances, and preferences'">(edit)</a></div>
+	<div style="text-align: center; font-size: small; margin-bottom: 6px; height: 24px; line-height: 24px;" ng-show="$root.currentUser.isAdmin">Organization:  <select id="root_organization_id" name="root_organization_id" ng-model="$root.currentUser.organizationId" ng-change="organizationChanged();" ng-options="o.organization_id as o.organization_name for o in $root.organizations | orderBy: 'organization_name'" style="height: 24px; margin-top: -3px; margin-bottom: 0px; font-size: small; padding: 0px;"></select>&nbsp;&nbsp;<a href="#/organization/edit/{{$root.currentUser.organizationId}}" tooltip="Edit organization information, hatchling and washback starting balances, and preferences">(edit)</a></div>
+	<div style="text-align: center; font-size: small; margin-bottom: 6px;" ng-show="$root.currentUser.isLoggedIn && !$root.currentUser.isAdmin">Organization:  <span style="font-weight: bold;">{{ $root.currentUser.organizationName }}</span>&nbsp;&nbsp;<a href="#/organization/edit/{{$root.currentUser.organizationId}}" tooltip="Edit organization information, hatchling and washback starting balances, and preferences">(edit)</a></div>
 	<hr />
-	<div style="text-align: center; font-size: larger; font-weight: 650; margin-bottom: 12px;">
+	<div class="container" style="text-align: center; font-size: larger; font-weight: 650; margin-bottom: 12px;">
 		<span ng-show="$root.currentUser.isLoggedIn"><a href='#/turtle'>Sea Turtles ({{ $root.recordCounts.turtleCount }})</a>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
 		<span ng-show="$root.currentUser.isLoggedIn"><a href='#/tank'>Holding Tanks ({{ $root.recordCounts.tankCount }})</a>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
 		<span ng-show="$root.currentUser.isLoggedIn"><a href='#/hatchlings_event'>Hatchlings ({{ $root.recordCounts.hatchlingCount }})</a>&nbsp;&nbsp;|&nbsp;&nbsp;</span>

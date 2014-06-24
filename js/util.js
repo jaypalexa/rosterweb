@@ -8,7 +8,7 @@ function util_delete_dialog_controller($scope, dialog) {
 	};
 }
 
-function util_open_delete_dialog($dialog, item_type, item_name, callback) {
+function util_open_delete_dialog($modal, item_type, item_name, callback) {
 
 	var dlgTemplate = '<div class="modal-body">'+
 		'<p>Delete {item_type} \'{item_name}\'?  This cannot be undone.</p>'+
@@ -28,7 +28,7 @@ function util_open_delete_dialog($dialog, item_type, item_name, callback) {
 		template: dlgTemplate.replace('{item_type}', item_type).replace('{item_name}', item_name)
 	};
 	
-	var dlg = $dialog.dialog(dlgOpts);
+	var dlg = $modal.dialog(dlgOpts);
 	dlg.open().then(function(result) {
 		callback(result);
 	});

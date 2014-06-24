@@ -289,6 +289,7 @@ RosterWebApp.service('hatchlingsEventService', function($rootScope, HatchlingsEv
 
 RosterWebApp.service('loginService', function($rootScope, $http, $location) {
     this.doLogin = function(openidIdentifier) {
+		console.log('[logoutService::doLogin()] *** ENTERING doLogin() ***');
 	
 		var changeLocation = function(url, forceReload) {
 			$rootScope = $rootScope || angular.element(document).scope();
@@ -342,6 +343,7 @@ RosterWebApp.service('loginService', function($rootScope, $http, $location) {
 
 RosterWebApp.service('logoutService', function($rootScope, $http, $location, $cookieStore) {
     this.doLogout = function() {
+		console.log('[logoutService::doLogout()] *** ENTERING doLogout() ***');
 		
 		$http({
 			method: 'GET', 

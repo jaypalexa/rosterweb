@@ -1,6 +1,6 @@
 ﻿<ul class="breadcrumb">
-	<li><a href='#/tank'>Holding Tanks</a> <span class="divider">/</span></li>
-	<li><a href='#/tank/edit/{{ $root.currentTank.tankId }}'>Holding Tank:  {{ $root.currentTank.tankName }}</a> <span class="divider">/</span></li>
+	<li><a href='#/tank'>Holding Tanks</a></li>
+	<li><a href='#/tank/edit/{{ $root.currentTank.tankId }}'>Holding Tank:  {{ $root.currentTank.tankName }}</a></li>
 	<li class="active">Water Quality Measurement</li>
 </ul>
 <h4>Water Quality Measurement</h4>
@@ -9,7 +9,7 @@
 		<label class="control-label" for="date_measured">Date measured:</label>
 		<div class="controls">
 			<input id="date_measured" name="date_measured" class="input-small" type="text" ng-model="item.date_measured" data-date-format="yyyy-mm-dd" bs-datepicker autofocus="autofocus" ng-model-onblur ng-change="save()" />
-			<button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
+			<button type="button" class="btn" data-toggle="datepicker"><i class="glyphicon glyphicon-calendar"></i></button>
 		</div>
 	</div>
     <div class="control-group" ng-class="{error: form.temperature.$invalid}">
