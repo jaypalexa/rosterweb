@@ -38,7 +38,7 @@
 			$sql = 'SELECT * FROM tank ';
 			$sql .= 'WHERE organization_id = :organization_id ';
 			
-			if ($parameters['q'] != 'undefined')
+			if (array_key_exists('q', $parameters) && ($parameters['q'] != 'undefined'))
 			{
 				$sql .= 'AND tank_name LIKE :search_tank_name ';
 			}
@@ -58,7 +58,7 @@
 			
 			$stmt = $db->prepare($sql);
 			$stmt->bindValue(':organization_id', $parameters['organization_id']);
-			if ($parameters['q'] != 'undefined')
+			if (array_key_exists('q', $parameters) && ($parameters['q'] != 'undefined'))
 			{
 				$stmt->bindValue(':search_tank_name', '%' . $parameters['q'] .'%');
 			}

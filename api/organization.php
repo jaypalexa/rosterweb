@@ -59,7 +59,7 @@
 		{
 			$sql = 'SELECT * FROM organization ';
 			
-			if ($parameters['q'] != 'undefined')
+			if (array_key_exists('q', $parameters) && ($parameters['q'] != 'undefined'))
 			{
 				$sql .= 'WHERE organization_name LIKE :search_organization_name ';
 			}
@@ -78,7 +78,7 @@
 			}
 			
 			$stmt = $db->prepare($sql);
-			if ($parameters['q'] != 'undefined')
+			if (array_key_exists('q', $parameters) && ($parameters['q'] != 'undefined'))
 			{
 				$stmt->bindValue(':search_organization_name', '%' . $parameters['q'] .'%');
 			}

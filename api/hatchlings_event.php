@@ -39,7 +39,7 @@
 		$sql .= 'WHERE organization_id = :organization_id ';
 		$sql .= ') tbl ';
 
-		if ($parameters['q'] != 'undefined')
+		if (array_key_exists('q', $parameters) && ($parameters['q'] != 'undefined'))
 		{
 			$sql .= 'WHERE species_code LIKE :q OR event_type LIKE :q OR county_name LIKE :q ';
 		}
@@ -59,7 +59,7 @@
 		
 		$stmt = $db->prepare($sql);
 		$stmt->bindValue(':organization_id', $parameters['organization_id']);
-		if ($parameters['q'] != 'undefined')
+		if (array_key_exists('q', $parameters) && ($parameters['q'] != 'undefined'))
 		{
 			$stmt->bindValue(':q', '%' . $parameters['q'] .'%');
 		}

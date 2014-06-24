@@ -67,7 +67,7 @@
 		$stmt->bindValue(':organization_id', dbGetParameterValue($parameters, 'organization_id'));
 		$stmt->bindValue(':species_code', dbGetParameterValue($parameters, 'species_code'));
 		$stmt->bindValue(':event_date', dbGetParameterDate($parameters, 'event_date'));
-		$stmt->bindValue(':event_count', dbGetParameterValue($parameters, 'event_count'));
+		$stmt->bindValue(':event_count', dbGetParameterInt($parameters, 'event_count'));
 		$stmt->bindValue(':under_5cm_clsl', dbGetParameterBoolean($parameters, 'under_5cm_clsl'));
 
 		$stmt->execute();

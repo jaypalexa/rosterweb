@@ -41,7 +41,7 @@
 			$sql = 'SELECT * FROM turtle_tag ';
 			$sql .= 'WHERE turtle_id = :turtle_id ';
 			
-			if ($parameters['q'] != 'undefined')
+			if (array_key_exists('q', $parameters) && ($parameters['q'] != 'undefined'))
 			{
 				$sql .= 'AND turtle_name LIKE :search_turtle_name ';
 			}
@@ -61,7 +61,7 @@
 			
 			$stmt = $db->prepare($sql);
 			$stmt->bindValue(':turtle_id', $parameters['turtle_id']);
-			if ($parameters['q'] != 'undefined')
+			if (array_key_exists('q', $parameters) && ($parameters['q'] != 'undefined'))
 			{
 				$stmt->bindValue(':search_turtle_name', '%' . $parameters['q'] .'%');
 			}

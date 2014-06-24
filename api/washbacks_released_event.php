@@ -67,8 +67,8 @@
 		$stmt->bindValue(':organization_id', dbGetParameterValue($parameters, 'organization_id'));
 		$stmt->bindValue(':species_code', dbGetParameterValue($parameters, 'species_code'));
 		$stmt->bindValue(':event_date', dbGetParameterDate($parameters, 'event_date'));
-		$stmt->bindValue(':beach_event_count', dbGetParameterValue($parameters, 'beach_event_count'));
-		$stmt->bindValue(':offshore_event_count', dbGetParameterValue($parameters, 'offshore_event_count'));
+		$stmt->bindValue(':beach_event_count', dbGetParameterInt($parameters, 'beach_event_count'));
+		$stmt->bindValue(':offshore_event_count', dbGetParameterInt($parameters, 'offshore_event_count'));
 
 		$stmt->execute();
 	}

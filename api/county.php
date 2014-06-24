@@ -36,7 +36,7 @@
 		{
 			$sql = 'SELECT * FROM county ';
 			
-			if (isset($parameters['q']) && ($parameters['q'] != 'undefined'))
+			if (array_key_exists('q', $parameters) && ($parameters['q'] != 'undefined'))
 			{
 				$sql .= 'WHERE county_name LIKE :search_county_name ';
 			}
@@ -55,7 +55,7 @@
 			}
 			
 			$stmt = $db->prepare($sql);
-			if (isset($parameters['q']) && ($parameters['q'] != 'undefined'))
+			if (array_key_exists('q', $parameters) && ($parameters['q'] != 'undefined'))
 			{
 				$stmt->bindValue(':search_county_name', '%' . $parameters['q'] .'%');
 			}

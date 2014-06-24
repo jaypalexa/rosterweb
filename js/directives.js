@@ -5,8 +5,8 @@ RosterWebApp.directive('sorted', function() {
         scope: true,
         transclude: true,
         template: '<a ng-click="do_sort()" ng-transclude></a>' +
-            '<span ng-show="do_show(true)"><i class="icon-circle-arrow-down"></i></span>' +
-            '<span ng-show="do_show(false)"><i class="icon-circle-arrow-up"></i></span>',
+            '<span ng-show="do_show(true)"><i class="glyphicon glyphicon-circle-arrow-down" style="margin-left: 3px;"></i></span>' +
+            '<span ng-show="do_show(false)"><i class="glyphicon glyphicon-circle-arrow-up" style="margin-left: 3px;"></i></span>',
 
         controller: function($scope, $element, $attrs) {
             $scope.sort = $attrs.sorted;

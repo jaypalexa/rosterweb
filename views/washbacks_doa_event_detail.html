@@ -20,8 +20,7 @@
 	<div class="control-group" ng-class="{error: form.event_count.$invalid}">
 		<label class="control-label" for="event_count">Event count:</label>
 		<div class="controls">
-			<input type="text" ng-model="item.event_count" id="event_count" name="event_count" ng-maxlength="255" maxlength="255" ng-model-onblur ng-change="save()" />
-			<span class="error" ng-show="form.event_count.$error.maxlength">max length exceeded</span>
+			<input type="number" min="0" max="99999" ng-model="item.event_count" id="event_count" name="event_count" ng-maxlength="255" maxlength="255" ng-model-onblur ng-change="save()" />
 		</div>
 	</div>
 	<div class="control-group" ng-class="{error: form.doa_from_county.$invalid}">

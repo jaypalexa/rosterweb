@@ -44,7 +44,7 @@
 		{
 			$sql = 'SELECT u.*, o.organization_name FROM user u LEFT JOIN organization o ON u.organization_id = o.organization_id ';
 
-			if ($parameters['q'] != 'undefined')
+			if (array_key_exists('q', $parameters) && ($parameters['q'] != 'undefined'))
 			{
 				$sql .= 'WHERE user_name LIKE :search_user_name ';
 			}
@@ -63,7 +63,7 @@
 			}
 			
 			$stmt = $db->prepare($sql);
-			if ($parameters['q'] != 'undefined')
+			if (array_key_exists('q', $parameters) && ($parameters['q'] != 'undefined'))
 			{
 				$stmt->bindValue(':search_user_name', '%' . $parameters['q'] .'%');
 			}
