@@ -3,31 +3,48 @@
 	<li class="active">Hatchlings DOA Event</li>
 </ul>
 
-<form name="form" class="form-horizontal">
-	<div class="control-group" ng-class="{error: form.species_code.$invalid}">
-		<label class="control-label" for="species_code">Species:</label>
-		<div class="controls">
-			<select id="species_code" name="species_code" ng-model="item.species_code" ng-options="s.id as s.name for s in species" ng-change="save()" ></select>
+<form name="form" class="container form-horizontal">
+	<div class="row">
+		<div class="col-md-6">
+			<div class="form-group" ng-class="{error: form.species_code.$invalid}">
+				<label for="species_code">Species</label>
+				<div>
+					<select class="form-control" id="species_code" name="species_code" ng-model="item.species_code" ng-options="s.id as s.name for s in species" ng-change="save()" ></select>
+				</div>
+			</div>
 		</div>
 	</div>
-	<div class="control-group input-append" style="display: block" ng-class="{error: form.event_date.$invalid}">
-		<label class="control-label" for="event_date">Event date:</label>
-		<div class="controls">
-			<input id="event_date" name="event_date" class="input-small" type="text" ng-model="item.event_date" data-date-format="yyyy-mm-dd" bs-datepicker ng-model-onblur ng-change="save()" />
-			<button type="button" class="btn" data-toggle="datepicker"><i class="glyphicon glyphicon-calendar"></i></button>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="form-group" ng-class="{error: form.event_date.$invalid}">
+				<label for="event_date">Event date</label>
+				<div class="input-group">
+					<input class="form-control" type="text" id="event_date" name="event_date" datepicker-popup="yyyy-MM-dd" ng-model="item.event_date" min-date="'1950-01-01'" max-date="'2099-12-31'" is-open="datePicker.eventDateOpened" datepicker-options="dateOptions" close-text="Close" />
+					<span class="input-group-btn">
+						<button type="button" class="btn btn-default" ng-click="openDatePicker($event, 'eventDateOpened')"><i class="glyphicon glyphicon-calendar"></i></button>
+					</span>
+				</div>
+			</div>
 		</div>
 	</div>
-	<div class="control-group" ng-class="{error: form.event_count.$invalid}">
-		<label class="control-label" for="event_count">Event count:</label>
-		<div class="controls">
-			<input type="text" ng-model="item.event_count" id="event_count" name="event_count" ng-maxlength="255" maxlength="255" ng-model-onblur ng-change="save()" />
-			<span class="error" ng-show="form.event_count.$error.maxlength">max length exceeded</span>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="form-group" ng-class="{error: form.event_count.$invalid}">
+				<label for="event_count">Event count</label>
+				<div>
+					<input class="form-control" type="number" min="0" max="99999" ng-model="item.event_count" id="event_count" name="event_count" ng-maxlength="255" maxlength="255" ng-model-onblur ng-change="save()" />
+				</div>
+			</div>
 		</div>
 	</div>
-	<div class="control-group" ng-class="{error: form.doa_from_county.$invalid}">
-		<label class="control-label" for="doa_from_county">County:</label>
-		<div class="controls">
-			<select id="doa_from_county" name="doa_from_county" ng-model="item.doa_from_county" ng-options="c.county_name as c.county_name for c in counties | orderBy: 'county_name'" ng-change="save()" ></select>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="form-group" ng-class="{error: form.doa_from_county.$invalid}">
+				<label for="doa_from_county">County</label>
+				<div>
+					<select class="form-control" id="doa_from_county" name="doa_from_county" ng-model="item.doa_from_county" ng-options="c.county_name as c.county_name for c in counties | orderBy: 'county_name'" ng-change="save()" ></select>
+				</div>
+			</div>
 		</div>
 	</div>
 </form>

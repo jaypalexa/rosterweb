@@ -124,10 +124,18 @@
 							<div>
 								<input class="form-control" type="text" ng-model="item.acquired_latitude" id="acquired_latitude" name="acquired_latitude" style="width:95px;display:inline-block;" ng-maxlength="255" maxlength="255" ng-model-onblur ng-change="save()" />
 								<input class="form-control" type="text" ng-model="item.acquired_longitude" id="acquired_longitude" name="acquired_longitude" style="width:95px;display:inline-block;" ng-maxlength="255" maxlength="255" ng-model-onblur ng-change="save()" />
-								<a href="" ng-click="mapAcquiredLatLng();" tooltip="Locate on map" tooltip-placement="right"><img src="/rosterweb/img/globe.png" style="height:30px;width:30px;display:inline-block;"></a>
+								<!-- <a href="" ng-click="mapAcquiredLatLng();" tooltip="Locate on map" tooltip-placement="right"><img src="/rosterweb/img/globe.png" style="height:30px;width:30px;display:inline-block;"></a> -->
 								<span class="error" ng-show="form.acquired_latitude.$error.maxlength">max length exceeded</span>
 								<span class="error" ng-show="form.acquired_longitude.$error.maxlength">max length exceeded</span>
 							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<ng-include src="'/rosterweb/views/map_acquired.html'" onload="initAcquiredMap()">
+							</ng-include>
 						</div>
 					</div>
 				</div>
@@ -172,10 +180,18 @@
 							<div>
 								<input class="form-control" type="text" ng-model="item.relinquished_latitude" id="relinquished_latitude" name="relinquished_latitude" style="width:95px;display:inline-block;" ng-maxlength="255" maxlength="255" ng-model-onblur ng-change="save()" />
 								<input class="form-control" type="text" ng-model="item.relinquished_longitude" id="relinquished_longitude" name="relinquished_longitude" style="width:95px;display:inline-block;" ng-maxlength="255" maxlength="255" ng-model-onblur ng-change="save()" />
-								<a href="" ng-click="mapRelinquishedLatLng();" tooltip="Locate on map" tooltip-placement="right"><img src="/rosterweb/img/globe.png" style="height:30px;width:30px;display:inline-block;"></a>
+								<!-- <a href="" ng-click="mapRelinquishedLatLng();" tooltip="Locate on map" tooltip-placement="right"><img src="/rosterweb/img/globe.png" style="height:30px;width:30px;display:inline-block;"></a> -->
 								<span class="error" ng-show="form.relinquished_latitude.$error.maxlength">max length exceeded</span>
 								<span class="error" ng-show="form.relinquished_longitude.$error.maxlength">max length exceeded</span>
 							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<ng-include src="'/rosterweb/views/map_relinquished.html'" onload="initRelinquishedMap()">
+							</ng-include>
 						</div>
 					</div>
 				</div>
@@ -419,7 +435,3 @@
 		</tab>
     </tabset>
 </form>
-<div id="modalMap" class="modal hide fade" role="dialog">
-	<div id="modalMapContainer">
-	</div>
-</div>

@@ -112,7 +112,19 @@ var HatchlingsEventListCtrl = function ($rootScope, $scope, $location, $modal, h
 };
 
 var HatchlingsAcquiredEventEditCtrl = function($rootScope, $scope, $routeParams, $location, hatchlingsEventService, codeTableService, countyService, recordCountService) {
-	
+
+	$scope.datePicker = {
+		'eventDateOpened': false
+	};
+ 	$scope.dateOptions = {
+		'show-weeks' : false
+	};
+	$scope.openDatePicker = function($event, opened) {
+		$event.preventDefault();
+		$event.stopPropagation();
+		$scope.datePicker[opened] = true;
+	};
+
     $scope.species = codeTableService.getCodes('species'); 
 	$scope.counties = countyService.getAll('county_name', false);
 
@@ -146,7 +158,19 @@ var HatchlingsAcquiredEventEditCtrl = function($rootScope, $scope, $routeParams,
 };
 
 var HatchlingsDiedEventEditCtrl = function($rootScope, $scope, $routeParams, $location, hatchlingsEventService, codeTableService, countyService, recordCountService) {
-	
+
+	$scope.datePicker = {
+		'eventDateOpened': false
+	};
+ 	$scope.dateOptions = {
+		'show-weeks' : false
+	};
+	$scope.openDatePicker = function($event, opened) {
+		$event.preventDefault();
+		$event.stopPropagation();
+		$scope.datePicker[opened] = true;
+	};
+
     $scope.species = codeTableService.getCodes('species'); 
 
 	$scope.save = function() {
@@ -179,7 +203,19 @@ var HatchlingsDiedEventEditCtrl = function($rootScope, $scope, $routeParams, $lo
 };
 
 var HatchlingsDoaEventEditCtrl = function($rootScope, $scope, $routeParams, $location, hatchlingsEventService, codeTableService, countyService, recordCountService) {
-	
+
+	$scope.datePicker = {
+		'eventDateOpened': false
+	};
+ 	$scope.dateOptions = {
+		'show-weeks' : false
+	};
+	$scope.openDatePicker = function($event, opened) {
+		$event.preventDefault();
+		$event.stopPropagation();
+		$scope.datePicker[opened] = true;
+	};
+
     $scope.species = codeTableService.getCodes('species'); 
 	$scope.counties = countyService.getAll('county_name', false);
 
@@ -213,7 +249,19 @@ var HatchlingsDoaEventEditCtrl = function($rootScope, $scope, $routeParams, $loc
 };
 
 var HatchlingsReleasedEventEditCtrl = function($rootScope, $scope, $routeParams, $location, hatchlingsEventService, codeTableService, countyService, recordCountService) {
-	
+
+	$scope.datePicker = {
+		'eventDateOpened': false
+	};
+ 	$scope.dateOptions = {
+		'show-weeks' : false
+	};
+	$scope.openDatePicker = function($event, opened) {
+		$event.preventDefault();
+		$event.stopPropagation();
+		$scope.datePicker[opened] = true;
+	};
+
     $scope.species = codeTableService.getCodes('species'); 
 	$scope.counties = countyService.getAll('county_name', false);
 
@@ -332,27 +380,6 @@ var LogoutCtrl = function ($scope, $location, logoutService) {
 };
 
 var MainCtrl = function ($rootScope, $scope, $location, $route, $cookieStore, organizationListItemService, recordCountService) {
-	
-	//-- datepicker
-	$scope.formData = {};
-	$scope.formData.date1 = "";
-	$scope.formData.date2 = "";
-	$scope.opened1 = false;
-	$scope.opened2 = false;
- 	$scope.dateOptions = {
-		'show-weeks' : false
-	};
-	$scope.open = function($event, opened) {
-		//console.log("open");
-		$event.preventDefault();
-		$event.stopPropagation();
-		$scope[opened] = true;
-	};
-
-	$scope.clear = function () {
-		$scope.ngModel = null;
-	};
-			
 	$scope.organizationChanged = function() {
 		//console.log('[MainCtrl::$scope.organizationChanged] $scope.currentUser = ' + $scope.currentUser);
 		if (($scope.currentUser != null) && ($scope.currentUser.organizationId != null))
@@ -692,9 +719,15 @@ var TurtleEditCtrl = function($rootScope, $scope, $routeParams, $location, $cook
 		$event.stopPropagation();
 		$scope.datePicker[opened] = true;
 	};
-	//$scope.clear = function () {
-	//	$scope.ngModel = null;
-	//};
+
+	var startLatlng = new google.maps.LatLng(29.45664, -82.25533);
+	var mapOptions = {
+		zoom: 6,
+		center: startLatlng,
+		mapTypeId: google.maps.MapTypeId.ROADMAP,
+		draggable: true, 
+		streetViewControl: false			
+	};
 
 	$scope.arrival_weight_value = '';
 	$scope.arrival_weight_units = '';
@@ -731,23 +764,103 @@ var TurtleEditCtrl = function($rootScope, $scope, $routeParams, $location, $cook
 		};
 	}, true);
 	
-	$scope.mapAcquiredLatLng = function() {
-		util_open_map_dialog($modal, $scope.item.acquired_latitude, $scope.item.acquired_longitude, function(result) {
-			$scope.item.acquired_latitude = result.lat;
-			$scope.item.acquired_longitude = result.lng;
-			$scope.save();
-			$scope.$apply();
-		});
-	};
+	$scope.acquiredMap = {};
+	$scope.acquiredMarker = null;
+		
+	$scope.initAcquiredMap = function() {
 
-	$scope.mapRelinquishedLatLng = function() {
-		util_open_map_dialog($modal, $scope.item.relinquished_latitude, $scope.item.relinquished_longitude, function(result) {
-			$scope.item.relinquished_latitude = result.lat;
-			$scope.item.relinquished_longitude = result.lng;
-			$scope.save();
-			$scope.$apply();
+		$scope.acquiredMap = new google.maps.Map(document.getElementById('acquired_map'), mapOptions);
+
+		google.maps.event.addListener($scope.acquiredMap, 'click', function(event) {
+			setAcquiredMarker(event.latLng.lat().toFixed(5), event.latLng.lng().toFixed(5));
+			setAcquiredCoords(event.latLng);
 		});
 	};
+	
+    function setAcquiredMarker(lat, lng) {       
+		var acquiredLat, acquiredLng;
+		if ((lat != undefined) && (lat != null) && (lat != ''))
+		{
+			acquiredLat = parseFloat(lat);
+		}
+		if ((lng != undefined) && (lng != null) && (lng != ''))
+		{
+			acquiredLng = parseFloat(lng);
+		}
+		var acquiredLatlng = new google.maps.LatLng(acquiredLat, acquiredLng);
+
+		//-- clear the previous marker
+        if ($scope.acquiredMarker != null) {
+            $scope.acquiredMarker.setMap(null);
+        }
+
+        $scope.acquiredMarker = new google.maps.Marker({
+            position: acquiredLatlng,
+            map: $scope.acquiredMap,
+            draggable:true
+        });
+
+		google.maps.event.addListener($scope.acquiredMarker, 'dragend', function(event) {
+			setAcquiredCoords(event.latLng);
+        });		
+    }
+
+	function setAcquiredCoords(latLng) {
+		$scope.$apply(function() {
+			$scope.item.acquired_latitude = latLng.lat().toFixed(5);
+			$scope.item.acquired_longitude = latLng.lng().toFixed(5);
+			$scope.save();
+		});
+	}
+
+	$scope.relinquishedMap = {};
+	$scope.relinquishedMarker = null;
+		
+	$scope.initRelinquishedMap = function() {
+
+		$scope.relinquishedMap = new google.maps.Map(document.getElementById('relinquished_map'), mapOptions);
+
+		google.maps.event.addListener($scope.relinquishedMap, 'click', function(event) {
+			setRelinquishedMarker(event.latLng.lat().toFixed(5), event.latLng.lng().toFixed(5));
+			setRelinquishedCoords(event.latLng);
+		});
+	};
+	
+    function setRelinquishedMarker(lat, lng) {       
+		var relinquishedLat, relinquishedLng;
+		if ((lat != undefined) && (lat != null) && (lat != ''))
+		{
+			relinquishedLat = parseFloat(lat);
+		}
+		if ((lng != undefined) && (lng != null) && (lng != ''))
+		{
+			relinquishedLng = parseFloat(lng);
+		}
+		var relinquishedLatlng = new google.maps.LatLng(relinquishedLat, relinquishedLng);
+
+		//-- clear the previous marker
+        if ($scope.relinquishedMarker != null) {
+            $scope.relinquishedMarker.setMap(null);
+        }
+
+        $scope.relinquishedMarker = new google.maps.Marker({
+            position: relinquishedLatlng,
+            map: $scope.relinquishedMap,
+            draggable:true
+        });
+
+		google.maps.event.addListener($scope.relinquishedMarker, 'dragend', function(event) {
+			setRelinquishedCoords(event.latLng);
+        });		
+    }
+
+	function setRelinquishedCoords(latLng) {
+		$scope.$apply(function() {
+			$scope.item.relinquished_latitude = latLng.lat().toFixed(5);
+			$scope.item.relinquished_longitude = latLng.lng().toFixed(5);
+			$scope.save();
+		});
+	}
 
 	$scope.previewBrochure = function(item) {
 		$timeout(function () {
@@ -782,6 +895,8 @@ var TurtleEditCtrl = function($rootScope, $scope, $routeParams, $location, $cook
 				recordCountService.resetAll($rootScope.currentUser.organizationId);
 				$scope.item.is_new = false;
 			}
+			setAcquiredMarker($scope.item.acquired_latitude, $scope.item.acquired_longitude);
+			setRelinquishedMarker($scope.item.relinquished_latitude, $scope.item.relinquished_longitude);
 		});
     };
 	
@@ -816,6 +931,9 @@ var TurtleEditCtrl = function($rootScope, $scope, $routeParams, $location, $cook
 						$scope.arrival_weight_units = result.weight_units;
 					}
 				);
+
+				setAcquiredMarker($scope.item.acquired_latitude, $scope.item.acquired_longitude);
+				setRelinquishedMarker($scope.item.relinquished_latitude, $scope.item.relinquished_longitude);
 			}
 		);
 	}
@@ -1199,7 +1317,7 @@ var WashbacksEventListCtrl = function ($rootScope, $scope, $location, $modal, wa
         $scope.sort_order = property_name;
     };
 
-    $scope.delete = function(item) {
+	$scope.delete = function(item) {
 		util_open_delete_dialog($modal, 'washbacks ' + item.event_type_code + ' event', item.species_code + ' - ' + item.event_date, function(result) {
 			if (result == 'yes') {
 				washbacksEventService.delete(item.washbacks_event_id, item.event_type_code, function() {
@@ -1222,6 +1340,18 @@ var WashbacksEventListCtrl = function ($rootScope, $scope, $location, $modal, wa
 
 var WashbacksAcquiredEventEditCtrl = function($rootScope, $scope, $routeParams, $location, washbacksEventService, codeTableService, countyService, recordCountService) {
 	
+	$scope.datePicker = {
+		'eventDateOpened': false
+	};
+ 	$scope.dateOptions = {
+		'show-weeks' : false
+	};
+	$scope.openDatePicker = function($event, opened) {
+		$event.preventDefault();
+		$event.stopPropagation();
+		$scope.datePicker[opened] = true;
+	};
+
     $scope.species = codeTableService.getCodes('species'); 
 	$scope.counties = countyService.getAll('county_name', false);
 
@@ -1255,6 +1385,18 @@ var WashbacksAcquiredEventEditCtrl = function($rootScope, $scope, $routeParams, 
 };
 
 var WashbacksDiedEventEditCtrl = function($rootScope, $scope, $routeParams, $location, washbacksEventService, codeTableService, countyService, recordCountService) {
+	
+	$scope.datePicker = {
+		'eventDateOpened': false
+	};
+ 	$scope.dateOptions = {
+		'show-weeks' : false
+	};
+	$scope.openDatePicker = function($event, opened) {
+		$event.preventDefault();
+		$event.stopPropagation();
+		$scope.datePicker[opened] = true;
+	};
 	
     $scope.species = codeTableService.getCodes('species'); 
 
@@ -1290,6 +1432,18 @@ var WashbacksDiedEventEditCtrl = function($rootScope, $scope, $routeParams, $loc
 
 var WashbacksDoaEventEditCtrl = function($rootScope, $scope, $routeParams, $location, washbacksEventService, codeTableService, countyService, recordCountService) {
 	
+	$scope.datePicker = {
+		'eventDateOpened': false
+	};
+ 	$scope.dateOptions = {
+		'show-weeks' : false
+	};
+	$scope.openDatePicker = function($event, opened) {
+		$event.preventDefault();
+		$event.stopPropagation();
+		$scope.datePicker[opened] = true;
+	};
+
     $scope.species = codeTableService.getCodes('species'); 
 	$scope.counties = countyService.getAll('county_name', false);
 
@@ -1324,6 +1478,18 @@ var WashbacksDoaEventEditCtrl = function($rootScope, $scope, $routeParams, $loca
 
 var WashbacksReleasedEventEditCtrl = function($rootScope, $scope, $routeParams, $location, washbacksEventService, codeTableService, countyService, recordCountService) {
 	
+	$scope.datePicker = {
+		'eventDateOpened': false
+	};
+ 	$scope.dateOptions = {
+		'show-weeks' : false
+	};
+	$scope.openDatePicker = function($event, opened) {
+		$event.preventDefault();
+		$event.stopPropagation();
+		$scope.datePicker[opened] = true;
+	};
+
     $scope.species = codeTableService.getCodes('species'); 
 	$scope.counties = countyService.getAll('county_name', false);
 
