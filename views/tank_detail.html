@@ -2,16 +2,24 @@
 	<li><a href='#/tank'>Holding Tanks</a></li>
 	<li class="active">Holding Tank: {{ item.tank_name }}</li>
 </ul>
-<form name="form" class="form-horizontal">
-    <div class="control-group" ng-class="{error: form.tank_name.$invalid}">
-        <label class="control-label" for="tank_name">Tank name:</label>
-        <div class="controls">
-            <input type="text" ng-model="item.tank_name" id="tank_name" name="tank_name" required ng-maxlength="255" maxlength="255" autofocus="autofocus" ng-model-onblur ng-change="save()" />
-			<span class="error" ng-show="form.tank_name.$error.required">required</span>
-			<span class="error" ng-show="form.tank_name.$error.maxlength">max length exceeded</span>
+<form name="form" class="form-horizontal container">
+	<div class="row">
+		<div class="col-md-6">
+			<div class="form-group" ng-class="{error: form.tank_name.$invalid}">
+				<label for="tank_name">Tank name</label>
+				<div>
+					<input class="form-control" type="text" ng-model="item.tank_name" id="tank_name" name="tank_name" required ng-maxlength="255" maxlength="255" autofocus="autofocus" ng-model-onblur ng-change="save()" />
+					<span class="error" ng-show="form.tank_name.$error.required">required</span>
+					<span class="error" ng-show="form.tank_name.$error.maxlength">max length exceeded</span>
+				</div>
+			</div>
         </div>
     </div>
-	<div>
-		<ng-include src="'/rosterweb/views/tank_water_list.html'"></ng-include>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="form-group">
+				<ng-include src="'/rosterweb/views/tank_water_list.html'"></ng-include>
+			</div>
+		</div>
 	</div>
 </form>
