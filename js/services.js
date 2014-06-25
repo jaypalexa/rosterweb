@@ -140,7 +140,6 @@ RosterWebApp.service('codeTableService', function() {
 				break;
 			case 'unit_type':
 				return [
-					{"id": "", "name": ""},
 					{"id": "M", "name": "Metric (cm, kg, etc.)"},
 					{"id": "I", "name": "Imperial (inches, lbs, etc.)"}
 				]; 

@@ -5,32 +5,50 @@
 	<li class="active">Tag: {{ item.tag_number }}</li>
 </ul>
 <h4>Tag</h4>
-<form name="form" class="form-horizontal">
-    <div class="control-group" ng-class="{error: form.tag_number.$invalid}">
-        <label class="control-label" for="tag_number">Tag number:</label>
-        <div class="controls">
-            <input type="text" ng-model="item.tag_number" id="tag_number" name="tag_number" required ng-maxlength="255" maxlength="255" autofocus="autofocus" ng-model-onblur ng-change="save()" />
-			<span class="error" ng-show="form.tag_number.$error.required">required</span>
-			<span class="error" ng-show="form.tag_number.$error.maxlength">max length exceeded</span>
+<form name="form" class="form-horizontal container">
+	<div class="row">
+		<div class="col-md-6">
+			<div class="form-group" ng-class="{error: form.tag_number.$invalid}">
+				<label for="tag_number">Tag number</label>
+				<div>
+					<input class="form-control" type="text" ng-model="item.tag_number" id="tag_number" name="tag_number" required ng-maxlength="255" maxlength="255" autofocus="autofocus" ng-model-onblur ng-change="save()" />
+					<span class="error" ng-show="form.tag_number.$error.required">required</span>
+					<span class="error" ng-show="form.tag_number.$error.maxlength">max length exceeded</span>
+				</div>
+			</div>
         </div>
     </div>
-	<div class="control-group" ng-class="{error: form.tag_type.$invalid}">
-		<label class="control-label" for="tag_type">Tag type:</label>
-		<div class="controls">
-			<select id="tag_type" name="tag_type" ng-model="item.tag_type" ng-options="t.id as t.name for t in tag_types" ng-change="save()" ></select>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="form-group" ng-class="{error: form.tag_type.$invalid}">
+				<label for="tag_type">Tag type</label>
+				<div>
+					<select class="form-control" id="tag_type" name="tag_type" ng-model="item.tag_type" ng-options="t.id as t.name for t in tag_types" ng-change="save()" ></select>
+				</div>
+			</div>
 		</div>
 	</div>
-	<div class="control-group" ng-class="{error: form.location.$invalid}">
-		<label class="control-label" for="location">Location on turtle:</label>
-		<div class="controls">
-			<select id="location" name="location" ng-model="item.location" ng-options="t.id as t.name for t in tag_locations" ng-change="save()" ></select>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="form-group" ng-class="{error: form.location.$invalid}">
+				<label for="location">Location on turtle</label>
+				<div>
+					<select class="form-control" id="location" name="location" ng-model="item.location" ng-options="t.id as t.name for t in tag_locations" ng-change="save()" ></select>
+				</div>
+			</div>
 		</div>
 	</div>
-	<div class="control-group input-append" style="display: block" ng-class="{error: form.date_tagged.$invalid}">
-		<label class="control-label" for="date_tagged">Date tagged:</label>
-		<div class="controls">
-			<input id="date_tagged" name="date_tagged" class="input-small" type="text" ng-model="item.date_tagged" data-date-format="yyyy-mm-dd" bs-datepicker ng-model-onblur ng-change="save()" />
-			<button type="button" class="btn" data-toggle="datepicker"><i class="glyphicon glyphicon-calendar"></i></button>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="form-group" ng-class="{error: form.date_tagged.$invalid}">
+				<label for="date_tagged">Date tagged</label>
+				<div class="input-group">
+					<input class="form-control" type="text" id="date_tagged" name="date_tagged" datepicker-popup="yyyy-MM-dd" ng-model="item.date_tagged" min-date="'1950-01-01'" max-date="'2099-12-31'" is-open="datePicker.dateTaggedOpened" datepicker-options="dateOptions" close-text="Close" />
+					<span class="input-group-btn">
+						<button type="button" class="btn btn-default" ng-click="openDatePicker($event, 'dateTaggedOpened')"><i class="glyphicon glyphicon-calendar"></i></button>
+					</span>
+				</div>
+			</div>
 		</div>
 	</div>
 </form>

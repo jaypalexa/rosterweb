@@ -5,84 +5,153 @@
 	<li class="active">Morphometric Information</li>
 </ul>
 <h4>Morphometric Information</h4>
-<form name="form" class="form-horizontal">
-	<div class="control-group input-append" style="display: block" ng-class="{error: form.date_measured.$invalid}">
-		<label class="control-label" for="date_measured">Date measured:</label>
-		<div class="controls">
-			<input id="date_measured" name="date_measured" class="input-small" type="text" ng-model="item.date_measured" data-date-format="yyyy-mm-dd" bs-datepicker required autofocus="autofocus" ng-model-onblur ng-change="save()" />
-			<button type="button" class="btn" data-toggle="datepicker"><i class="glyphicon glyphicon-calendar"></i></button>
+<form name="form" class="form-horizontal container">
+	<div class="row">
+		<div class="col-md-6">
+			<div class="form-group" ng-class="{error: form.date_measured.$invalid}">
+				<label for="date_measured">Date measured</label>
+				<div class="input-group">
+					<input class="form-control" type="text" id="date_measured" name="date_measured" datepicker-popup="yyyy-MM-dd" ng-model="item.date_measured" min-date="'1950-01-01'" max-date="'2099-12-31'" is-open="datePicker.dateMeasuredOpened" datepicker-options="dateOptions" close-text="Close" />
+					<span class="input-group-btn">
+						<button type="button" class="btn btn-default" ng-click="openDatePicker($event, 'dateMeasuredOpened')"><i class="glyphicon glyphicon-calendar"></i></button>
+					</span>
+				</div>
+			</div>
 		</div>
-	</div>
-    <div class="control-group" ng-class="{error: form.scl_notch_notch_value.$invalid}">
-        <label class="control-label" for="scl_notch_notch_value">SCL notch-notch:</label>
-        <div class="controls">
-            <input type="text" ng-model="item.scl_notch_notch_value" id="scl_notch_notch_value" name="scl_notch_notch_value" ng-maxlength="10" maxlength="10" ng-pattern="/^[0-9]+([.][0-9]+)?$/" ng-model-onblur ng-change="save()" />
-			<select id="scl_notch_notch_units" name="scl_notch_notch_units" ng-model="item.scl_notch_notch_units" ng-options="c.id as c.name for c in cm_ins" ng-change="save()" ></select>
-			<span class="error" ng-show="form.scl_notch_notch_value.$error.pattern">not a valid number</span>
+	</div>	
+	<div class="row">
+		<div class="col-md-3">
+			<div class="form-group" ng-class="{error: form.scl_notch_notch_value.$invalid}">
+				<label for="scl_notch_notch_value">SCL notch-notch</label>
+				<div>
+					<input class="form-control" type="text" ng-model="item.scl_notch_notch_value" id="scl_notch_notch_value" name="scl_notch_notch_value" ng-maxlength="10" maxlength="10" ng-pattern="/^[0-9]+([.][0-9]+)?$/" ng-model-onblur ng-change="save()" />
+					<span class="error" ng-show="form.scl_notch_notch_value.$error.pattern">not a valid number</span>
+				</div>
+			</div>
+        </div>
+		<div class="col-md-3">
+			<label>Units</label>
+			<select class="form-control" id="scl_notch_notch_units" name="scl_notch_notch_units" ng-model="item.scl_notch_notch_units" ng-options="c.id as c.name for c in cm_ins" ng-change="save()" ></select>
         </div>
     </div>
-    <div class="control-group" ng-class="{error: form.scl_notch_tip_value.$invalid}">
-        <label class="control-label" for="scl_notch_tip_value">SCL notch-tip:</label>
-        <div class="controls">
-            <input type="text" ng-model="item.scl_notch_tip_value" id="scl_notch_tip_value" name="scl_notch_tip_value" ng-maxlength="10" maxlength="10" ng-pattern="/^[0-9]+([.][0-9]+)?$/" ng-model-onblur ng-change="save()" />
-			<select id="scl_notch_tip_units" name="scl_notch_tip_units" ng-model="item.scl_notch_tip_units" ng-options="c.id as c.name for c in cm_ins" ng-change="save()" ></select>
-			<span class="error" ng-show="form.scl_notch_tip_value.$error.pattern">not a valid number</span>
+	<div class="row">
+		<div class="col-md-3">
+			<div class="form-group" ng-class="{error: form.scl_notch_tip_value.$invalid}">
+				<label for="scl_notch_tip_value">SCL notch-tip</label>
+				<div>
+					<input class="form-control" type="text" ng-model="item.scl_notch_tip_value" id="scl_notch_tip_value" name="scl_notch_tip_value" ng-maxlength="10" maxlength="10" ng-pattern="/^[0-9]+([.][0-9]+)?$/" ng-model-onblur ng-change="save()" />
+					<span class="error" ng-show="form.scl_notch_tip_value.$error.pattern">not a valid number</span>
+				</div>
+			</div>
+        </div>
+		<div class="col-md-3">
+			<label>Units</label>
+			<select class="form-control" id="scl_notch_tip_units" name="scl_notch_tip_units" ng-model="item.scl_notch_tip_units" ng-options="c.id as c.name for c in cm_ins" ng-change="save()" ></select>
         </div>
     </div>
-    <div class="control-group" ng-class="{error: form.scl_tip_tip_value.$invalid}">
-        <label class="control-label" for="scl_tip_tip_value">SCL tip-tip:</label>
-        <div class="controls">
-            <input type="text" ng-model="item.scl_tip_tip_value" id="scl_tip_tip_value" name="scl_tip_tip_value" ng-maxlength="10" maxlength="10" ng-pattern="/^[0-9]+([.][0-9]+)?$/" ng-model-onblur ng-change="save()" />
-			<select id="scl_tip_tip_units" name="scl_tip_tip_units" ng-model="item.scl_tip_tip_units" ng-options="c.id as c.name for c in cm_ins" ng-change="save()" ></select>
-			<span class="error" ng-show="form.scl_tip_tip_value.$error.pattern">not a valid number</span>
+	<div class="row">
+		<div class="col-md-3">
+			<div class="form-group" ng-class="{error: form.scl_tip_tip_value.$invalid}">
+				<label for="scl_tip_tip_value">SCL tip-tip</label>
+				<div>
+					<input class="form-control" type="text" ng-model="item.scl_tip_tip_value" id="scl_tip_tip_value" name="scl_tip_tip_value" ng-maxlength="10" maxlength="10" ng-pattern="/^[0-9]+([.][0-9]+)?$/" ng-model-onblur ng-change="save()" />
+					<span class="error" ng-show="form.scl_tip_tip_value.$error.pattern">not a valid number</span>
+				</div>
+			</div>
+        </div>
+		<div class="col-md-3">
+			<label>Units</label>
+			<select class="form-control" id="scl_tip_tip_units" name="scl_tip_tip_units" ng-model="item.scl_tip_tip_units" ng-options="c.id as c.name for c in cm_ins" ng-change="save()" ></select>
         </div>
     </div>
-    <div class="control-group" ng-class="{error: form.scw_value.$invalid}">
-        <label class="control-label" for="scw_value">SCW:</label>
-        <div class="controls">
-            <input type="text" ng-model="item.scw_value" id="scw_value" name="scw_value" ng-maxlength="10" maxlength="10" ng-pattern="/^[0-9]+([.][0-9]+)?$/" ng-model-onblur ng-change="save()" />
-			<select id="scw_units" name="scw_units" ng-model="item.scw_units" ng-options="c.id as c.name for c in cm_ins" ng-change="save()" ></select>
-			<span class="error" ng-show="form.scw_value.$error.pattern">not a valid number</span>
+	<div class="row">
+		<div class="col-md-3">
+			<div class="form-group" ng-class="{error: form.scw_value.$invalid}">
+				<label for="scw_value">SCW</label>
+				<div>
+					<input class="form-control" type="text" ng-model="item.scw_value" id="scw_value" name="scw_value" ng-maxlength="10" maxlength="10" ng-pattern="/^[0-9]+([.][0-9]+)?$/" ng-model-onblur ng-change="save()" />
+					<span class="error" ng-show="form.scw_value.$error.pattern">not a valid number</span>
+				</div>
+			</div>
+        </div>
+		<div class="col-md-3">
+			<label>Units</label>
+			<select class="form-control" id="scw_units" name="scw_units" ng-model="item.scw_units" ng-options="c.id as c.name for c in cm_ins" ng-change="save()" ></select>
         </div>
     </div>
-    <div class="control-group" ng-class="{error: form.ccl_notch_notch_value.$invalid}">
-        <label class="control-label" for="ccl_notch_notch_value">CCL notch-notch:</label>
-        <div class="controls">
-            <input type="text" ng-model="item.ccl_notch_notch_value" id="ccl_notch_notch_value" name="ccl_notch_notch_value" ng-maxlength="10" maxlength="10" ng-pattern="/^[0-9]+([.][0-9]+)?$/" ng-model-onblur ng-change="save()" />
-			<select id="ccl_notch_notch_units" name="ccl_notch_notch_units" ng-model="item.ccl_notch_notch_units" ng-options="c.id as c.name for c in cm_ins" ng-change="save()" ></select>
-			<span class="error" ng-show="form.ccl_notch_notch_value.$error.pattern">not a valid number</span>
+	<div class="row">
+		<div class="col-md-3">
+			<div class="form-group" ng-class="{error: form.ccl_notch_notch_value.$invalid}">
+				<label for="ccl_notch_notch_value">CCL notch-notch</label>
+				<div>
+					<input class="form-control" type="text" ng-model="item.ccl_notch_notch_value" id="ccl_notch_notch_value" name="ccl_notch_notch_value" ng-maxlength="10" maxlength="10" ng-pattern="/^[0-9]+([.][0-9]+)?$/" ng-model-onblur ng-change="save()" />
+					<span class="error" ng-show="form.ccl_notch_notch_value.$error.pattern">not a valid number</span>
+				</div>
+			</div>
+        </div>
+		<div class="col-md-3">
+			<label>Units</label>
+			<select class="form-control" id="ccl_notch_notch_units" name="ccl_notch_notch_units" ng-model="item.ccl_notch_notch_units" ng-options="c.id as c.name for c in cm_ins" ng-change="save()" ></select>
         </div>
     </div>
-    <div class="control-group" ng-class="{error: form.ccl_notch_tip_value.$invalid}">
-        <label class="control-label" for="ccl_notch_tip_value">CCL notch-tip:</label>
-        <div class="controls">
-            <input type="text" ng-model="item.ccl_notch_tip_value" id="ccl_notch_tip_value" name="ccl_notch_tip_value" ng-maxlength="10" maxlength="10" ng-pattern="/^[0-9]+([.][0-9]+)?$/" ng-model-onblur ng-change="save()" />
-			<select id="ccl_notch_tip_units" name="ccl_notch_tip_units" ng-model="item.ccl_notch_tip_units" ng-options="c.id as c.name for c in cm_ins" ng-change="save()" ></select>
-			<span class="error" ng-show="form.ccl_notch_tip_value.$error.pattern">not a valid number</span>
+	<div class="row">
+		<div class="col-md-3">
+			<div class="form-group" ng-class="{error: form.ccl_notch_tip_value.$invalid}">
+				<label for="ccl_notch_tip_value">CCL notch-tip</label>
+				<div>
+					<input class="form-control" type="text" ng-model="item.ccl_notch_tip_value" id="ccl_notch_tip_value" name="ccl_notch_tip_value" ng-maxlength="10" maxlength="10" ng-pattern="/^[0-9]+([.][0-9]+)?$/" ng-model-onblur ng-change="save()" />
+					<span class="error" ng-show="form.ccl_notch_tip_value.$error.pattern">not a valid number</span>
+				</div>
+			</div>
+        </div>
+		<div class="col-md-3">
+			<label>Units</label>
+			<select class="form-control" id="ccl_notch_tip_units" name="ccl_notch_tip_units" ng-model="item.ccl_notch_tip_units" ng-options="c.id as c.name for c in cm_ins" ng-change="save()" ></select>
         </div>
     </div>
-    <div class="control-group" ng-class="{error: form.ccl_tip_tip_value.$invalid}">
-        <label class="control-label" for="ccl_tip_tip_value">CCL tip-tip:</label>
-        <div class="controls">
-            <input type="text" ng-model="item.ccl_tip_tip_value" id="ccl_tip_tip_value" name="ccl_tip_tip_value" ng-maxlength="10" maxlength="10" ng-pattern="/^[0-9]+([.][0-9]+)?$/" ng-model-onblur ng-change="save()" />
-			<select id="ccl_tip_tip_units" name="ccl_tip_tip_units" ng-model="item.ccl_tip_tip_units" ng-options="c.id as c.name for c in cm_ins" ng-change="save()" ></select>
-			<span class="error" ng-show="form.ccl_tip_tip_value.$error.pattern">not a valid number</span>
+	<div class="row">
+		<div class="col-md-3">
+			<div class="form-group" ng-class="{error: form.ccl_tip_tip_value.$invalid}">
+				<label for="ccl_tip_tip_value">CCL tip-tip</label>
+				<div>
+					<input class="form-control" type="text" ng-model="item.ccl_tip_tip_value" id="ccl_tip_tip_value" name="ccl_tip_tip_value" ng-maxlength="10" maxlength="10" ng-pattern="/^[0-9]+([.][0-9]+)?$/" ng-model-onblur ng-change="save()" />
+					<span class="error" ng-show="form.ccl_tip_tip_value.$error.pattern">not a valid number</span>
+				</div>
+			</div>
+        </div>
+		<div class="col-md-3">
+			<label>Units</label>
+			<select class="form-control" id="ccl_tip_tip_units" name="ccl_tip_tip_units" ng-model="item.ccl_tip_tip_units" ng-options="c.id as c.name for c in cm_ins" ng-change="save()" ></select>
         </div>
     </div>
-    <div class="control-group" ng-class="{error: form.ccw_value.$invalid}">
-        <label class="control-label" for="ccw_value">CCW:</label>
-        <div class="controls">
-            <input type="text" ng-model="item.ccw_value" id="ccw_value" name="ccw_value" ng-maxlength="10" maxlength="10" ng-pattern="/^[0-9]+([.][0-9]+)?$/" ng-model-onblur ng-change="save()" />
-			<select id="ccw_units" name="ccw_units" ng-model="item.ccw_units" ng-options="c.id as c.name for c in cm_ins" ng-change="save()" ></select>
-			<span class="error" ng-show="form.ccw_value.$error.pattern">not a valid number</span>
+	<div class="row">
+		<div class="col-md-3">
+			<div class="form-group" ng-class="{error: form.ccw_value.$invalid}">
+				<label for="ccw_value">CCW</label>
+				<div>
+					<input class="form-control" type="text" ng-model="item.ccw_value" id="ccw_value" name="ccw_value" ng-maxlength="10" maxlength="10" ng-pattern="/^[0-9]+([.][0-9]+)?$/" ng-model-onblur ng-change="save()" />
+					<span class="error" ng-show="form.ccw_value.$error.pattern">not a valid number</span>
+				</div>
+			</div>
+        </div>
+		<div class="col-md-3">
+			<label>Units</label>
+			<select class="form-control" id="ccw_units" name="ccw_units" ng-model="item.ccw_units" ng-options="c.id as c.name for c in cm_ins" ng-change="save()" ></select>
         </div>
     </div>
-    <div class="control-group" ng-class="{error: form.weight_value.$invalid}">
-        <label class="control-label" for="weight_value">Weight:</label>
-        <div class="controls">
-            <input type="text" ng-model="item.weight_value" id="weight_value" name="weight_value" ng-maxlength="10" maxlength="10" ng-pattern="/^[0-9]+([.][0-9]+)?$/" ng-model-onblur ng-change="save()" />
-			<select id="weight_units" name="weight_units" ng-model="item.weight_units" ng-options="k.id as k.name for k in kg_lbs" ng-change="save()" ></select>
-			<span class="error" ng-show="form.weight_value.$error.pattern">not a valid number</span>
+	<div class="row">
+		<div class="col-md-3">
+			<div class="form-group" ng-class="{error: form.weight_value.$invalid}">
+				<label for="weight_value">Weight</label>
+				<div>
+					<input class="form-control" type="text" ng-model="item.weight_value" id="weight_value" name="weight_value" ng-maxlength="10" maxlength="10" ng-pattern="/^[0-9]+([.][0-9]+)?$/" ng-model-onblur ng-change="save()" />
+					<span class="error" ng-show="form.weight_value.$error.pattern">not a valid number</span>
+				</div>
+			</div>
         </div>
-    </div>
+ 		<div class="col-md-3">
+			<label>Units</label>
+			<select class="form-control" id="weight_units" name="weight_units" ng-model="item.weight_units" ng-options="k.id as k.name for k in kg_lbs" ng-change="save()" ></select>
+        </div>
+   </div>
 </form>

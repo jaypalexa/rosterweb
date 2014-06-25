@@ -42,7 +42,7 @@
 		//--------------------------------------------------------------------------------
 		if (!array_key_exists('user_id', $parameters) && !array_key_exists('user_email', $parameters))
 		{
-			$sql = 'SELECT u.*, o.organization_name FROM user u LEFT JOIN organization o ON u.organization_id = o.organization_id ';
+			$sql = 'SELECT u.*, o.organization_name, o.preferred_units_type FROM user u LEFT JOIN organization o ON u.organization_id = o.organization_id ';
 
 			if (array_key_exists('q', $parameters) && ($parameters['q'] != 'undefined'))
 			{

@@ -453,7 +453,18 @@ var OrganizationListCtrl = function ($rootScope, $scope, $location, $modal, orga
 };
 
 var OrganizationEditCtrl = function($rootScope, $scope, $routeParams, $location, $cookieStore, codeTableService, organizationService, organizationListItemService, recordCountService) {
-
+	$scope.datePicker = {
+		'hatchlingBalanceAsOfDateOpened': false,
+		'washbackBalanceAsOfDateOpened': false
+	};
+ 	$scope.dateOptions = {
+		'show-weeks' : false
+	};
+	$scope.openDatePicker = function($event, opened) {
+		$event.preventDefault();
+		$event.stopPropagation();
+		$scope.datePicker[opened] = true;
+	};
     $scope.states = codeTableService.getCodes('state'); 
     $scope.unit_types = codeTableService.getCodes('unit_type'); 
 
@@ -636,6 +647,18 @@ var TankWaterListCtrl = function ($rootScope, $scope, $location, $modal, tankWat
 
 var TankWaterEditCtrl = function($rootScope, $scope, $routeParams, $location, tankWaterService, recordCountService) {
 
+	$scope.datePicker = {
+		'dateMeasuredOpened': false
+	};
+ 	$scope.dateOptions = {
+		'show-weeks' : false
+	};
+	$scope.openDatePicker = function($event, opened) {
+		$event.preventDefault();
+		$event.stopPropagation();
+		$scope.datePicker[opened] = true;
+	};
+
 	$scope.save = function() {
         tankWaterService.save($scope.item, function() {
 			if ($scope.item.is_new)
@@ -764,20 +787,20 @@ var TurtleEditCtrl = function($rootScope, $scope, $routeParams, $location, $cook
 		};
 	}, true);
 	
-	$scope.acquiredMap = {};
+	$scope.acquiredMap = null;
 	$scope.acquiredMarker = null;
 		
 	$scope.initAcquiredMap = function() {
-
 		$scope.acquiredMap = new google.maps.Map(document.getElementById('acquired_map'), mapOptions);
-
 		google.maps.event.addListener($scope.acquiredMap, 'click', function(event) {
 			setAcquiredMarker(event.latLng.lat().toFixed(5), event.latLng.lng().toFixed(5));
 			setAcquiredCoords(event.latLng);
 		});
 	};
 	
-    function setAcquiredMarker(lat, lng) {       
+    function setAcquiredMarker(lat, lng) { 
+		if (!$scope.acquiredMap) return;
+		
 		var acquiredLat, acquiredLng;
 		if ((lat != undefined) && (lat != null) && (lat != ''))
 		{
@@ -813,13 +836,11 @@ var TurtleEditCtrl = function($rootScope, $scope, $routeParams, $location, $cook
 		});
 	}
 
-	$scope.relinquishedMap = {};
+	$scope.relinquishedMap = null;
 	$scope.relinquishedMarker = null;
 		
 	$scope.initRelinquishedMap = function() {
-
 		$scope.relinquishedMap = new google.maps.Map(document.getElementById('relinquished_map'), mapOptions);
-
 		google.maps.event.addListener($scope.relinquishedMap, 'click', function(event) {
 			setRelinquishedMarker(event.latLng.lat().toFixed(5), event.latLng.lng().toFixed(5));
 			setRelinquishedCoords(event.latLng);
@@ -827,6 +848,8 @@ var TurtleEditCtrl = function($rootScope, $scope, $routeParams, $location, $cook
 	};
 	
     function setRelinquishedMarker(lat, lng) {       
+		if (!$scope.relinquishedMap) return;
+
 		var relinquishedLat, relinquishedLng;
 		if ((lat != undefined) && (lat != null) && (lat != ''))
 		{
@@ -872,7 +895,7 @@ var TurtleEditCtrl = function($rootScope, $scope, $routeParams, $location, $cook
 				"<div class='printable'>" + 
 				"<div style='float:left; margin-left:20px; margin-top:20px;'><img src='" + item.brochure_image_file_attachment_id + "' height='240px' width='240px' /></div>" +
 				"<p><span style='font-weight:bold; margin-left:12px;'>Turtle Name:  </span>" + util_blank_if_null(item.turtle_name) + "</p>" +
-				"<p><span style='font-weight:bold; margin-left:12px;'>Species:  </span>" + angular.element('#species').find(':selected').text() + "</p>" +
+				"<p><span style='font-weight:bold; margin-left:12px;'>Species:  </span>" + util_blank_if_null(item.species) + "</p>" +
 				"<p><span style='font-weight:bold; margin-left:12px;'>Size:  </span>" + util_blank_if_null(item.turtle_size) + "</p>" +
 				"<p><span style='font-weight:bold; margin-left:12px;'>Arrival Weight:  </span>" + $scope.arrival_weight_value + " " + $scope.arrival_weight_units + "</p>" +
 				"<p><span style='font-weight:bold; margin-left:12px;'>Stranding Date:  </span>" + util_blank_if_null(item.date_acquired) + "</p>" +
@@ -932,8 +955,12 @@ var TurtleEditCtrl = function($rootScope, $scope, $routeParams, $location, $cook
 					}
 				);
 
-				setAcquiredMarker($scope.item.acquired_latitude, $scope.item.acquired_longitude);
-				setRelinquishedMarker($scope.item.relinquished_latitude, $scope.item.relinquished_longitude);
+				$timeout(function () {
+					$scope.initAcquiredMap();
+					setAcquiredMarker($scope.item.acquired_latitude, $scope.item.acquired_longitude);
+					$scope.initRelinquishedMap();
+					setRelinquishedMarker($scope.item.relinquished_latitude, $scope.item.relinquished_longitude);
+				});
 			}
 		);
 	}
@@ -1022,6 +1049,18 @@ var TurtleMorphometricListCtrl = function ($rootScope, $scope, $location, $modal
 };
 
 var TurtleMorphometricEditCtrl = function($rootScope, $scope, $routeParams, $location, turtleMorphometricService, turtleService, codeTableService, recordCountService) {
+
+	$scope.datePicker = {
+		'dateMeasuredOpened': false
+	};
+ 	$scope.dateOptions = {
+		'show-weeks' : false
+	};
+	$scope.openDatePicker = function($event, opened) {
+		$event.preventDefault();
+		$event.stopPropagation();
+		$scope.datePicker[opened] = true;
+	};
 
     $scope.cm_ins = codeTableService.getCodes('cm_in'); 
     $scope.kg_lbs = codeTableService.getCodes('kg_lb'); 
@@ -1200,6 +1239,18 @@ var TurtleTagListCtrl = function ($rootScope, $scope, $location, $modal, turtleT
 };
 
 var TurtleTagEditCtrl = function($rootScope, $scope, $routeParams, $location, turtleTagService, codeTableService, recordCountService) {
+
+	$scope.datePicker = {
+		'dateTaggedOpened': false
+	};
+ 	$scope.dateOptions = {
+		'show-weeks' : false
+	};
+	$scope.openDatePicker = function($event, opened) {
+		$event.preventDefault();
+		$event.stopPropagation();
+		$scope.datePicker[opened] = true;
+	};
 
     $scope.tag_locations = codeTableService.getCodes('tag_location'); 
     $scope.tag_types = codeTableService.getCodes('tag_type'); 

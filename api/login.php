@@ -78,6 +78,16 @@
 		//--------------------------------------------------------------------------------
 		//-- the "identity" is the URL used by the OpenID provider to do the authentication
 		//--------------------------------------------------------------------------------
+		if ($openid_identifier == 'google') 
+		{
+			$openid_identifier = 'https://www.google.com/accounts/o8/id';
+		}
+		
+		if ($openid_identifier == 'yahoo') 
+		{
+			$openid_identifier = 'http://me.yahoo.com/';
+		}
+		
 		$openid->identity = $openid_identifier;
 		 
 		//--------------------------------------------------------------------------------
