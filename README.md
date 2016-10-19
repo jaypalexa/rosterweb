@@ -10,5 +10,4 @@ Demo at http://www.turtlegeek.com/rosterweb
 
 Original VB.NET WinForms version at http://www.TurtleGeek.com/roster/
 
-New web version (AngularJS 2.x / C# / SQL Server) at http://rosterwebnet.apphb.com
-
+New web version (ASP.NET Core and C# / AngularJS 2.x / SQL Server) at http://rosterwebnet.azurewebsites.net/
